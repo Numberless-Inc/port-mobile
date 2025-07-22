@@ -95,6 +95,12 @@ const PopUpActions = ({
     togglePopUp();
   };
 
+  const onCameraPressed = () => {
+    navigation.push('MediaCapture', {
+      chatId: chatId
+    });
+  };
+
   // image pressed
   const onImagePressed = async (): Promise<void> => {
     try {
@@ -184,6 +190,17 @@ const PopUpActions = ({
   return (
     <Animated.View style={[styles.mainContainer, animatedStyle]}>
       <View style={styles.popUpContainer}>
+        <View style={styles.optionContainer}>
+          <Pressable style={styles.optionBox} onPress={onCameraPressed}>
+          <VideoIcon />
+          </Pressable>
+          <NumberlessText
+            fontSizeType={FontSizeType.s}
+            textColor={Colors.text.primary}
+            fontType={FontType.rg}>
+            Camera
+          </NumberlessText>
+        </View>
         <View style={styles.optionContainer}>
           <Pressable style={styles.optionBox} onPress={onImagePressed}>
             <ImageIcon />
