@@ -31,12 +31,36 @@ import { CONTENT_SPACING, CONTROL_BUTTON_SIZE, MAX_ZOOM_FACTOR, SAFE_AREA_PADDIN
 import { usePreferredCameraDevice } from './hooks/usePreferredCameraDevice'
 import { CaptureButton } from './views/CaptureButon'
 import { StatusBarBlurBackground } from './views/StatusBarBlurBackground';
-
+import useSVG from '@components/svgGuide'
 
 const ReanimatedCamera = Reanimated.createAnimatedComponent(Camera)
 Reanimated.addWhitelistedNativeProps({
   zoom: true,
 })
+
+const svgArray = [
+  {
+    assetName: 'FlashOn',
+    light: require('@assets/icons/FlashOn.svg').default,
+    dark: require('@assets/icons/FlashOn.svg').default,
+  },
+  {
+    assetName: 'FlashOff',
+    light: require('@assets/icons/FlashOff.svg').default,
+    dark: require('@assets/icons/FlashOff.svg').default,
+  },
+  {
+    assetName: 'CameraFlip',
+    light: require('@assets/icons/CameraFlip.svg').default,
+    dark: require('@assets/icons/CameraFlip.svg').default,
+  }
+];
+
+const results = useSVG(svgArray);
+const FlashOn = results.FlashOn;
+const FlashOff = results.FlashOff;
+const CameraFlip = results.CameraFlip;
+
 
 const SCALE_FULL_ZOOM = 3
 
@@ -326,12 +350,15 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
 
       <View style={styles.rightButtonRow}>
         <PressableOpacity style={styles.button} onPress={onFlipCameraPressed} disabledOpacity={0.4}>
-          <IonIcon name="camera-reverse" color="white" size={24} />
+          <CameraFlip/>
         </PressableOpacity>
         {supportsFlash && (
           <PressableOpacity style={styles.button} onPress={onFlashPressed} disabledOpacity={0.4}>
-            flash
-            <IonIcon name={flash === 'on' ? 'flash' : 'flash-off'} color="white" size={24} />
+            {flash === 'on' ? (
+              <FlashOn/>
+            ): (
+              <FlashOff/>
+            )} 
           </PressableOpacity>
         )}
         {supports60Fps && (

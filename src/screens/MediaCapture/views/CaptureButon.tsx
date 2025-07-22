@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from 'react';
-import { StyleSheet, View, ViewProps } from 'react-native';
+import { StyleSheet, ViewProps } from 'react-native';
 
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import Reanimated, {
@@ -9,7 +9,6 @@ import Reanimated, {
     runOnJS,
     useAnimatedStyle,
     useSharedValue,
-    withRepeat,
     withSpring,
     withTiming
 } from 'react-native-reanimated';
@@ -53,16 +52,15 @@ export const CaptureButton: React.FC<Props> = ({
 
 
     const svgArray = [
-        // 1.NotificationOutline
         {
-        assetName: 'MediaCapture',
-        light: require('@assets/icons/MediaCapture.svg').default,
-        dark: require('@assets/icons/MediaCapture.svg').default,
+        assetName: 'CaptureButton',
+        light: require('@assets/icons/CaptureButton.svg').default,
+        dark: require('@assets/icons/CaptureButton.svg').default,
         },
     ];
     const results = useSVG(svgArray);
 
-    const MediaCaptureIcon = results.MediaCapture;
+    const CaptureButton = results.CaptureButton;
 
     // Capture logic
     const takePhoto = useCallback(async () => {
@@ -166,20 +164,20 @@ const longPressGesture = Gesture.LongPress()
 
     const shadowStyle = useAnimatedStyle(() => ({
         transform: [
-            {
-                scale: withSpring(isPressingButton.value ? 1 : 0, {
-                    mass: 1,
-                    damping: 35,
-                    stiffness: 300,
-                }),
-            },
+          {
+            scale: withSpring(isPressingButton.value ? 1.4 : 0, {
+              mass: 1,
+              damping: 35,
+              stiffness: 300,
+            }),
+          },
         ],
-    }));
+      }));      
 
     const buttonStyle = useAnimatedStyle(() => {
         const scale = enabled
             ? isPressingButton.value
-                ? withRepeat(withSpring(1), -1, true)
+            ? withSpring(1.3, { damping: 10, stiffness: 150 }) // or adjust size
                 : withSpring(0.9)
             : withSpring(0.6);
 
@@ -195,7 +193,7 @@ const longPressGesture = Gesture.LongPress()
                 <Reanimated.View {...props} style={[buttonStyle, style]}>
                     <Reanimated.View style={styles.flex}>
                         <Reanimated.View style={[styles.shadow, shadowStyle]} />
-                        <MediaCaptureIcon width={CAPTURE_BUTTON_SIZE} height={CAPTURE_BUTTON_SIZE} />
+                        <CaptureButton width={CAPTURE_BUTTON_SIZE} height={CAPTURE_BUTTON_SIZE} />
                     </Reanimated.View>
                 </Reanimated.View>
             </GestureDetector>
