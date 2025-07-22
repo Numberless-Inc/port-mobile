@@ -38,9 +38,15 @@ const HelpScreen = () => {
       <SafeAreaView style={styles.screen}>
         <BackTopbar
           onBackPress={() => navigation.goBack()}
-          title="Legal"
-          bgColor="w"
+          bgColor="g"
         />
+        <NumberlessText
+        style={{textAlign:'left', width:'100%', marginLeft: Spacing.xl}}
+          textColor={Colors.text.title}
+          fontWeight={FontWeight.sb}
+          fontSizeType={FontSizeType.xl}>
+          Legal
+        </NumberlessText>
         <View style={styles.mainComponent}>
             <Pressable
               style={styles.button}
