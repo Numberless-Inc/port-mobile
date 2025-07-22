@@ -6,11 +6,12 @@ import {DEFAULT_PROFILE_AVATAR_INFO} from '@configs/constants';
 import {blockUser, unblockUser} from '@utils/Storage/blockUsers';
 import {BlockedUser} from '@utils/Storage/DBCalls/blockUser';
 
-import {PortSpacing} from './ComponentUtils';
-import DynamicColors from './DynamicColors';
-import {FontSizeType, FontType, NumberlessText} from './NumberlessText';
+
+import { useColors } from './colorGuide';
+import {FontSizeType, FontWeight, NumberlessText} from './NumberlessText';
 import {AvatarBox} from './Reusable/AvatarBox/AvatarBox';
 import ConfirmationBottomSheet from './Reusable/BottomSheets/ConfirmationBottomSheet';
+import { Spacing } from './spacingGuide';
 
 interface BlockedContactProps extends BlockedUser {
   isLast: boolean;
@@ -46,7 +47,7 @@ const BlockedContactTile = (user: BlockedContactProps) => {
       console.log('Error in unblocking user');
     }
   };
-  const Colors = DynamicColors();
+  const Colors = useColors();
   const styles = styling(isLast, Colors);
 
   return (
@@ -57,19 +58,23 @@ const BlockedContactTile = (user: BlockedContactProps) => {
           profileUri={DEFAULT_PROFILE_AVATAR_INFO.fileUri}
         />
         <NumberlessText
-          textColor={Colors.text.primary}
-          fontType={FontType.rg}
+          textColor={Colors.text.title}
+          fontWeight={FontWeight.rg}
           fontSizeType={FontSizeType.m}>
           {name}
         </NumberlessText>
       </View>
 
+<View style={styles.button}>
+
+
       <NumberlessText
-        textColor={Colors.primary.red}
-        fontType={FontType.md}
+        textColor={Colors.text.title}
+        fontWeight={FontWeight.md}
         fontSizeType={FontSizeType.s}>
         {isSelected ? 'Block' : 'Unblock'}
       </NumberlessText>
+      </View>
       <ConfirmationBottomSheet
         visible={confirmBlockUserSheet}
         onClose={() => setConfirmBlockUserSheet(false)}
@@ -82,16 +87,15 @@ const BlockedContactTile = (user: BlockedContactProps) => {
         }}
         title={
           isBlocked
-            ? `Are you sure you want to unblock ${name}?`
-            : `Are you sure you want to block ${name}?`
+            ? `Unblock ${name}?`
+            : `Block ${name}?`
         }
         description={
           isBlocked
-            ? `Unblocking ${name} gives them the ability to connect with you through Port and Superports`
+            ? `If you unblock this contact, they will be able to send you messages and call you, based on their individual permissions.`
             : `Blocking ${name} will prevent them from connecting with you over Ports, Superports or contact sharing until you unblock them.`
         }
-        buttonText={isBlocked ? 'Unblock contact' : 'Block contact'}
-        buttonColor="r"
+        buttonText={isBlocked ? 'Yes, unblock' : 'Yes, block'}
       />
     </Pressable>
   );
@@ -103,16 +107,22 @@ const styling = (isLast: boolean, colors: any) =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      paddingVertical: PortSpacing.tertiary.uniform,
-      marginHorizontal: PortSpacing.tertiary.uniform,
+      paddingVertical: Spacing.s,
+      marginHorizontal: Spacing.s,
       borderBottomWidth: isLast ? 0 : 1,
-      borderBottomColor: colors.primary.lightgrey,
+      borderBottomColor: colors.grey,
     },
     row: {
       flexDirection: 'row',
       alignItems: 'center',
-      gap: PortSpacing.tertiary.uniform,
+      gap: Spacing.s,
     },
+    button:{
+      backgroundColor: colors.surface2,
+      paddingVertical: Spacing.s,
+      paddingHorizontal: Spacing.xs,
+      borderRadius: Spacing.s
+    }
   });
 
 export default BlockedContactTile;

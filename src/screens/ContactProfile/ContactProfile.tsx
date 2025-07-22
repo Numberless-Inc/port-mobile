@@ -343,7 +343,6 @@ const ContactProfile = ({route, navigation}: Props) => {
               : `Blocking ${displayName} will prevent them from connecting with you over Ports, Superports or contact sharing until you unblock them.`
           }
           buttonText={isBlocked ? 'Unblock contact' : 'Block contact'}
-          buttonColor="r"
         />
         {isSharingContact && (
           <ContactSharingBottomsheet
