@@ -1339,6 +1339,27 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - react-native-blur (4.4.1):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - react-native-cameraroll (7.10.0):
     - DoubleConversion
     - glog
@@ -2329,6 +2350,8 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - RNStaticSafeAreaInsets (2.2.0):
+    - React-Core
   - RNSVG (15.11.2):
     - DoubleConversion
     - glog
@@ -2452,6 +2475,7 @@ DEPENDENCIES:
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - react-native-blob-util (from `../node_modules/react-native-blob-util`)
+  - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - "react-native-cameraroll (from `../node_modules/@react-native-camera-roll/camera-roll`)"
   - react-native-cloud-storage (from `../node_modules/react-native-cloud-storage`)
   - react-native-compressor (from `../node_modules/react-native-compressor`)
@@ -2517,6 +2541,7 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNShare (from `../node_modules/react-native-share`)
+  - RNStaticSafeAreaInsets (from `../node_modules/react-native-static-safe-area-insets`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - RNVoipPushNotification (from `../node_modules/react-native-voip-push-notification`)
@@ -2621,6 +2646,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/microtasks"
   react-native-blob-util:
     :path: "../node_modules/react-native-blob-util"
+  react-native-blur:
+    :path: "../node_modules/@react-native-community/blur"
   react-native-cameraroll:
     :path: "../node_modules/@react-native-camera-roll/camera-roll"
   react-native-cloud-storage:
@@ -2751,6 +2778,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@sentry/react-native"
   RNShare:
     :path: "../node_modules/react-native-share"
+  RNStaticSafeAreaInsets:
+    :path: "../node_modules/react-native-static-safe-area-insets"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
@@ -2782,7 +2811,7 @@ SPEC CHECKSUMS:
   JitsiWebRTC: b47805ab5668be38e7ee60e2258f49badfe8e1d0
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
-  RCT-Folly: 36fe2295e44b10d831836cc0d1daec5f8abcf809
+  RCT-Folly: e78785aa9ba2ed998ea4151e314036f6c49e6d82
   RCTDeprecation: be794de7dc6ed8f9f7fbf525f86e7651b8b68746
   RCTRequired: a83787b092ec554c2eb6019ff3f5b8d125472b3b
   RCTTypeSafety: 48ad3c858926b1c46f46a81a58822b476e178e2c
@@ -2814,6 +2843,7 @@ SPEC CHECKSUMS:
   React-Mapbuffer: 63278529b5cf531a7eaf8fc71244fabb062ca90c
   React-microtasksnativemodule: 6a39463c32ce831c4c2aa8469273114d894b6be9
   react-native-blob-util: 36672af67a5a37db7838182360aaf16729ef25fd
+  react-native-blur: c4d838e8cd2896379328aec8a600c6ddad589c78
   react-native-cameraroll: b93d0a5f753817f337cb32a5e245814f6961c628
   react-native-cloud-storage: 3c15e67329e46518de76023d43aa481d68032393
   react-native-compressor: d9bc019edde3dacbed5810ad9effc4f3be352751
@@ -2879,6 +2909,7 @@ SPEC CHECKSUMS:
   RNScreens: 790123c4a28783d80a342ce42e8c7381bed62db1
   RNSentry: e601f4f6d207cbef3b59206ee8c75d10a660f8f1
   RNShare: 56b5431c60e1e9ee167191f4f327471af1c2941a
+  RNStaticSafeAreaInsets: 4696b82d3a11ba6f3a790159ddb7290f04abd275
   RNSVG: 8126581b369adf6a0004b6a6cab1a55e3002d5b0
   RNVectorIcons: bd818296a51dc2bb8c3bd97a3ca399df1afe216d
   RNVoipPushNotification: e5edde96849c0133ebc7e900dc30c8c221cfb690
@@ -2890,4 +2921,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 083b60ad094cab6e950062767777fc483af83182
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2
