@@ -16,6 +16,7 @@ import {CommonGroups} from '@components/CommonGroups';
 import { screen} from '@components/ComponentUtils';
 import {CustomStatusBar} from '@components/CustomStatusBar';
 import { GestureSafeAreaView } from '@components/GestureSafeAreaView';
+import Notes from '@components/Notes';
 import {
   FontSizeType,
   FontWeight,
@@ -26,11 +27,12 @@ import ProfilePictureBlurViewModal from '@components/Reusable/BlurView/ProfilePi
 import AddFolderBottomsheet from '@components/Reusable/BottomSheets/AddFolderBottomsheet';
 import ConfirmationBottomSheet from '@components/Reusable/BottomSheets/ConfirmationBottomSheet';
 import EditName from '@components/Reusable/BottomSheets/EditName';
-import SimpleCard from '@components/Reusable/Cards/SimpleCard';
 import PrimaryButton from '@components/Reusable/LongButtons/PrimaryButton';
 import SecondaryButton from '@components/Reusable/LongButtons/SecondaryButton';
 import UserInfoTopbar from '@components/Reusable/TopBars/UserInfoTopbar';
+import SharedMediaCard from '@components/SharedMediaCard';
 import { Spacing } from '@components/spacingGuide';
+import useSVG from '@components/svgGuide';
 
 import {
   DEFAULT_AVATAR,
@@ -52,17 +54,12 @@ import {MediaEntry} from '@utils/Storage/DBCalls/media';
 import {getAllFolders} from '@utils/Storage/folders';
 import {getImagesAndVideos} from '@utils/Storage/media';
 import {deleteAllMessagesInChat} from '@utils/Storage/messages';
-import useDynamicSVG from '@utils/Themes/createDynamicSVG';
 import {getChatTileTimestamp, wait} from '@utils/Time';
 
 import Alert from '@assets/icons/Alert.svg';
-import EditIcon from '@assets/icons/PencilCircleAccent.svg';
 
-import {useTheme} from 'src/context/ThemeContext';
-import {ToastType, useToast} from 'src/context/ToastContext';
+import { ToastType, useToast } from 'src/context/ToastContext';
 
-import Notes from '../../components/Notes';
-import SharedMediaCard from '../../components/SharedMediaCard';
 
 type Props = NativeStackScreenProps<AppStackParamList, 'ChatProfile'>;
 
@@ -102,22 +99,21 @@ const ChatProfile = ({route, navigation}: Props) => {
   const styles = styling(Colors);
 
   const svgArray = [
-    // 1.NotificationOutline
-    {
-      assetName: 'RightChevron',
-      light: require('@assets/light/icons/navigation/AngleRight.svg').default,
-      dark: require('@assets/dark/icons/navigation/AngleRight.svg').default,
-    },
     {
       assetName: 'ContactShareIcon',
       dark: require('@assets/light/icons/ContactShareIcon.svg').default,
       light: require('@assets/dark/icons/ContactShareIcon.svg').default,
     },
+    {
+      assetName: 'EditIcon',
+      light: require('@assets/light/icons/Pencil.svg').default,
+      dark: require('@assets/dark/icons/Pencil.svg').default,
+    },
   ];
-  const results = useDynamicSVG(svgArray);
+  const results = useSVG(svgArray);
 
-  const RightChevron = results.RightChevron;
   const ContactShareIcon = results.ContactShareIcon;
+  const EditIcon = results.EditIcon;
 
   const loadMedia = async () => {
     const response = await getImagesAndVideos(chatId);
@@ -234,7 +230,6 @@ const ChatProfile = ({route, navigation}: Props) => {
       );
     }
   };
-  const {themeValue} = useTheme();
 
   const onProfilePictureClick = () => {
     setFocusProfilePicture(true);
@@ -296,7 +291,7 @@ const ChatProfile = ({route, navigation}: Props) => {
                 textColor={Colors.text.subtitle}
                 fontSizeType={FontSizeType.s}
                 fontWeight={FontWeight.rg}
-               >
+              >
                 {chatData.connectedOn
                   ? 'Connection since : ' +
                     getChatTileTimestamp(chatData.connectedOn)
@@ -306,68 +301,32 @@ const ChatProfile = ({route, navigation}: Props) => {
 
             {connected ? (
               <>
-                <View style={styles.chatSettingsContainer}>
-                  <SimpleCard style={styles.folderCard}>
-                    <Pressable
-                      style={styles.clickableCard}
-                      onPress={() => setShowAddFolderModal(true)}>
-                      <View style={styles.cardTitle}>
-                        <NumberlessText
-                          textColor={Colors.text.title}
-                          fontSizeType={FontSizeType.l}
-                          fontWeight={FontWeight.md}
-                       >
-                          Chat folder
-                        </NumberlessText>
-                      </View>
-                      <View style={styles.labelContainer}>
-                        <View style={styles.labelWrapper}>
-                          <NumberlessText
-                            textColor={
-                              selectedFolder.name === defaultFolderInfo.name
-                              ? Colors.text.title
-                              : themeValue === 'light'
-                                ? Colors.accent
-                                : Colors.text.title
-                            }
-                            fontSizeType={FontSizeType.m}
-                            fontWeight={FontWeight.rg}
-                            numberOfLines={1}
-                            ellipsizeMode="tail">
-                            {selectedFolder.name}
-                          </NumberlessText>
-                        </View>
-                        <RightChevron width={20} height={20} />
-                      </View>
-                    </Pressable>
-                  </SimpleCard>
-                </View>
+               
 
                 <Notes getNote={getNote} pairHash={pairHash} note={note} />
                 <View style={styles.sharedMediaContainer}>
                   <SharedMediaCard media={media} chatId={chatId} />
                 </View>
                 <CommonGroups pairHash={pairHash} />
-                <View style={{paddingBottom: Spacing.l}}>
+                <View style={{paddingBottom: Spacing.l,}}>
                   <NumberlessText
                     style={{
                       color: Colors.red,
-                      marginTop:  Spacing.l
+                      marginTop: Spacing.l,
                     }}
                     fontSizeType={FontSizeType.l}
                     fontWeight={FontWeight.md}
-                   >
+                >
                     Disconnect chat?
                   </NumberlessText>
                   <NumberlessText
                     style={styles.footerDesc}
                     fontSizeType={FontSizeType.m}
-                    fontWeight={FontWeight.rg}
-                   >
+                   fontWeight={FontWeight.rg}>
                     When a chat is disconnected, you can't contact the user
                     until you connect again using a new Port.
                   </NumberlessText>
-                  <View style={{gap: Spacing.s}}>
+                  <View style={{gap:Spacing.s,}}>
                     <PrimaryButton
                       isLoading={false}
                       disabled={false}
@@ -399,7 +358,7 @@ const ChatProfile = ({route, navigation}: Props) => {
                     textColor={Colors.text.subtitle}
                     fontSizeType={FontSizeType.m}
                     fontWeight={FontWeight.rg}
-                >
+                    >
                     Your chat has been disconnected. Deleting the chat will
                     erase all data associated with it.
                   </NumberlessText>
@@ -527,7 +486,7 @@ const ChatProfile = ({route, navigation}: Props) => {
 const styling = (colors: any) =>
   StyleSheet.create({
     mainContainer: {
-      padding: Spacing.l,
+      padding:Spacing.l,
       paddingTop: 0,
       paddingBottom: 0,
       flex: 1,
@@ -567,10 +526,11 @@ const styling = (colors: any) =>
       marginTop: Spacing.l,
       flexDirection: 'row',
       alignItems: 'center',
+      gap: Spacing.s
     },
     sharedMediaContainer: {
       marginBottom: Spacing.l,
-      marginTop: Spacing.l,
+      marginTop:Spacing.l,
     },
     alertwrapper: {flex: 1, justifyContent: 'center'},
     chatSettingsContainer: {
@@ -584,9 +544,9 @@ const styling = (colors: any) =>
       justifyContent: 'space-between',
     },
     footerDesc: {
-      color: colors.text.subtitle,
+      color: colors.text.title,
       lineHeight: 16,
-      marginTop:Spacing.s,
+      marginTop: Spacing.s,
       marginBottom: Spacing.xl,
     },
     advanceSettingsContainer: {

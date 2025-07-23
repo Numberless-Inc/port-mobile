@@ -113,7 +113,8 @@ const Description = ({
         )}
       </View>
       <LargeTextInput
-        maxLength={2000}
+        showLimit
+        maxLength={300}
         setText={onChangeText}
         text={newNote}
         bgColor="w"
