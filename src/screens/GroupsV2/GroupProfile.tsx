@@ -517,6 +517,7 @@ const GroupProfile = ({ route, navigation }: Props) => {
             'Current chat history will be saved, but you can subsequently choose to delete it.'
           }
           buttonText={'Exit'}
+          buttonColor="r"
         />
         <ConfirmationBottomSheet
           visible={confirmSheetDelete}
@@ -540,6 +541,7 @@ const GroupProfile = ({ route, navigation }: Props) => {
             'Deleting this chat will erase all data associated with it.'
           }
           buttonText={'Delete Chat'}
+          buttonColor="r"
         />
         <ConfirmationBottomSheet
           visible={confirmSheetHistoryDelete}
@@ -556,6 +558,7 @@ const GroupProfile = ({ route, navigation }: Props) => {
           title={'Are you sure you want to delete chat history?'}
           description={'Deleting chat history will erase all messages.'}
           buttonText={'Delete history'}
+          buttonColor="r"
         />
         {focusProfilePicture && (
           <ProfilePictureBlurViewModal

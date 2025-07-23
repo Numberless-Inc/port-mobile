@@ -451,6 +451,7 @@ const ChatProfile = ({route, navigation}: Props) => {
             'Disconnecting a chat will prevent further messaging. Current chat history will be saved, but you can subsequently choose to delete it.'
           }
           buttonText={'Disconnect'}
+          buttonColor="r"
         />
         <ConfirmationBottomSheet
           visible={confirmSheetDelete}
@@ -471,6 +472,7 @@ const ChatProfile = ({route, navigation}: Props) => {
             'Deleting this chat will erase all data associated with it.'
           }
           buttonText={'Delete Chat'}
+          buttonColor="r"
         />
         <ConfirmationBottomSheet
           visible={confirmSheetHistoryDelete}
@@ -486,6 +488,7 @@ const ChatProfile = ({route, navigation}: Props) => {
           title={'Are you sure you want to delete chat history?'}
           description={'Deleting chat history will erase all messages.'}
           buttonText={'Delete history'}
+          buttonColor="r"
         />
         <ConfirmationBottomSheet
           visible={confirmBlockUserSheet}
@@ -508,6 +511,7 @@ const ChatProfile = ({route, navigation}: Props) => {
               : `Blocking ${displayName} will prevent them from connecting with you over Ports, Superports or contact sharing until you unblock them.`
           }
           buttonText={isBlocked ? 'Unblock contact' : 'Block contact'}
+          buttonColor="r"
         />
         {focusProfilePicture && (
           <ProfilePictureBlurViewModal

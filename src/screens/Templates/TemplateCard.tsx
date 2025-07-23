@@ -111,6 +111,7 @@ const TemplateCard = ({
         title={'Are you sure you want to delete this template?'}
         description={'Deleting a template will mean it is lost permanantly.'}
         buttonText={'Delete'}
+        buttonColor="r"
       />
     </>
   );
