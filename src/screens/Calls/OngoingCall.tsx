@@ -54,7 +54,9 @@ import ViewSwitch from '@assets/dark/icons/ViewSwitch.svg';
 import CloseWhite from '@assets/icons/closeWhite.svg';
 
 import NativeCallHelperModule, {
+  MappedAudioRoute,
   MuteEventPayload,
+  NativeAudioRouteChangePayload,
 } from '@specs/NativeCallHelperModule';
 
 import {useCallContext} from './CallContext';
@@ -95,6 +97,8 @@ export enum CallState {
   reconnecting = 4,
   cleaned = 5,
 }
+
+// enum 
 
 //state of the call UI
 export interface CallUIState {
@@ -151,6 +155,7 @@ function OngoingCall({route, navigation}: Props) {
   const {chatId, isVideoCall, callId} = route.params;
   const {callState, dispatchCallAction} = useCallContext();
   const [allPermissionsGranted, setAllPermissionsGranted] = useState(true);
+  const [channel, setChannel] = useState<string>('Earpiece');
 
   //styling variables
   const Colors = DynamicColors();
@@ -260,6 +265,7 @@ function OngoingCall({route, navigation}: Props) {
       setMyStream(myMediaStream);
       if (isVideoCall) {
         dispatchCallUIState({type: CallUIEvents.my_video_on});
+        processCoordinatorMessage('turn_speaker_on');
       } else {
         dispatchCallUIState({type: CallUIEvents.my_video_off});
       }
@@ -311,11 +317,39 @@ function OngoingCall({route, navigation}: Props) {
         }
       },
     );
+
+
+    const nativeAudioRouteChangeListener = NativeCallHelperModule.onNativeAudioRouteChange(
+      ({ outputs }: NativeAudioRouteChangePayload) => {
+        const mappedAudioRoute  = outputs[0].mappedAudioRoute;
+
+        if (!outputs || outputs.length === 0) {
+          console.warn('[nativeAudioRouteChangeListener] No outputs detected');
+          return;
+        }
+        let selectedRoute: MappedAudioRoute = 'Earpiece';
+
+        if (mappedAudioRoute === 'Speakerphone') {
+          selectedRoute = 'Speakerphone';
+        }
+        else if(mappedAudioRoute === 'unknown') {
+          console.warn('[nativeAudioRouteChangeListener] mappedAudioRoute is unknown. Switching to Earpiece');
+          selectedRoute = 'Earpiece';
+        }
+        console.log(`[nativeAudioRouteChangeListener] Forcing route to: ${selectedRoute}`);
+
+        NativeCallHelperModule.setAudioRoute(selectedRoute);
+        setChannel(selectedRoute);
+      }
+    );
+    
+
     NativeCallHelperModule.startKeepPhoneAwake();
 
     return () => {
       backHandler.remove();
       muteListener.remove();
+      nativeAudioRouteChangeListener.remove();
       NativeCallHelperModule.endKeepPhoneAwake();
       NativeCallHelperModule.endOutgoingRinging();
     };
@@ -338,6 +372,7 @@ function OngoingCall({route, navigation}: Props) {
           const videoTrack = peerMediaStream.getVideoTracks()[0];
           if (videoTrack.enabled) {
             dispatchCallUIState({type: CallUIEvents.peer_video_on});
+            processCoordinatorMessage('turn_speaker_on');
           }
           const audioTrack = peerMediaStream.getAudioTracks()[0];
           if (audioTrack.enabled) {
@@ -428,6 +463,7 @@ function OngoingCall({route, navigation}: Props) {
     if (mediaStreamManager) {
       mediaStreamManager.setVideoStream(true);
       dispatchCallUIState({type: CallUIEvents.my_video_on});
+      processCoordinatorMessage('turn_speaker_on');
       //emit call event over data channel
       peerConnectionManager?.sendEvent(CallEvents.videoOn);
     }
@@ -624,7 +660,7 @@ function OngoingCall({route, navigation}: Props) {
                 OnIcon={MicrophoneOn}
                 OffIcon={MicrophoneOff}
               />
-              <AudioChannelButton />
+              <AudioChannelButton channel={channel} setChannel={setChannel} />
               <BooleanControlButton
                 isOn={true}
                 onSwitchOn={disconnectCall}
@@ -690,10 +726,12 @@ const BooleanControlButton = ({
   );
 };
 
-const AudioChannelButton = () => {
+const AudioChannelButton = ({ channel, setChannel }:{ 
+  channel: string;
+  setChannel: (channel: string) => void;
+}) => {
   const Colors = DynamicColors();
   const styles = styling(Colors);
-  const [channel, setChannel] = useState<string>('Earpiece');
   const onPress = async () => {
     // Determine the number of outputs available
     const routes = await NativeCallHelperModule.getAudioRoutes();
