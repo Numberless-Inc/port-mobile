@@ -12,15 +12,16 @@
 import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 
-import PrimaryButton from '@components/Buttons/PrimaryButton';
-import { useColors } from '@components/colorGuide';
-import {isIOS} from '@components/ComponentUtils';
+import {PortSpacing, isIOS} from '@components/ComponentUtils';
+import DynamicColors from '@components/DynamicColors';
 import {
   FontSizeType,
-  FontWeight,
+  FontType,
   NumberlessText,
+  getWeight,
 } from '@components/NumberlessText';
-import { Spacing } from '@components/spacingGuide';
+
+import PrimaryButton from '../LongButtons/PrimaryButton';
 
 import PrimaryBottomSheet from './PrimaryBottomSheet';
 
@@ -32,6 +33,7 @@ const ConfirmationBottomSheet = ({
   title,
   description,
   buttonText,
+  buttonColor,
 }: {
   visible: boolean;
   onClose: () => void;
@@ -39,6 +41,7 @@ const ConfirmationBottomSheet = ({
   title?: string;
   description?: string;
   buttonText: string;
+  buttonColor: 'b' | 'r' | 'w';
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const onClick = async () => {
@@ -47,7 +50,7 @@ const ConfirmationBottomSheet = ({
     setIsLoading(false);
     onClose();
   };
-  const Colors = useColors();
+  const Colors = DynamicColors();
   return (
     <PrimaryBottomSheet
       showClose={true}
@@ -58,24 +61,22 @@ const ConfirmationBottomSheet = ({
       <View style={styles.mainWrapper}>
         {description && (
           <View
-            style={{marginBottom: Spacing.l, width: '100%'}}>
+            style={{marginBottom: PortSpacing.secondary.bottom, width: '100%'}}>
             <NumberlessText
               style={{color: Colors.text.subtitle}}
               fontSizeType={FontSizeType.m}
-              fontWeight={FontWeight.rg}
-              >
+              fontType={FontType.rg}>
               {description}
             </NumberlessText>
           </View>
         )}
         <PrimaryButton
-          text={buttonText}
-          theme={Colors.theme}
+          buttonText={buttonText}
+          primaryButtonColor={buttonColor}
           isLoading={isLoading}
           disabled={false}
           onClick={onClick}
         />
-
       </View>
     </PrimaryBottomSheet>
   );
@@ -85,12 +86,13 @@ const styles = StyleSheet.create({
   mainWrapper: {
     flexDirection: 'column',
     width: '100%',
-    marginTop:Spacing.l,
-    ...(isIOS ? {marginBottom: Spacing.l} : 0),
+    marginTop: PortSpacing.secondary.top,
+    ...(isIOS ? {marginBottom: PortSpacing.secondary.bottom} : 0),
   },
   title: {
+    fontFamily: FontType.md,
     fontSize: FontSizeType.l,
-    fontWeight: FontWeight.md,
+    fontWeight: getWeight(FontType.md),
   },
 });
 
