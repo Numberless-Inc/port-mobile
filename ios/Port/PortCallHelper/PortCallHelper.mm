@@ -20,10 +20,17 @@ static AVAudioPlayer *outgoingRingingPlayer = nil;
 
 @implementation PortCallHelper
 
+
 // Private initializer for the singleton instance
 - (instancetype)initInstance {
     NSLog(@"[PortCallHelper] Initializing PortCallHelper singleton instance.");
     self = [super init];
+    // Get the default notification center instance.
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self
+           selector:@selector(handleRouteChange:)
+               name:AVAudioSessionRouteChangeNotification
+             object:nil];
     return self;
 }
 
@@ -40,9 +47,46 @@ RCT_EXPORT_MODULE(NativeCallHelperModule);
     dispatch_once(&onceToken, ^{
         // Call the private initializer within dispatch_once
         sharedHelper = [[self alloc] initInstance];
-    });
+        });
     return sharedHelper;
 }
+
+- (void)handleRouteChange:(NSNotification *)notification {
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    AVAudioSessionRouteDescription *currentRoute = session.currentRoute;
+    NSMutableArray<NSDictionary *> *outputsInfo = [NSMutableArray array];
+    AVAudioSessionPortDescription *output = currentRoute.outputs.firstObject;
+
+    if (output) {
+        NSString *portType = output.portType ?: @"unknown";
+        NSString *portName = output.portName ?: @"unknown";
+        
+        NSDictionary<NSString *, NSString *> *portTypeMapping = @{
+            AVAudioSessionPortBuiltInReceiver: @"Earpiece",
+            AVAudioSessionPortBuiltInSpeaker: @"Speakerphone",
+            // AVAudioSessionPortHeadphones: @"Wired Headphones",
+            // AVAudioSessionPortAirPlay: @"AirPlay",
+        };
+        
+        NSDictionary<NSString *, NSString *> *portNameMapping = @{
+            @"Receiver": @"Earpiece",
+            @"Speaker": @"Speakerphone",
+        };
+        
+        NSString *mappedPort = portTypeMapping[portType] ?: portNameMapping[portName] ?: portType ?: portName ?: @"unknown";
+        
+        NSDictionary *outputDetails = @{
+            @"mappedAudioRoute": mappedPort
+        };
+        [outputsInfo addObject:outputDetails];
+    } else {
+      // Worst case
+      [outputsInfo addObject:@{@"mappedAudioRoute": @"unknown"}];
+    }
+
+    [self emitOnNativeAudioRouteChange:@{@"outputs": outputsInfo}];
+}
+
 
 // Class method to get the shared CXCallController instance
 + (CXCallController *)sharedCallController {
@@ -359,7 +403,6 @@ RCT_EXPORT_METHOD(displayIncomingCall:(NSString *)callerName callUUID:(NSString 
 
 - (void)provider:(CXProvider *)provider performStartCallAction:(CXStartCallAction *)action {
     NSLog(@"[PortCallHelper] Provider received request to start call: %@", action.callUUID);
-
     if (![self startAudioSession]) {
       [action fail]; // Fail the action if session can't be configured
       return;

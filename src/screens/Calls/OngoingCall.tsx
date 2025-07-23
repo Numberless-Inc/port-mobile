@@ -260,6 +260,7 @@ function OngoingCall({route, navigation}: Props) {
       setMyStream(myMediaStream);
       if (isVideoCall) {
         dispatchCallUIState({type: CallUIEvents.my_video_on});
+        processCoordinatorMessage('turn_speaker_on');
       } else {
         dispatchCallUIState({type: CallUIEvents.my_video_off});
       }
@@ -338,6 +339,7 @@ function OngoingCall({route, navigation}: Props) {
           const videoTrack = peerMediaStream.getVideoTracks()[0];
           if (videoTrack.enabled) {
             dispatchCallUIState({type: CallUIEvents.peer_video_on});
+            processCoordinatorMessage('turn_speaker_on');
           }
           const audioTrack = peerMediaStream.getAudioTracks()[0];
           if (audioTrack.enabled) {
@@ -428,6 +430,7 @@ function OngoingCall({route, navigation}: Props) {
     if (mediaStreamManager) {
       mediaStreamManager.setVideoStream(true);
       dispatchCallUIState({type: CallUIEvents.my_video_on});
+      processCoordinatorMessage('turn_speaker_on');
       //emit call event over data channel
       peerConnectionManager?.sendEvent(CallEvents.videoOn);
     }
