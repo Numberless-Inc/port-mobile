@@ -31,35 +31,15 @@ import { CONTENT_SPACING, CONTROL_BUTTON_SIZE, MAX_ZOOM_FACTOR, SAFE_AREA_PADDIN
 import { usePreferredCameraDevice } from './hooks/usePreferredCameraDevice'
 import { CaptureButton } from './views/CaptureButon'
 import { StatusBarBlurBackground } from './views/StatusBarBlurBackground';
-import useSVG from '@components/svgGuide'
+import FlashOn from '@assets/icons/FlashOn.svg';
+import FlashOff from '@assets/icons/FlashOff.svg';
+import CameraFlip from '@assets/icons/CameraFlip.svg';
 
 const ReanimatedCamera = Reanimated.createAnimatedComponent(Camera)
 Reanimated.addWhitelistedNativeProps({
   zoom: true,
-})
+});
 
-const svgArray = [
-  {
-    assetName: 'FlashOn',
-    light: require('@assets/icons/FlashOn.svg').default,
-    dark: require('@assets/icons/FlashOn.svg').default,
-  },
-  {
-    assetName: 'FlashOff',
-    light: require('@assets/icons/FlashOff.svg').default,
-    dark: require('@assets/icons/FlashOff.svg').default,
-  },
-  {
-    assetName: 'CameraFlip',
-    light: require('@assets/icons/CameraFlip.svg').default,
-    dark: require('@assets/icons/CameraFlip.svg').default,
-  }
-];
-
-const results = useSVG(svgArray);
-const FlashOn = results.FlashOn;
-const FlashOff = results.FlashOff;
-const CameraFlip = results.CameraFlip;
 
 
 const SCALE_FULL_ZOOM = 3
@@ -119,17 +99,6 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
 
   const [targetFps, setTargetFps] = useState(60);
 
-  // const svgArray = [
-  //   {
-  //     assetName: 'MediaCapture',
-  //     light: require('@assets/icons/MediaCapture.svg').default,
-  //     dark: require('@assets/icons/MediaCapture.svg').default,
-  //   },
-  // ];
-  // const results = useSVG(svgArray);
-
-  // const CaptureButton = results.MediaCapture;
-
   const screenAspectRatio = SCREEN_HEIGHT / SCREEN_WIDTH
   const format = useCameraFormat(device, [
     { fps: targetFps },
@@ -161,6 +130,7 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
   //#region Callbacks
   const setIsPressingButton = useCallback(
     (_isPressingButton: boolean) => {
+      console.log("setIsPressingButton");
       isPressingButton.value = _isPressingButton
     },
     [isPressingButton],
