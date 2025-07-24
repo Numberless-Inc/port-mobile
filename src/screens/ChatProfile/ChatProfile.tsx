@@ -584,7 +584,7 @@ const styling = (colors: any) =>
       justifyContent: 'space-between',
     },
     footerDesc: {
-      color: colors.text.title,
+      color: colors.text.subtitle,
       lineHeight: 16,
       marginTop:Spacing.s,
       marginBottom: Spacing.xl,
