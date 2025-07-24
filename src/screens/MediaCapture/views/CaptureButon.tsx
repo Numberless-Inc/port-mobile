@@ -14,9 +14,11 @@ import Reanimated, {
 } from 'react-native-reanimated';
 import type { Camera, PhotoFile, VideoFile } from 'react-native-vision-camera';
 
-import { CAPTURE_BUTTON_SIZE } from './../Constants';
+import { GestureSafeAreaView } from '@components/GestureSafeAreaView';
 import useSVG from '@components/svgGuide';
 
+// Capture Button
+const CAPTURE_BUTTON_SIZE = 78
 const BORDER_WIDTH = CAPTURE_BUTTON_SIZE * 0.1;
 const START_RECORDING_DELAY = 200;
 
@@ -188,7 +190,7 @@ const longPressGesture = Gesture.LongPress()
     });
 
     return (
-        <GestureHandlerRootView style={{ height: 100 }}>
+        <GestureSafeAreaView style={{ height: 100 }}>
             <GestureDetector gesture={combinedGesture}>
                 <Reanimated.View {...props} style={[buttonStyle, style]}>
                     <Reanimated.View style={styles.flex}>
@@ -197,7 +199,7 @@ const longPressGesture = Gesture.LongPress()
                     </Reanimated.View>
                 </Reanimated.View>
             </GestureDetector>
-        </GestureHandlerRootView>
+        </GestureSafeAreaView>
     );
 };
 

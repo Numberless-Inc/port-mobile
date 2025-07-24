@@ -27,22 +27,25 @@ import { AppStackParamList } from '@navigation/AppStack/AppStackTypes'
 import { ContentType } from '@utils/Messaging/interfaces'
 import { getConnection } from '@utils/Storage/connections'
 
-import { CONTENT_SPACING, CONTROL_BUTTON_SIZE, MAX_ZOOM_FACTOR, SAFE_AREA_PADDING, SCREEN_HEIGHT, SCREEN_WIDTH } from './Constants'
 import { usePreferredCameraDevice } from './hooks/usePreferredCameraDevice'
 import { CaptureButton } from './views/CaptureButon'
 import { StatusBarBlurBackground } from './views/StatusBarBlurBackground';
 import FlashOn from '@assets/icons/FlashOn.svg';
 import FlashOff from '@assets/icons/FlashOff.svg';
 import CameraFlip from '@assets/icons/CameraFlip.svg';
+import { GestureSafeAreaView } from '@components/GestureSafeAreaView';
+import { screen, Spacing } from '@components/spacingGuide';
 
 const ReanimatedCamera = Reanimated.createAnimatedComponent(Camera)
 Reanimated.addWhitelistedNativeProps({
   zoom: true,
 });
 
-
-
+// Control Button like Flash
+const CONTROL_BUTTON_SIZE = 40
 const SCALE_FULL_ZOOM = 3
+const MAX_ZOOM_FACTOR = 10
+const CONTENT_SPACING = 15
 
 type Props = NativeStackScreenProps<AppStackParamList, 'MediaCapture'>;
 
@@ -89,8 +92,8 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
   const [enableNightMode, setEnableNightMode] = useState(false)
 
   // camera device settings
-  const [preferredDevice] = usePreferredCameraDevice()
-  let device = useCameraDevice(cameraPosition)
+  const [preferredDevice] = usePreferredCameraDevice();
+  let device = useCameraDevice(cameraPosition);
 
   if (preferredDevice != null && preferredDevice.position === cameraPosition) {
     // override default device with the one selected by the user in settings
@@ -99,7 +102,7 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
 
   const [targetFps, setTargetFps] = useState(60);
 
-  const screenAspectRatio = SCREEN_HEIGHT / SCREEN_WIDTH
+  const screenAspectRatio = screen.height / screen.width;
   const format = useCameraFormat(device, [
     { fps: targetFps },
     { videoAspectRatio: screenAspectRatio },
@@ -130,7 +133,6 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
   //#region Callbacks
   const setIsPressingButton = useCallback(
     (_isPressingButton: boolean) => {
-      console.log("setIsPressingButton");
       isPressingButton.value = _isPressingButton
     },
     [isPressingButton],
@@ -160,10 +162,7 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
         },
       ];
       console.log(fileList);
-
       goToConfirmation(fileList);
-      navigation.goBack();
-
       // Optional: If you still want to show preview after capture
       // navigation.navigate('MediaPage', {
       //   path: media.path,
@@ -266,11 +265,10 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
   return (
     <View style={styles.container}>
       {device != null ? (
-        <GestureHandlerRootView
+        <GestureSafeAreaView
           style={{ flex: 1 }}
         >
           <GestureDetector gesture={pinchGesture}>
-            {/* <GestureDetector gesture={tapGesture}> */}
               <GestureDetector gesture={Gesture.Exclusive(doubleTapGesture, tapGesture)}>
                 <Reanimated.View onTouchEnd={onFocusTap}
                   style={StyleSheet.absoluteFill}
@@ -308,8 +306,7 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
                 </Reanimated.View>
               </GestureDetector>
             </GestureDetector>
-          {/* </GestureDetector> */}
-        </GestureHandlerRootView>
+        </GestureSafeAreaView>
       ) : (
         <View style={styles.emptyContainer}>
           <Text style={styles.text}>Your phone does not have a Camera.</Text>
@@ -382,10 +379,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     // // height: ,
     // flex: 1,
+    bottom: Spacing.xl,
     alignSelf: 'center',
-    bottom: SAFE_AREA_PADDING.paddingBottom,
   },
   button: {
+    top: Spacing.xxl,
     marginBottom: CONTENT_SPACING,
     width: CONTROL_BUTTON_SIZE,
     height: CONTROL_BUTTON_SIZE,
@@ -396,8 +394,8 @@ const styles = StyleSheet.create({
   },
   rightButtonRow: {
     position: 'absolute',
-    right: SAFE_AREA_PADDING.paddingRight,
-    top: SAFE_AREA_PADDING.paddingTop,
+    right: Spacing.m,
+    top: Spacing.xl,
   },
   text: {
     color: 'white',
