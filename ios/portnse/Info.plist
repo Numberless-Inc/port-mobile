@@ -10,8 +10,8 @@
       <string>$(PRODUCT_MODULE_NAME).NotificationService</string>
     </dict>
     <key>CFBundleVersion</key>
-    <string>78</string>
+    <string>80</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.15.2</string>
+    <string>1.15.3</string>
   </dict>
 </plist>
