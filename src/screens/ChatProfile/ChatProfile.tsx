@@ -11,6 +11,8 @@ import {
 import {useFocusEffect} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
+import ConfirmationBottomSheet from '@components/Bottomsheets/ConfirmationBottomsheet';
+import PrimaryButton from '@components/Buttons/PrimaryButton';
 import { useColors } from '@components/colorGuide';
 import {CommonGroups} from '@components/CommonGroups';
 import { screen} from '@components/ComponentUtils';
@@ -25,9 +27,7 @@ import {
 import {AvatarBox} from '@components/Reusable/AvatarBox/AvatarBox';
 import ProfilePictureBlurViewModal from '@components/Reusable/BlurView/ProfilePictureBlurView';
 import AddFolderBottomsheet from '@components/Reusable/BottomSheets/AddFolderBottomsheet';
-import ConfirmationBottomSheet from '@components/Reusable/BottomSheets/ConfirmationBottomSheet';
 import EditName from '@components/Reusable/BottomSheets/EditName';
-import PrimaryButton from '@components/Reusable/LongButtons/PrimaryButton';
 import SecondaryButton from '@components/Reusable/LongButtons/SecondaryButton';
 import UserInfoTopbar from '@components/Reusable/TopBars/UserInfoTopbar';
 import SharedMediaCard from '@components/SharedMediaCard';
@@ -330,8 +330,8 @@ const ChatProfile = ({route, navigation}: Props) => {
                     <PrimaryButton
                       isLoading={false}
                       disabled={false}
-                      primaryButtonColor="r"
-                      buttonText="Disconnect"
+                      theme={Colors.theme}
+                      text="Disconnect"
                       onClick={() => {
                         setConfirmSheet(true);
                       }}
@@ -371,8 +371,8 @@ const ChatProfile = ({route, navigation}: Props) => {
                   <PrimaryButton
                     isLoading={false}
                     disabled={false}
-                    primaryButtonColor="r"
-                    buttonText="Delete chat"
+                    theme={Colors.theme}
+                    text="Delete chat"
                     onClick={() => {
                       setConfirmSheetDelete(true);
                     }}
@@ -410,7 +410,6 @@ const ChatProfile = ({route, navigation}: Props) => {
             'Disconnecting a chat will prevent further messaging. Current chat history will be saved, but you can subsequently choose to delete it.'
           }
           buttonText={'Disconnect'}
-          buttonColor="r"
         />
         <ConfirmationBottomSheet
           visible={confirmSheetDelete}
@@ -431,7 +430,6 @@ const ChatProfile = ({route, navigation}: Props) => {
             'Deleting this chat will erase all data associated with it.'
           }
           buttonText={'Delete Chat'}
-          buttonColor="r"
         />
         <ConfirmationBottomSheet
           visible={confirmSheetHistoryDelete}
@@ -447,7 +445,6 @@ const ChatProfile = ({route, navigation}: Props) => {
           title={'Are you sure you want to delete chat history?'}
           description={'Deleting chat history will erase all messages.'}
           buttonText={'Delete history'}
-          buttonColor="r"
         />
         <ConfirmationBottomSheet
           visible={confirmBlockUserSheet}
@@ -470,7 +467,6 @@ const ChatProfile = ({route, navigation}: Props) => {
               : `Blocking ${displayName} will prevent them from connecting with you over Ports, Superports or contact sharing until you unblock them.`
           }
           buttonText={isBlocked ? 'Unblock contact' : 'Block contact'}
-          buttonColor="r"
         />
         {focusProfilePicture && (
           <ProfilePictureBlurViewModal
