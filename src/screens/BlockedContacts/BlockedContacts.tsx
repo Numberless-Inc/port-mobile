@@ -13,10 +13,10 @@ import {
   FontWeight,
   NumberlessText,
 } from '@components/NumberlessText';
-import BackTopbar from '@components/Reusable/TopBars/BackTopBar';
 import {SafeAreaView} from '@components/SafeAreaView';
 import SearchBar from '@components/SearchBar';
 import { Height, Spacing } from '@components/spacingGuide';
+import GenericBackTopBar from '@components/TopBars/GenericBackTopBar';
 
 import {getAllBlockedUsers} from '@utils/Storage/blockUsers';
 import {BlockedUser} from '@utils/Storage/DBCalls/blockUser';
@@ -55,22 +55,26 @@ const BlockedContacts = () => {
     <>
       <CustomStatusBar backgroundColor={Colors.surface} />
       <SafeAreaView style={styles.screen}>
-        <BackTopbar
+        <GenericBackTopBar
           onBackPress={() => navigation.goBack()}
-          title="Blocked contacts"
-          bgColor="g"
+          theme={Colors.theme}
+          backgroundColor={Colors.background}
         />
+          <View style={{width:'100%', marginLeft: Spacing.xl }}>
+            <NumberlessText
+          style={{textAlign:'left', }}
+              textColor={Colors.text.title}
+              fontWeight={FontWeight.sb}
+              fontSizeType={FontSizeType.es}>
+              Blocked contacts
+            </NumberlessText>
+          </View>
         <View style={styles.mainComponent}>
+      
           {viewableMembers.length > 0 ? (
             < >
               <View style={{marginBottom: Spacing.m}}>
-              <NumberlessText
-                style={{textAlign: 'left'}}
-                fontSizeType={FontSizeType.l}
-                fontWeight={FontWeight.sb}
-                textColor={Colors.text.title}>
-                Blocked contacts
-              </NumberlessText>
+              
               <NumberlessText
                 style={{textAlign: 'left'}}
                 fontSizeType={FontSizeType.m}
@@ -148,8 +152,7 @@ const styling = colors =>
       flexDirection: 'column',
       alignItems: 'center',
       paddingBottom: Spacing.l,
-      paddingHorizontal: Spacing.l,
-      marginTop:Spacing.l,
+      paddingHorizontal: Spacing.m,
       
     },
   });
