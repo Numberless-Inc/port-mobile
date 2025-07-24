@@ -5,7 +5,7 @@ import { StyleSheet, Text, View } from 'react-native'
 
 import { useIsFocused } from '@react-navigation/core'
 import type { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler'
+import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import { PressableOpacity } from 'react-native-pressable-opacity'
 import Reanimated, { Extrapolation, interpolate, runOnJS, useAnimatedProps, useSharedValue } from 'react-native-reanimated'
 import IonIcon from 'react-native-vector-icons/Ionicons'
@@ -20,21 +20,22 @@ import {
   useMicrophonePermission
 } from 'react-native-vision-camera'
 
+import { GestureSafeAreaView } from '@components/GestureSafeAreaView';
 import { NumberlessText } from '@components/NumberlessText'
+import { Spacing, screen } from '@components/spacingGuide';
 
 import { AppStackParamList } from '@navigation/AppStack/AppStackTypes'
 
 import { ContentType } from '@utils/Messaging/interfaces'
 import { getConnection } from '@utils/Storage/connections'
 
+import CameraFlip from '@assets/icons/CameraFlip.svg';
+import FlashOff from '@assets/icons/FlashOff.svg';
+import FlashOn from '@assets/icons/FlashOn.svg';
+
 import { usePreferredCameraDevice } from './hooks/usePreferredCameraDevice'
 import { CaptureButton } from './views/CaptureButon'
 import { StatusBarBlurBackground } from './views/StatusBarBlurBackground';
-import FlashOn from '@assets/icons/FlashOn.svg';
-import FlashOff from '@assets/icons/FlashOff.svg';
-import CameraFlip from '@assets/icons/CameraFlip.svg';
-import { GestureSafeAreaView } from '@components/GestureSafeAreaView';
-import { screen, Spacing } from '@components/spacingGuide';
 
 const ReanimatedCamera = Reanimated.createAnimatedComponent(Camera)
 Reanimated.addWhitelistedNativeProps({

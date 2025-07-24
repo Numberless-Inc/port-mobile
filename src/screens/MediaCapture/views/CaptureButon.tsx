@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 import { StyleSheet, ViewProps } from 'react-native';
 
-import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Reanimated, {
     Easing,
     SharedValue,
