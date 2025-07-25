@@ -1,5 +1,8 @@
+
+
 import {NativeModules} from 'react-native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {saveDocuments} from '@react-native-documents/picker';
 import {
   CloudStorage,
@@ -9,6 +12,8 @@ import {
 import RNFS from 'react-native-fs';
 
 import {isIOS} from '@components/ComponentUtils';
+
+import store from '@store/appStore';
 
 import {generateRandomHexId} from '@utils/IdGenerator';
 import {getProfileInfo} from '@utils/Profile';
@@ -404,4 +409,29 @@ export async function restoreBackupFromCache(
       ),
     );
   }
+}
+
+/**
+ * Sets the backup reminder interval in storage.
+ * 
+ * @param {BackupIntervalString} backupInterval - Backup interval to set
+ */
+export async function setBackupIntervalInStorage(backupInterval: BackupIntervalString) {
+    store.dispatch({ type: 'UPDATE_REMINDER_INTERVAL', newInterval: backupInterval })
+    await AsyncStorage.setItem('BackupReminderInterval', backupInterval);
+}
+
+/**
+ * Gets the backup reminder interval in storage.
+ * 
+ * @returns {BackupIntervalString} The backup reminder interval
+ */
+export async function getBackupIntervalInStorage(): Promise<BackupIntervalString> {
+  const value = await AsyncStorage.getItem('BackupReminderInterval');
+
+  if (value && backupIntervalStrings.includes(value as BackupIntervalString)) {
+    return value as BackupIntervalString;
+  }
+
+  return DEFAULT_BACKUP_INTERVAL;
 }
