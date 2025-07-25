@@ -13,6 +13,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 import ConfirmationBottomSheet from '@components/Bottomsheets/ConfirmationBottomsheet';
 import PrimaryButton from '@components/Buttons/PrimaryButton';
+import SecondaryButton from '@components/Buttons/SecondaryButton';
 import { useColors } from '@components/colorGuide';
 import {CommonGroups} from '@components/CommonGroups';
 import { screen} from '@components/ComponentUtils';
@@ -58,7 +59,6 @@ import {getChatTileTimestamp, wait} from '@utils/Time';
 import Alert from '@assets/icons/Alert.svg';
 
 import { ToastType, useToast } from 'src/context/ToastContext';
-import SecondaryButton from '@components/Buttons/SecondaryButton';
 
 
 type Props = NativeStackScreenProps<AppStackParamList, 'ChatProfile'>;

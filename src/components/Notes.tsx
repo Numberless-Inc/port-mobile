@@ -1,12 +1,15 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 
+import GradientCard from '@components/Cards/GradientCard';
 import {
   FontSizeType,
   FontWeight,
   NumberlessText,
 } from '@components/NumberlessText';
 import LargeTextInput from '@components/Reusable/Inputs/LargeTextInput';
+import { Spacing } from '@components/spacingGuide';
+import useSVG from '@components/svgGuide';
 
 import {updateContact} from '@utils/Storage/contacts';
 
@@ -14,9 +17,6 @@ import Greentick from '@assets/icons/notes/Greentick.svg';
 import Tick from '@assets/icons/notes/Tick.svg';
 
 import { useColors } from './colorGuide';
-import { Spacing } from '@components/spacingGuide';
-import useSVG from '@components/svgGuide';
-import GradientCard from '@components/Cards/GradientCard';
 
 const Notes = ({
   note,
