@@ -93,7 +93,6 @@ class ReceiveGroupMessage {
   //perform receive action
   async receive() {
     console.log('group message received', this.message);
-    console.log('Trying to assign receiver for: ', this.groupId, this.message);
     await this.extractDecryptedMessageContent();
     await this.assignReceiverClass();
     if (this.receiveClass) {

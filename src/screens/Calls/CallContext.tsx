@@ -182,7 +182,6 @@ export const CallContextProvider = ({children}: {children: any}) => {
   // This useEffect manages incoming calls from the message receiver
   useEffect(() => {
     if (!newCall || !newCall.chat) {
-      console.log('Not a new call, ', newCall, newCall?.chat);
       return;
     }
     console.warn('[NEW CALL] ', newCall);

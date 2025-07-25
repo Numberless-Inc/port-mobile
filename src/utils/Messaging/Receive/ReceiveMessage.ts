@@ -13,7 +13,6 @@ class ReceiveMessage {
   //construct the class
   constructor(messageRaw: any, receiveTime: string = new Date().toISOString()) {
     this.message = this.processRawMessage(messageRaw);
-    console.log('receiver invoked: ', this.message);
     let messageTime = receiveTime;
     try {
       if (this.message.timestamp) {

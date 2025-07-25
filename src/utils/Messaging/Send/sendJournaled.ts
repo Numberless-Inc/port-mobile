@@ -37,7 +37,6 @@ async function sendJournaled() {
     }
 
     const journaledMessages = await getJournaled();
-    console.log('journaled messages: ', journaledMessages);
     for (let index = 0; index < journaledMessages.length; index++) {
       try {
         const {contentType, data, replyId, messageId, chatId} =
