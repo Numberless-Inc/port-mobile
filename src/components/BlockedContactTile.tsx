@@ -45,10 +45,10 @@ const BlockedContactTile = ({
 
       <View style={styles.button}>
         <NumberlessText
-          textColor={Colors.text.title}
+          textColor={Colors.white}
           fontWeight={FontWeight.md}
           fontSizeType={FontSizeType.s}>
-          {isBlocked ? 'Unblock' : 'Block'}
+          {isBlocked ? 'UNBLOCK' : 'BLOCK'}
         </NumberlessText>
       </View>
     </Pressable>
@@ -73,9 +73,9 @@ const styling = (isLast: boolean, colors: any) =>
       gap: Spacing.s,
     },
     button:{
-      backgroundColor: colors.surface2,
+      backgroundColor: colors.mainElements,
       paddingVertical: Spacing.s,
-      paddingHorizontal: Spacing.xs,
+      paddingHorizontal: Spacing.s,
       borderRadius: Spacing.s
     }
   });

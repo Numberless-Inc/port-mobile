@@ -8,7 +8,7 @@ import ConfirmationBottomSheet from '@components/Bottomsheets/ConfirmationBottom
 import GradientCard from '@components/Cards/GradientCard';
 import { useColors } from '@components/colorGuide';
 import { screen} from '@components/ComponentUtils';
-import {CustomStatusBar} from '@components/CustomStatusBar';
+import { CustomStatusBar } from '@components/CustomStatusBar';
 import { GestureSafeAreaView } from '@components/GestureSafeAreaView';
 import {
   FontSizeType,
@@ -90,23 +90,23 @@ const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
   
   return (
     <>
-      <CustomStatusBar backgroundColor={Colors.surface} />
+      <CustomStatusBar theme={Colors.theme}  backgroundColor={Colors.background} />
       <GestureSafeAreaView style={styles.screen}>
         <GenericBackTopBar
           onBackPress={() => navigation.goBack()}
           theme={Colors.theme}
           backgroundColor={Colors.background}
         />
-          <View style={{width:'100%', marginLeft: Spacing.xl, gap:Spacing.m, marginBottom: Spacing.m }}>
+          <View style={{width:'100%', marginLeft: Spacing.xl, gap:Spacing.m, marginBottom: Spacing.xl }}>
             <NumberlessText
           style={{textAlign:'left', }}
               textColor={Colors.text.title}
               fontWeight={FontWeight.sb}
               fontSizeType={FontSizeType.es}>
-              Blocked contacts
+              Blocked contactsx
             </NumberlessText>
             <NumberlessText
-                style={{textAlign: 'left'}}
+                style={{textAlign: 'left', paddingRight: Spacing.l}}
                 fontSizeType={FontSizeType.m}
                 fontWeight={FontWeight.rg}
                 textColor={Colors.text.subtitle}>
@@ -114,11 +114,13 @@ const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
               </NumberlessText>
       
           </View>
+          <View style={{     paddingHorizontal: Spacing.m}}>
+
+   
           <SearchBar
       style={{
         backgroundColor: Colors.surface,
         height: Height.searchBar,
-        width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
         borderRadius: Spacing.xml,
@@ -127,6 +129,7 @@ const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
       searchText={searchText}
       setSearchText={setSearchtext}
     />
+           </View>
         <View style={styles.mainComponent}>
       
         {viewableMembers.length > 0 ? (
@@ -143,18 +146,18 @@ const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
     </GradientCard>
   </>
 ) : searchText.length > 0 ? (
-  <View style={{justifyContent: 'center', flex: 1, width: '100%'}}>
+  <View style={{justifyContent: 'flex-start', flex: 1, width: '100%'}}>
     <GradientCard
       style={{
         paddingHorizontal: Spacing.m,
-        paddingVertical: Spacing.m,
+        paddingVertical: Spacing.xl,
       }}>
       <NumberlessText
         style={{textAlign: 'left', marginBottom: Spacing.xs}}
         fontSizeType={FontSizeType.l}
-        fontWeight={FontWeight.sb}
+        fontWeight={FontWeight.rg}
         textColor={Colors.text.title}>
-        No blocked contacts
+        No blocked contacts found
       </NumberlessText>
     </GradientCard>
   </View>
@@ -170,7 +173,7 @@ const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
         fontSizeType={FontSizeType.l}
         fontWeight={FontWeight.sb}
         textColor={Colors.text.title}>
-        No blocked contacts
+        No blocked contactss
       </NumberlessText>
       <NumberlessText
         style={{textAlign: 'left'}}
@@ -195,7 +198,7 @@ const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
   }
   description={
     blockedContactsList.some(u => u.pairHash === selectedUser?.pairHash)
-      ? `If you unblock this contact, they will be able to send you messages and call you, based on their individual permissions.`
+      ? `If you unblock this contact, they will be able to connect with you over a new Port.`
       : `Blocking ${selectedUser?.name} will prevent them from connecting with you over Ports, Superports or contact sharing until you unblock them.`
   }
   buttonText={
