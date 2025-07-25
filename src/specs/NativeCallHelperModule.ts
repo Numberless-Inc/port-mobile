@@ -14,15 +14,16 @@ export interface Spec extends TurboModule {
   readonly endOngoingCall: (callUUID: string) => void;
   readonly didAnswerCall: (callUUID: string) => string;
   readonly displayIncomingCall: (callerName: string, callUUID: string, callRingTimeSeconds: number) => void;
-  readonly onAccept: EventEmitter<AcceptEventPayload>;
-  readonly onEnd: EventEmitter<EndEventPayload>;
-  readonly onMute: EventEmitter<MuteEventPayload>;
   readonly getAudioRoutes: () => Promise<string[]>;
   readonly setAudioRoute: (route: string) => void;
   readonly cancelRingtone: () => void;  // Remove this, tie directly into answer/decline
   readonly startKeepPhoneAwake: () => void;
   readonly endKeepPhoneAwake: () => void;
   readonly endOutgoingRinging: () => void;
+  // Event emitters for call events
+  readonly onAccept: EventEmitter<AcceptEventPayload>;
+  readonly onEnd: EventEmitter<EndEventPayload>;
+  readonly onMute: EventEmitter<MuteEventPayload>;
 }
 
 export default TurboModuleRegistry.getEnforcing<Spec>('NativeCallHelperModule');
