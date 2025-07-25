@@ -19,7 +19,6 @@ function useDynamicSVG(svgArray: SVGOptions[]): any {
   const {themeValue} = useTheme();
 
   return useMemo(() => {
-    console.log('Changing SVGs based on theme: ', themeValue);
     const resultsObj: any = {};
     svgArray.forEach(item => {
       resultsObj[item.assetName] =

@@ -64,7 +64,6 @@ function AppStack() {
 
   useEffect(() => {
     if (isInitialMount.current) {
-      console.log('Checking if terms and conditions need accepting from initial render');
       isInitialMount.current = false;
       (async () => {
         await checkForUpdates();
