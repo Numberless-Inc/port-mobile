@@ -10,10 +10,10 @@ import {
   FontWeight,
   NumberlessText,
 } from '@components/NumberlessText';
-import BackTopbar from '@components/Reusable/TopBars/BackTopBar';
 import {SafeAreaView} from '@components/SafeAreaView';
 import { Spacing } from '@components/spacingGuide';
 import useSVG from '@components/svgGuide';
+import GenericBackTopBar from '@components/TopBars/GenericBackTopBar';
 
 // TODO: Why is the legal screen labeled HelpScreen
 const HelpScreen = () => {
@@ -36,11 +36,18 @@ const HelpScreen = () => {
     <>
       <CustomStatusBar backgroundColor={Colors.surface} />
       <SafeAreaView style={styles.screen}>
-        <BackTopbar
+      <GenericBackTopBar
           onBackPress={() => navigation.goBack()}
-          title="Legal"
-          bgColor="w"
+          theme={Colors.theme}
+          backgroundColor={Colors.background}
         />
+        <NumberlessText 
+        style={{textAlign:'left', width:'100%', marginLeft: Spacing.xl}}
+          textColor={Colors.text.title}
+          fontWeight={FontWeight.sb}
+          fontSizeType={FontSizeType.xl}>
+          Legal
+        </NumberlessText>
         <View style={styles.mainComponent}>
             <Pressable
               style={styles.button}
