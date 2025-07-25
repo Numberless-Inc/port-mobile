@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { GestureResponderEvent } from 'react-native'
-import { StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 import { useIsFocused } from '@react-navigation/core'
 import type { NativeStackScreenProps } from '@react-navigation/native-stack'
@@ -20,6 +20,7 @@ import {
   useMicrophonePermission
 } from 'react-native-vision-camera'
 
+import { useColors } from '@components/colorGuide'
 import { GestureSafeAreaView } from '@components/GestureSafeAreaView';
 import { NumberlessText } from '@components/NumberlessText'
 import { Spacing, screen } from '@components/spacingGuide';
@@ -87,10 +88,10 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
     // togglePopUp();
   };
 
-  const [cameraPosition, setCameraPosition] = useState<'front' | 'back'>('back')
-  const [enableHdr, setEnableHdr] = useState(false)
-  const [flash, setFlash] = useState<'off' | 'on'>('off')
-  const [enableNightMode, setEnableNightMode] = useState(false)
+  const [cameraPosition, setCameraPosition] = useState<'front' | 'back'>('back');
+  const [enableHdr, setEnableHdr] = useState(false);
+  const [flash, setFlash] = useState<'off' | 'on'>('off');
+  const [enableNightMode, setEnableNightMode] = useState(false);
 
   // camera device settings
   const [preferredDevice] = usePreferredCameraDevice();
@@ -98,7 +99,7 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
 
   if (preferredDevice != null && preferredDevice.position === cameraPosition) {
     // override default device with the one selected by the user in settings
-    device = preferredDevice
+    device = preferredDevice;
   }
 
   const [targetFps, setTargetFps] = useState(60);
@@ -110,18 +111,21 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
     { videoResolution: 'max' },
     { photoAspectRatio: screenAspectRatio },
     { photoResolution: 'max' },
-  ])
+  ]);
 
-  const fps = Math.min(format?.maxFps ?? 1, targetFps)
+  const fps = Math.min(format?.maxFps ?? 1, targetFps);
 
-  const supportsFlash = device?.hasFlash ?? false
-  const supportsHdr = format?.supportsPhotoHdr
-  const supports60Fps = useMemo(() => device?.formats.some((f) => f.maxFps >= 60), [device?.formats])
-  const canToggleNightMode = device?.supportsLowLightBoost ?? false
+  const supportsFlash = device?.hasFlash ?? false;
+  const supportsHdr = format?.supportsPhotoHdr;
+  const supports60Fps = useMemo(() => device?.formats.some((f) => f.maxFps >= 60), [device?.formats]);
+  const canToggleNightMode = device?.supportsLowLightBoost ?? false;
+  const [mode, setMode] = useState<'photo' | 'video'>('photo');
 
   //#region Animated Zoom
   const minZoom = device?.minZoom ?? 1
   const maxZoom = Math.min(device?.maxZoom ?? 1, MAX_ZOOM_FACTOR)
+
+  const Colors = useColors();
 
   const cameraAnimatedProps = useAnimatedProps<CameraProps>(() => {
     const z = Math.max(Math.min(zoom.value, maxZoom), minZoom)
@@ -270,43 +274,43 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
           style={{ flex: 1 }}
         >
           <GestureDetector gesture={pinchGesture}>
-              <GestureDetector gesture={Gesture.Exclusive(doubleTapGesture, tapGesture)}>
-                <Reanimated.View onTouchEnd={onFocusTap}
+            <GestureDetector gesture={Gesture.Exclusive(doubleTapGesture, tapGesture)}>
+              <Reanimated.View onTouchEnd={onFocusTap}
+                style={StyleSheet.absoluteFill}
+              >
+                <ReanimatedCamera
                   style={StyleSheet.absoluteFill}
-                >
-                  <ReanimatedCamera
-                    style={StyleSheet.absoluteFill}
-                    device={device}
-                    isActive={isActive}
-                    ref={camera}
-                    onInitialized={onInitialized}
-                    onError={onError}
-                    onStarted={() => console.log('Camera started!')}
-                    onStopped={() => console.log('Camera stopped!')}
-                    onPreviewStarted={() => console.log('Preview started!')}
-                    onPreviewStopped={() => console.log('Preview stopped!')}
-                    onOutputOrientationChanged={(o) => console.log(`Output orientation changed to ${o}!`)}
-                    onPreviewOrientationChanged={(o) => console.log(`Preview orientation changed to ${o}!`)}
-                    onUIRotationChanged={(degrees) => console.log(`UI Rotation changed: ${degrees}°`)}
-                    format={format}
-                    fps={fps}
-                    photoHdr={photoHdr}
-                    videoHdr={videoHdr}
-                    photoQualityBalance="quality"
-                    lowLightBoost={device.supportsLowLightBoost && enableNightMode}
-                    enableZoomGesture={false}
-                    animatedProps={cameraAnimatedProps}
-                    exposure={0}
-                    // enableFpsGraph={true}
-                    outputOrientation="device"
-                    photo={true}
-                    video={true}
-                    audio={microphone.hasPermission}
-                    enableLocation={location.hasPermission}
-                  />
-                </Reanimated.View>
-              </GestureDetector>
+                  device={device}
+                  isActive={isActive}
+                  ref={camera}
+                  onInitialized={onInitialized}
+                  onError={onError}
+                  onStarted={() => console.log('Camera started!')}
+                  onStopped={() => console.log('Camera stopped!')}
+                  onPreviewStarted={() => console.log('Preview started!')}
+                  onPreviewStopped={() => console.log('Preview stopped!')}
+                  onOutputOrientationChanged={(o) => console.log(`Output orientation changed to ${o}!`)}
+                  onPreviewOrientationChanged={(o) => console.log(`Preview orientation changed to ${o}!`)}
+                  onUIRotationChanged={(degrees) => console.log(`UI Rotation changed: ${degrees}°`)}
+                  format={format}
+                  fps={fps}
+                  photoHdr={photoHdr}
+                  videoHdr={videoHdr}
+                  photoQualityBalance="quality"
+                  lowLightBoost={device.supportsLowLightBoost && enableNightMode}
+                  enableZoomGesture={false}
+                  animatedProps={cameraAnimatedProps}
+                  exposure={0}
+                  // enableFpsGraph={true}
+                  outputOrientation="device"
+                  photo={true}
+                  video={true}
+                  audio={microphone.hasPermission}
+                  enableLocation={location.hasPermission}
+                />
+              </Reanimated.View>
             </GestureDetector>
+          </GestureDetector>
         </GestureSafeAreaView>
       ) : (
         <View style={styles.emptyContainer}>
@@ -318,15 +322,15 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
 
       <View style={styles.rightButtonRow}>
         <PressableOpacity style={styles.button} onPress={onFlipCameraPressed} disabledOpacity={0.4}>
-          <CameraFlip/>
+          <CameraFlip />
         </PressableOpacity>
         {supportsFlash && (
           <PressableOpacity style={styles.button} onPress={onFlashPressed} disabledOpacity={0.4}>
             {flash === 'on' ? (
-              <FlashOn/>
-            ): (
-              <FlashOff/>
-            )} 
+              <FlashOn />
+            ) : (
+              <FlashOff />
+            )}
           </PressableOpacity>
         )}
         {supports60Fps && (
@@ -351,11 +355,29 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
           <IonIcon name="qr-code-outline" color="white" size={24} />
         </PressableOpacity> */}
       </View>
-      <View>
-        <NumberlessText>
-          Photo
-        </NumberlessText>
+      <View style={styles.bottomContainer}>
+        <View style={styles.pillContainer}>
+          <Pressable onPress={() => setMode('photo')}>
+            <View style={[styles.pill, mode === 'photo' && styles.activePill]}>
+              <NumberlessText textColor={mode === 'photo' ? Colors.text.primary : Colors.text.subtitle}>
+                Photo
+              </NumberlessText>
+            </View>
+          </Pressable>
+
+          <Pressable onPress={() => setMode('video')}>
+            <View style={[styles.pill, mode === 'video' && styles.activePill]}>
+              <NumberlessText textColor={mode === 'video' ? Colors.text.primary : Colors.text.subtitle}>
+                Video
+              </NumberlessText>
+            </View>
+          </Pressable>
+        </View>
+
+      </View>
+      <View style={styles.captureButtonWrapper}>
         <CaptureButton
+          mode={mode}
           style={styles.captureButton}
           camera={camera}
           onMediaCaptured={onMediaCaptured}
@@ -367,6 +389,7 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
           setIsPressingButton={setIsPressingButton}
         />
       </View>
+
     </View>
   )
 }
@@ -376,12 +399,43 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'black',
   },
+  bottomContainer: {
+    position: 'absolute',
+    bottom: Spacing.xxxxl, // Adjust spacing from bottom
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  pillContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 16,
+    bottom: Spacing.xml,
+  },
+  activePill: {
+    backgroundColor: 'white',
+  },
+  pill: {
+    backgroundColor: 'rgba(0, 0, 0, 0.4)', // optional pill background
+    paddingHorizontal: Spacing.m,
+    paddingVertical: Spacing.s,
+    borderRadius: 20,
+    alignItems: 'center',
+  },
+  captureButtonWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   captureButton: {
     position: 'absolute',
-    // // height: ,
-    // flex: 1,
+    // height: 100,
+    flex: 1,
+    width: "100%",
+    justifyContent: "center",
     bottom: Spacing.xl,
     alignSelf: 'center',
+    // alignItems: 'center',
+    // backgroundColor: 'red'
   },
   button: {
     top: Spacing.xxl,
