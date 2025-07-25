@@ -75,12 +75,12 @@ const SharedMediaCard = ({
         />
         {item.type === ContentType.video && (
           <Play
+          width={35}
+          height={35}
             style={{
-              height: 40,
-              width: 40,
               position: 'absolute',
-              top: 4,
-              left: 4,
+              top: 12,
+              left:12,
             }}
           />
         )}

@@ -328,6 +328,7 @@ const ChatProfile = ({route, navigation}: Props) => {
                   </NumberlessText>
                   <View style={{gap:Spacing.s,}}>
                     <PrimaryButton
+                    color={Colors.red}
                       isLoading={false}
                       disabled={false}
                       theme={Colors.theme}
