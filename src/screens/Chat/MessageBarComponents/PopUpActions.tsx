@@ -50,6 +50,11 @@ const PopUpActions = ({
 
   const svgArray = [
     {
+      assetName: 'CameraIcon',
+      light: require('@assets/light/icons/media/Camera.svg').default,
+      dark: require('@assets/dark/icons/media/Camera.svg').default,
+    },
+    {
       assetName: 'VideoIcon',
       light: require('@assets/light/icons/media/Video.svg').default,
       dark: require('@assets/dark/icons/media/Video.svg').default,
@@ -78,6 +83,7 @@ const PopUpActions = ({
 
   const results = useDynamicSVG(svgArray);
 
+  const CameraIcon = results.CameraIcon;
   const VideoIcon = results.VideoIcon;
   const FileIcon = results.FileIcon;
   const ImageIcon = results.ImageIcon;
@@ -192,7 +198,7 @@ const PopUpActions = ({
       <View style={styles.popUpContainer}>
         <View style={styles.optionContainer}>
           <Pressable style={styles.optionBox} onPress={onCameraPressed}>
-          <VideoIcon />
+          <CameraIcon />
           </Pressable>
           <NumberlessText
             fontSizeType={FontSizeType.s}
