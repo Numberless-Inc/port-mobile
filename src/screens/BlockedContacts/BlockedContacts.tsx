@@ -177,7 +177,7 @@ const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
         fontSizeType={FontSizeType.m}
         fontWeight={FontWeight.rg}
         textColor={Colors.text.subtitle}>
-        This is a list of all your blocked contacts on Port. People who are blocked cannot text or call you and aren’t notified that you blocked them.
+        This is a list of your blocked contacts. These contacts cannot form a chat with your over any Port until you unblock them.
       </NumberlessText>
     </GradientCard>
   </View>
