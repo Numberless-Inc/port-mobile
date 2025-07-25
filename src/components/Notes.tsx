@@ -13,10 +13,10 @@ import {updateContact} from '@utils/Storage/contacts';
 import Greentick from '@assets/icons/notes/Greentick.svg';
 import Tick from '@assets/icons/notes/Tick.svg';
 
-import GradientCard from './Cards/GradientCard';
 import { useColors } from './colorGuide';
-import { Spacing } from './spacingGuide';
-import useSVG from './svgGuide';
+import { Spacing } from '@components/spacingGuide';
+import useSVG from '@components/svgGuide';
+import GradientCard from '@components/Cards/GradientCard';
 
 const Notes = ({
   note,

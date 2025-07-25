@@ -28,7 +28,6 @@ import {AvatarBox} from '@components/Reusable/AvatarBox/AvatarBox';
 import ProfilePictureBlurViewModal from '@components/Reusable/BlurView/ProfilePictureBlurView';
 import AddFolderBottomsheet from '@components/Reusable/BottomSheets/AddFolderBottomsheet';
 import EditName from '@components/Reusable/BottomSheets/EditName';
-import SecondaryButton from '@components/Reusable/LongButtons/SecondaryButton';
 import UserInfoTopbar from '@components/Reusable/TopBars/UserInfoTopbar';
 import SharedMediaCard from '@components/SharedMediaCard';
 import { Spacing } from '@components/spacingGuide';
@@ -59,6 +58,7 @@ import {getChatTileTimestamp, wait} from '@utils/Time';
 import Alert from '@assets/icons/Alert.svg';
 
 import { ToastType, useToast } from 'src/context/ToastContext';
+import SecondaryButton from '@components/Buttons/SecondaryButton';
 
 
 type Props = NativeStackScreenProps<AppStackParamList, 'ChatProfile'>;
@@ -337,8 +337,10 @@ const ChatProfile = ({route, navigation}: Props) => {
                       }}
                     />
                     <SecondaryButton
-                      secondaryButtonColor="r"
-                      buttonText={'Delete chat history'}
+                    isLoading={false}
+                    disabled={false}
+                      theme={Colors.theme}
+                      text={'Delete chat history'}
                       onClick={() => setConfirmSheetHistoryDelete(true)}
                     />
                   </View>
