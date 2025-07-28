@@ -22,6 +22,7 @@ const ConfirmationBottomSheet = ({
   title,
   description,
   buttonText,
+  buttonColor,
 }: {
   visible: boolean;
   onClose: () => void;
@@ -29,6 +30,7 @@ const ConfirmationBottomSheet = ({
   title?: string;
   description?: string;
   buttonText: string;
+  buttonColor?: string;
 }) => {
     
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -67,6 +69,7 @@ const ConfirmationBottomSheet = ({
           </View>
         )}
         <PrimaryButton
+          color={buttonColor}
           text={buttonText}
           theme={Colors.theme}
           isLoading={isLoading}

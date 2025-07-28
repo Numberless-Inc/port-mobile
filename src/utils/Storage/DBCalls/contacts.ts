@@ -54,7 +54,6 @@ export async function getContact(
     [pairHash],
     (tx, results) => {
       if (results.rows.length > 0) {
-        console.log('results of contact', results.rows.item(0));
         contact = results.rows.item(0);
       }
     },
