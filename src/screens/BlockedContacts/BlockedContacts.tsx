@@ -103,7 +103,7 @@ const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
               textColor={Colors.text.title}
               fontWeight={FontWeight.sb}
               fontSizeType={FontSizeType.es}>
-              Blocked contactsx
+              Blocked contacts
             </NumberlessText>
             <NumberlessText
                 style={{textAlign: 'left', paddingRight: Spacing.l}}
@@ -114,7 +114,7 @@ const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
               </NumberlessText>
       
           </View>
-          <View style={{     paddingHorizontal: Spacing.m}}>
+          <View style={{paddingHorizontal: Spacing.m}}>
 
    
           <SearchBar
@@ -153,37 +153,30 @@ const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
         paddingVertical: Spacing.xl,
       }}>
       <NumberlessText
-        style={{textAlign: 'left', marginBottom: Spacing.xs}}
+        style={{textAlign: 'center', marginBottom: Spacing.xs}}
         fontSizeType={FontSizeType.l}
-        fontWeight={FontWeight.rg}
+        fontWeight={FontWeight.md}
         textColor={Colors.text.title}>
         No blocked contacts found
       </NumberlessText>
     </GradientCard>
   </View>
 ) : (
-  <View style={{justifyContent: 'center', flex: 1}}>
-    <GradientCard
-      style={{
-        paddingHorizontal: Spacing.m,
-        paddingVertical: Spacing.m,
-      }}>
-      <NumberlessText
-        style={{textAlign: 'left', marginBottom: Spacing.xs}}
-        fontSizeType={FontSizeType.l}
-        fontWeight={FontWeight.sb}
-        textColor={Colors.text.title}>
-        No blocked contactss
-      </NumberlessText>
-      <NumberlessText
-        style={{textAlign: 'left'}}
-        fontSizeType={FontSizeType.m}
-        fontWeight={FontWeight.rg}
-        textColor={Colors.text.subtitle}>
-        This is a list of your blocked contacts. These contacts cannot form a chat with your over any Port until you unblock them.
-      </NumberlessText>
-    </GradientCard>
-  </View>
+  <View style={{justifyContent: 'flex-start', flex: 1, width: '100%'}}>
+  <GradientCard
+    style={{
+      paddingHorizontal: Spacing.m,
+      paddingVertical: Spacing.xl,
+    }}>
+    <NumberlessText
+      style={{textAlign: 'center', marginBottom: Spacing.xs}}
+      fontSizeType={FontSizeType.l}
+      fontWeight={FontWeight.md}
+      textColor={Colors.text.title}>
+      You have not blocked any contacts yet
+    </NumberlessText>
+  </GradientCard>
+</View>
 )}
 
         </View>
