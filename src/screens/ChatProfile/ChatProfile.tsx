@@ -381,8 +381,10 @@ const ChatProfile = ({route, navigation}: Props) => {
                     }}
                   />
                   <SecondaryButton
-                    secondaryButtonColor="r"
-                    buttonText={isBlocked ? 'Unblock contact' : 'Block contact'}
+                  disabled={false}
+                  isLoading={false}
+                    theme={Colors.theme}
+                    text={isBlocked ? 'Unblock contact' : 'Block contact'}
                     onClick={() => setConfirmBlockUserSheet(true)}
                   />
                 </View>
