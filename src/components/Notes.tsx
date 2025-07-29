@@ -1,21 +1,22 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 
-import {PortSpacing} from '@components/ComponentUtils';
-import DynamicColors from '@components/DynamicColors';
+import GradientCard from '@components/Cards/GradientCard';
 import {
   FontSizeType,
-  FontType,
+  FontWeight,
   NumberlessText,
 } from '@components/NumberlessText';
-import SimpleCard from '@components/Reusable/Cards/SimpleCard';
 import LargeTextInput from '@components/Reusable/Inputs/LargeTextInput';
+import { Spacing } from '@components/spacingGuide';
+import useSVG from '@components/svgGuide';
 
 import {updateContact} from '@utils/Storage/contacts';
-import useDynamicSVG from '@utils/Themes/createDynamicSVG';
 
 import Greentick from '@assets/icons/notes/Greentick.svg';
 import Tick from '@assets/icons/notes/Tick.svg';
+
+import { useColors } from './colorGuide';
 
 const Notes = ({
   note,
@@ -24,9 +25,9 @@ const Notes = ({
 }: {
   note: string;
   pairHash: string;
-  getNote: () => void;
+  getNote: () => Promise<void>;
 }) => {
-  const Colors = DynamicColors();
+  const Colors = useColors();
   const [changesSaved, setChangesSaved] = useState(false);
   const [newNote, setNewNote] = useState(note);
   const timeoutId = useRef(null);
@@ -43,7 +44,7 @@ const Notes = ({
       dark: require('@assets/dark/icons/RedCross.svg').default,
     },
   ];
-  const results = useDynamicSVG(svgArray);
+  const results = useSVG(svgArray);
   const Cross = results.Cross;
 
   useMemo(() => {
@@ -61,13 +62,14 @@ const Notes = ({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeoutId.current]);
+  
 
   return (
-    <SimpleCard style={styles.main}>
+    <GradientCard style={styles.main}>
       <View style={styles.container}>
         <NumberlessText
-          textColor={Colors.text.primary}
-          fontType={FontType.md}
+          textColor={Colors.text.title}
+          fontWeight={FontWeight.md}
           fontSizeType={FontSizeType.l}>
           Notes
         </NumberlessText>
@@ -79,7 +81,7 @@ const Notes = ({
                 <Greentick />
                 <NumberlessText
                   textColor={Colors.text.subtitle}
-                  fontType={FontType.rg}
+                  fontWeight={FontWeight.rg}
                   fontSizeType={FontSizeType.s}>
                   Changes Saved
                 </NumberlessText>
@@ -87,21 +89,25 @@ const Notes = ({
             ) : (
               <>
                 <Tick
-                  onPress={async () => {
-                    await updateContact(pairHash, {notes: newNote});
-                    setChangesSaved(true);
-                    if (timeoutId.current) {
-                      clearTimeout(timeoutId.current);
-                    }
-
-                    timeoutId.current = setTimeout(async () => {
-                      await getNote();
-                      setChangesSaved(false);
-                    }, 2000);
-                  }}
+               onPress={async () => {
+                await updateContact(pairHash, {notes: newNote});
+                setChangesSaved(true);
+              
+                if (timeoutId.current) {
+                  clearTimeout(timeoutId.current);
+                }
+              
+                timeoutId.current = setTimeout(async () => {
+                  await getNote();
+                  setChangesSaved(false);
+                  timeoutId.current = null;
+                }, 2000);
+              }}
+              
                 />
                 <Cross
-                  onPress={() => {
+                  onPress={async () => {
+                    await getNote();
                     setNewNote(note);
                     setChangesSaved(false);
                   }}
@@ -112,31 +118,32 @@ const Notes = ({
         )}
       </View>
       <LargeTextInput
-        maxLength={2000}
+        showLimit
+        maxLength={300}
         setText={onChangeText}
         text={newNote}
         bgColor="w"
         placeholderText="Add a note"
       />
-    </SimpleCard>
+    </GradientCard>
   );
 };
 
 const styles = StyleSheet.create({
   main: {
-    paddingVertical: PortSpacing.secondary.uniform,
-    paddingHorizontal: PortSpacing.secondary.uniform,
+    paddingVertical: Spacing.l,
+    paddingHorizontal:  Spacing.l,
   },
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: PortSpacing.secondary.uniform,
+    marginBottom:  Spacing.l,
     alignItems: 'center',
     height: 30,
   },
   row: {
     flexDirection: 'row',
-    gap: PortSpacing.tertiary.uniform,
+    gap: Spacing.s
   },
 });
 export default Notes;
