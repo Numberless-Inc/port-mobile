@@ -14,63 +14,77 @@ import {
 } from '@components/NumberlessText';
 import { Spacing, Width } from '@components/spacingGuide';
 
+import { formatTimeAgo } from '@utils/Time';
+
 import Backup from '@assets/icons/GreenBackup.svg';
 import GreenCross from '@assets/icons/GreenCross.svg';
 
-//reminder every 3 days
-const REMINDER_THRESHOLD = 1000 * 60 * 60 * 24 * 3; //3 days
-
-function shouldShowReminder(latestBackupTime: string | null | undefined) {
-    console.log('latestBackupTime', latestBackupTime);
-    if (latestBackupTime === '') {
-        return true;
-    } else if (latestBackupTime) {
-        try {
-            const timeOfBackup = new Date(latestBackupTime);
-            const now: Date = new Date();
-            const timeDiff = now.getTime() - timeOfBackup.getTime();
-            console.log('timeDiff', timeDiff);
-            return timeDiff > REMINDER_THRESHOLD;
-        } catch (error) {
-            return false;
-        }
-    } else {
+// Get reminder interval from storage
+function shouldShowReminder(
+    latestBackupTime: string | null | undefined,
+    interval: number,
+) {
+    if (!interval || !latestBackupTime) return false; // Reminders off, or backup time is null
+    if (latestBackupTime === '') return true; // Never backed up
+    try {
+        return new Date(latestBackupTime).getTime() - Date.now() > interval;
+    } catch (error) {
         return false;
     }
 }
 
-function BackupReminder({ lastBackupTime, hideReminder, onBackupPress, onClosePress }: { lastBackupTime: string | undefined, hideReminder: boolean, onBackupPress: () => void, onClosePress: () => void }): ReactNode {
-
+function BackupReminder({
+    lastBackupTime,
+    hideReminder,
+    onBackupPress,
+    onClosePress
+}: {
+    lastBackupTime: string | undefined,
+    hideReminder: boolean,
+    onBackupPress: () => void,
+    onClosePress: () => void
+}): ReactNode {
+    const interval = useSelector(state => state.backups.backupReminderInterval);
     const profile = useSelector(state => state.profile.profile);
 
     const { showReminder, reminderText } = useMemo(() => {
         if (hideReminder) {
-            return { showReminder: false, reminderText: '' };
+            return {
+                showReminder: false,
+                reminderText: ''
+            };
         } else {
             const latestBackupTime = profile?.lastBackupTime || lastBackupTime;
-            return { showReminder: shouldShowReminder(latestBackupTime), reminderText: latestBackupTime ? `It's been a while since you last backed up your data. Backup now to avoid losing your data.` : 'You haven\'t backed up your data yet. Backup now to avoid losing your data.' };
+            return {
+                showReminder: shouldShowReminder(latestBackupTime, interval),
+                reminderText: latestBackupTime
+                    ? `Your last backup was ${formatTimeAgo(latestBackupTime)}. Backup now to avoid losing your data.`
+                    : 'You haven\'t backed up your chats yet. Backup now to avoid losing your data.'
+                };
         }
-    }, [hideReminder, lastBackupTime, profile]);
+    }, [hideReminder, lastBackupTime, profile, interval]);
 
     return (
-        showReminder ? (
-                <View style={styles.mainContainer}>
-                    <TouchableOpacity onPress={onBackupPress} style={styles.backupContainer}>
-                        <View style={styles.svg1Container}>
-                            <Backup width={24} height={24} />
-                        </View>
-                        <NumberlessText
-                            style={styles.textContainer}
-                            textColor={Colors.common.boldAccentColors.darkGreen}
-                            fontSizeType={FontSizeType.m}
-                            fontWeight={FontWeight.rg}>
-                            {reminderText}
-                        </NumberlessText>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={onClosePress} style={styles.svg2Container}>
-                        <GreenCross width={20} height={20} />
-                    </TouchableOpacity>
-                </View>) : null
+        showReminder
+        ? (
+            <View style={styles.mainContainer}>
+                <TouchableOpacity onPress={onBackupPress} style={styles.backupContainer}>
+                    <View style={styles.svg1Container}>
+                        <Backup width={24} height={24} />
+                    </View>
+                    <NumberlessText
+                        style={styles.textContainer}
+                        textColor={Colors.common.boldAccentColors.darkGreen}
+                        fontSizeType={FontSizeType.m}
+                        fontWeight={FontWeight.rg}>
+                        {reminderText}
+                    </NumberlessText>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={onClosePress} style={styles.svg2Container}>
+                    <GreenCross width={20} height={20} />
+                </TouchableOpacity>
+            </View>
+        ) : null
     );
 }
 
