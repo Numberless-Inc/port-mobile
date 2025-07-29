@@ -7,6 +7,7 @@ import Reanimated, {
     SharedValue,
     cancelAnimation,
     runOnJS,
+    useAnimatedProps,
     useAnimatedReaction,
     useAnimatedStyle,
     useDerivedValue,
@@ -20,6 +21,9 @@ import { GestureSafeAreaView } from '@components/GestureSafeAreaView';
 
 import Capture from '@assets/icons/CaptureButton.svg';
 import StopRecording from '@assets/icons/StopRecording.svg';
+import Animated from 'react-native-reanimated';
+import { NumberlessText } from '@components/NumberlessText';
+import { Text } from 'react-native-svg';
 
 
 // Capture Button
@@ -39,6 +43,7 @@ interface Props extends ViewProps {
     enabled: boolean;
     setIsPressingButton: (isPressingButton: boolean) => void;
     mode: 'photo' | 'video';
+    setTimerString: (val: string) => void;
 }
 
 export const CaptureButton: React.FC<Props> = ({
@@ -51,6 +56,7 @@ export const CaptureButton: React.FC<Props> = ({
     enabled,
     setIsPressingButton,
     mode,
+    setTimerString,
     style,
     ...props
 }) => {
@@ -61,6 +67,7 @@ export const CaptureButton: React.FC<Props> = ({
     const isPressingButton = useSharedValue(false);
 
     const showStopIcon = useSharedValue(false);
+    const elapsedRecordingTime = useSharedValue(0);
 
     // Sync it with isRecording and mode
     useDerivedValue(() => {
@@ -68,6 +75,9 @@ export const CaptureButton: React.FC<Props> = ({
     });
 
     const [showStopIconJS, setShowStopIconJS] = React.useState(false);
+    const MAX_RECORDING_TIME = 60000; // 1 minute in milliseconds
+    // const recordingStartTime = useSharedValue(0);
+    
 
     useAnimatedReaction(
         () => showStopIcon.value,
@@ -89,36 +99,64 @@ export const CaptureButton: React.FC<Props> = ({
             console.error('Failed to take photo', e);
         }
     }, [camera, flash, onMediaCaptured]);
-
+      
     const stopRecording = useCallback(async () => {
         try {
             if (!camera.current) return;
-            await camera.current.stopRecording();
+            await camera.current.stopRecording(); // triggers onRecordingFinished
         } catch (e) {
             console.error('Failed to stop recording', e);
         } finally {
             isRecording.value = false;
-            // cancel animation on UI thread
+            pressDownTime.value = 0;
+            elapsedRecordingTime.value = 0;
             cancelAnimation(recordingProgress);
         }
     }, [camera]);
+    
 
-    const startRecording = useCallback(() => {
-        console.log("in startRecording");
-        if (!camera.current) return;
-        isRecording.value = true;
-        camera.current.startRecording({
-            flash,
-            onRecordingFinished: (video) => {
-                runOnJS(onMediaCaptured)(video, 'video');
-                isRecording.value = false;
-            },
-            onRecordingError: (error) => {
-                console.error('Recording failed', error);
-                isRecording.value = false;
-            },
-        });
-    }, [camera, flash, onMediaCaptured]);
+const startRecording = useCallback(() => {
+    console.log("in startRecording");
+    if (!camera.current) return;
+
+    pressDownTime.value = Date.now();
+    isRecording.value = true;
+    // start loop for elapsed time and auto-stop
+    const updateLoop = () => {
+        'worklet';
+        if (!isRecording.value) return;
+
+        elapsedRecordingTime.value = Date.now() - pressDownTime.value;
+        const ms = Math.min(elapsedRecordingTime.value, MAX_RECORDING_TIME);
+        const sec = Math.floor(ms / 1000) % 60;
+        const min = Math.floor(ms / 60000);
+        const formatted = `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+        runOnJS(console.log)(formatted);
+
+        runOnJS(setTimerString)(formatted);
+        if (elapsedRecordingTime.value >= MAX_RECORDING_TIME) {
+            runOnJS(stopRecording)(); // Call JS stopRecording
+            runOnJS(console.log)("stopping recording");
+            return;
+        }
+        requestAnimationFrame(updateLoop);
+    };
+
+
+    camera.current.startRecording({
+        flash,
+        onRecordingFinished: (video) => {
+            runOnJS(onMediaCaptured)(video, 'video');
+            isRecording.value = false;
+        },
+        onRecordingError: (error) => {
+            console.error('Recording failed', error);
+            isRecording.value = false;
+        },
+    });
+}, [camera, flash, onMediaCaptured, stopRecording]);
+
+
 
     const tapGesture = Gesture.Tap()
         .maxDuration(999999)
@@ -227,7 +265,6 @@ export const CaptureButton: React.FC<Props> = ({
                                         <Capture width={CAPTURE_BUTTON_SIZE} height={CAPTURE_BUTTON_SIZE} />
                                     )}
                                 </Pressable>
-
                             </Reanimated.View>
                         </Reanimated.View>
                     </GestureDetector>
