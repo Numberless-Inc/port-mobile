@@ -396,6 +396,7 @@ const GalleryConfirmation = ({navigation, route}: Props) => {
               }
               navigation.goBack();
             }}
+            hitSlop={40}
           />
 
           <Carousel
