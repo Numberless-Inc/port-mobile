@@ -401,7 +401,7 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     position: 'absolute',
-    bottom: Spacing.xxxxl, // Adjust spacing from bottom
+    bottom: Spacing.xxxxl,
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
@@ -416,7 +416,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   pill: {
-    backgroundColor: 'rgba(0, 0, 0, 0.4)', // optional pill background
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
     paddingHorizontal: Spacing.m,
     paddingVertical: Spacing.s,
     borderRadius: 20,
