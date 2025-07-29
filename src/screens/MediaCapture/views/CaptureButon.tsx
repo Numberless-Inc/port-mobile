@@ -7,7 +7,6 @@ import Reanimated, {
     SharedValue,
     cancelAnimation,
     runOnJS,
-    useAnimatedProps,
     useAnimatedReaction,
     useAnimatedStyle,
     useDerivedValue,
@@ -21,9 +20,7 @@ import { GestureSafeAreaView } from '@components/GestureSafeAreaView';
 
 import Capture from '@assets/icons/CaptureButton.svg';
 import StopRecording from '@assets/icons/StopRecording.svg';
-import Animated from 'react-native-reanimated';
-import { NumberlessText } from '@components/NumberlessText';
-import { Text } from 'react-native-svg';
+
 
 
 // Capture Button
@@ -121,27 +118,6 @@ const startRecording = useCallback(() => {
 
     pressDownTime.value = Date.now();
     isRecording.value = true;
-    // start loop for elapsed time and auto-stop
-    const updateLoop = () => {
-        'worklet';
-        if (!isRecording.value) return;
-
-        elapsedRecordingTime.value = Date.now() - pressDownTime.value;
-        const ms = Math.min(elapsedRecordingTime.value, MAX_RECORDING_TIME);
-        const sec = Math.floor(ms / 1000) % 60;
-        const min = Math.floor(ms / 60000);
-        const formatted = `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
-        runOnJS(console.log)(formatted);
-
-        runOnJS(setTimerString)(formatted);
-        if (elapsedRecordingTime.value >= MAX_RECORDING_TIME) {
-            runOnJS(stopRecording)(); // Call JS stopRecording
-            runOnJS(console.log)("stopping recording");
-            return;
-        }
-        requestAnimationFrame(updateLoop);
-    };
-
 
     camera.current.startRecording({
         flash,
@@ -154,6 +130,7 @@ const startRecording = useCallback(() => {
             isRecording.value = false;
         },
     });
+    // updateLoop();
 }, [camera, flash, onMediaCaptured, stopRecording]);
 
 
