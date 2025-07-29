@@ -11,7 +11,6 @@ import {TermsAndConditionParams, getTermsAndConditions, sendUpdatedAcceptance} f
  * Checks for updates to the terms and conditions
  */
 export async function checkForUpdates() {
-  console.log('Checking for terms and conditions updates');
   const profile: ProfileInfo | undefined = await getProfileInfo();
   // If a profile is not found, we can't check for updates
   if (!profile) {

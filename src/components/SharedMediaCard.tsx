@@ -3,7 +3,6 @@ import {FlatList, Pressable, StyleSheet, View} from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
 
-import DynamicColors from '@components/DynamicColors';
 import {
   FontSizeType,
   FontWeight,
@@ -21,6 +20,7 @@ import {getSafeAbsoluteURI} from '@utils/Storage/StorageRNFS/sharedFileHandlers'
 import Play from '@assets/icons/videoPlay.svg';
 
 import GradientCard from './Cards/GradientCard';
+import { useColors } from './colorGuide';
 import { Spacing } from './spacingGuide';
 import useSVG from './svgGuide';
 
@@ -32,7 +32,7 @@ const SharedMediaCard = ({
   media: MediaEntry[];
 }) => {
   const navigation = useNavigation();
-  const Colors = DynamicColors();
+  const Colors = useColors();
   const svgArray = [
     // 1.NotificationOutline
     {
@@ -75,12 +75,12 @@ const SharedMediaCard = ({
         />
         {item.type === ContentType.video && (
           <Play
+          width={35}
+          height={35}
             style={{
-              height: 40,
-              width: 40,
               position: 'absolute',
               top: 12,
-              left: 12,
+              left:12,
             }}
           />
         )}
@@ -96,7 +96,7 @@ const SharedMediaCard = ({
       }}>
       <View style={styles.headerWrapper}>
         <NumberlessText
-          textColor={Colors.labels.text}
+          textColor={Colors.text.title}
           fontWeight={FontWeight.sb}
           fontSizeType={FontSizeType.l}>
           Shared media
@@ -112,7 +112,7 @@ const SharedMediaCard = ({
           }}>
           <NumberlessText
             style={{
-              color: Colors.labels.text,
+              color: Colors.text.title,
               paddingRight: 4,
             }}
             fontWeight={FontWeight.rg}
@@ -136,7 +136,7 @@ const SharedMediaCard = ({
             <NumberlessText
               fontSizeType={FontSizeType.s}
               fontWeight={FontWeight.rg}
-              textColor={Colors.labels.text}
+              textColor={Colors.text.title}
               style={styles.noSharedMediaText}>
               No shared media
             </NumberlessText>

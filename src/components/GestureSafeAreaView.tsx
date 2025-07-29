@@ -25,7 +25,6 @@ export function GestureSafeAreaView({
   style,
   ...rest
 }: GestureSafeAreaViewProps) {
-  console.log('[Rendering GestureSafeAreaView]');
   const insets = useSafeAreaInsets();
 
   useEffect(() => {
