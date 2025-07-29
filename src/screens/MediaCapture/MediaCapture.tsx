@@ -7,7 +7,7 @@ import { useIsFocused } from '@react-navigation/core'
 import type { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import { PressableOpacity } from 'react-native-pressable-opacity'
-import Reanimated, { Extrapolation, interpolate, runOnJS, useAnimatedProps, useSharedValue } from 'react-native-reanimated'
+import Reanimated, { Extrapolation, interpolate, runOnJS, useAnimatedProps, useAnimatedReaction, useDerivedValue, useSharedValue } from 'react-native-reanimated'
 import IonIcon from 'react-native-vector-icons/Ionicons'
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import type { CameraProps, CameraRuntimeError, PhotoFile, VideoFile } from 'react-native-vision-camera'
@@ -20,7 +20,7 @@ import {
   useMicrophonePermission
 } from 'react-native-vision-camera'
 
-import { useColors } from '@components/colorGuide'
+import { Colors, useColors } from '@components/colorGuide'
 import { GestureSafeAreaView } from '@components/GestureSafeAreaView';
 import { NumberlessText } from '@components/NumberlessText'
 import { Spacing, screen } from '@components/spacingGuide';
@@ -33,6 +33,7 @@ import { getConnection } from '@utils/Storage/connections'
 import CameraFlip from '@assets/icons/CameraFlip.svg';
 import FlashOff from '@assets/icons/FlashOff.svg';
 import FlashOn from '@assets/icons/FlashOn.svg';
+import Whitecross from '@assets/icons/greyCrossIcon.svg';
 
 import { usePreferredCameraDevice } from './hooks/usePreferredCameraDevice'
 import { CaptureButton } from './views/CaptureButon'
@@ -60,11 +61,11 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
   const zoom = useSharedValue(1);
   const isPressingButton = useSharedValue(false);
 
+  const [timerString, setTimerString] = React.useState("00:00");
   // check if camera page is active
   const isFocussed = useIsFocused();
   //   const isForeground = useIsForeground()
   const isActive = isFocussed;
-  // const [shouldRenderCamera, setShouldRenderCamera] = useState(true);
 
   // to go to gallery confirmation screen
   const goToConfirmation = async (lst: any[]) => {
@@ -79,13 +80,7 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
         isChat: true,
       });
     }
-    // navigation.navigate('GalleryConfirmation', {
-    //   selectedMembers: [{ chatId: chatId }],
-    //   shareMessages: lst,
-    //   isChat: true,
-    // });
     console.log("navigated to GalleryConfirmation...");
-    // togglePopUp();
   };
 
   const [cameraPosition, setCameraPosition] = useState<'front' | 'back'>('back');
@@ -96,6 +91,7 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
   // camera device settings
   const [preferredDevice] = usePreferredCameraDevice();
   let device = useCameraDevice(cameraPosition);
+
 
   if (preferredDevice != null && preferredDevice.position === cameraPosition) {
     // override default device with the one selected by the user in settings
@@ -114,7 +110,6 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
   ]);
 
   const fps = Math.min(format?.maxFps ?? 1, targetFps);
-
   const supportsFlash = device?.hasFlash ?? false;
   const supportsHdr = format?.supportsPhotoHdr;
   const supports60Fps = useMemo(() => device?.formats.some((f) => f.maxFps >= 60), [device?.formats]);
@@ -319,13 +314,23 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
       )}
 
       <StatusBarBlurBackground />
-
+      <PressableOpacity
+        style={styles.whiteCrossIcon}
+        hitSlop={40}
+      >
+        <Whitecross
+          disabled={false}
+          onPress={() => {
+            navigation.goBack();
+          }}
+        />
+      </PressableOpacity>
+      {mode === 'video' && (
+        <Text style={styles.timerText}>{timerString}</Text>
+      )}
       <View style={styles.rightButtonRow}>
-        <PressableOpacity style={styles.button} onPress={onFlipCameraPressed} disabledOpacity={0.4}>
-          <CameraFlip />
-        </PressableOpacity>
         {supportsFlash && (
-          <PressableOpacity style={styles.button} onPress={onFlashPressed} disabledOpacity={0.4}>
+          <PressableOpacity style={[styles.button]} onPress={onFlashPressed} disabledOpacity={0.4}>
             {flash === 'on' ? (
               <FlashOn />
             ) : (
@@ -348,18 +353,15 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
             <IonIcon name={enableNightMode ? 'moon' : 'moon-outline'} color="white" size={24} />
           </PressableOpacity>
         )}
-        {/* <PressableOpacity style={styles.button} onPress={() => navigation.navigate('Devices')}>
-          <IonIcon name="settings-outline" color="white" size={24} />
-        </PressableOpacity>
-        <PressableOpacity style={styles.button} onPress={() => navigation.navigate('CodeScannerPage')}>
-          <IonIcon name="qr-code-outline" color="white" size={24} />
-        </PressableOpacity> */}
       </View>
+      <PressableOpacity style={[styles.flipCameraIcon]} onPress={onFlipCameraPressed} disabledOpacity={0.4}>
+        <CameraFlip />
+      </PressableOpacity>
       <View style={styles.bottomContainer}>
         <View style={styles.pillContainer}>
           <Pressable onPress={() => setMode('photo')}>
             <View style={[styles.pill, mode === 'photo' && styles.activePill]}>
-              <NumberlessText textColor={mode === 'photo' ? Colors.text.primary : Colors.text.subtitle}>
+              <NumberlessText textColor={Colors.white}>
                 Photo
               </NumberlessText>
             </View>
@@ -367,7 +369,7 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
 
           <Pressable onPress={() => setMode('video')}>
             <View style={[styles.pill, mode === 'video' && styles.activePill]}>
-              <NumberlessText textColor={mode === 'video' ? Colors.text.primary : Colors.text.subtitle}>
+              <NumberlessText textColor={Colors.white}>
                 Video
               </NumberlessText>
             </View>
@@ -387,6 +389,7 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
           flash={supportsFlash ? flash : 'off'}
           enabled={isCameraInitialized && isActive}
           setIsPressingButton={setIsPressingButton}
+          setTimerString={setTimerString}
         />
       </View>
 
@@ -399,12 +402,43 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'black',
   },
-  bottomContainer: {
+  timerText: {
+    backgroundColor: '#00000099',
     position: 'absolute',
-    bottom: Spacing.xxxxl,
+    alignSelf:'center',
+    top: Spacing.xxxl,
+    borderRadius: 16,
+    color: Colors.common.white,
+    padding: Spacing.s
+},
+  flipCameraIcon: {
+    bottom: Spacing.xxxl,
+    right: Spacing.s,
+    // backgroundColor:'red', 
+    alignSelf: 'flex-end'
+  },
+  whiteCrossIcon: {
+    position: 'absolute',
+    zIndex: 10,
+    top: Spacing.xxxl,
+    left: Spacing.m,
+    marginBottom: CONTENT_SPACING,
+    width: CONTROL_BUTTON_SIZE,
+    height: CONTROL_BUTTON_SIZE,
+    borderRadius: CONTROL_BUTTON_SIZE / 2,
+    backgroundColor: 'rgba(140, 140, 140, 0.3)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bottomContainer: {
+    position: 'relative',
+    // bottom: Spacing.s,
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'black',
+    height: Spacing.xml,
+    // paddingTop: Spacing.m
   },
   pillContainer: {
     flexDirection: 'row',
@@ -413,7 +447,7 @@ const styles = StyleSheet.create({
     bottom: Spacing.xml,
   },
   activePill: {
-    backgroundColor: 'white',
+    backgroundColor: '#4A94B033',
   },
   pill: {
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
@@ -425,17 +459,16 @@ const styles = StyleSheet.create({
   captureButtonWrapper: {
     alignItems: 'center',
     justifyContent: 'center',
+    // bottom: Spacing.m // check
   },
   captureButton: {
     position: 'absolute',
     // height: 100,
     flex: 1,
-    width: "100%",
     justifyContent: "center",
-    bottom: Spacing.xl,
+    bottom: Spacing.xxxxl,
     alignSelf: 'center',
     // alignItems: 'center',
-    // backgroundColor: 'red'
   },
   button: {
     top: Spacing.xxl,
