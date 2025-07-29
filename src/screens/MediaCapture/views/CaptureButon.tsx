@@ -79,17 +79,6 @@ export const CaptureButton: React.FC<Props> = ({
         [showStopIcon]
     );
 
-    // const svgArray = [
-    //     {
-    //         assetName: 'CaptureButton',
-    //         light: require('@assets/icons/CaptureButton.svg').default,
-    //         dark: require('@assets/icons/CaptureButton.svg').default,
-    //     },
-    // ];
-    // const results = useSVG(svgArray);
-
-    // const CaptureButton = results.CaptureButton;
-
     // Capture logic
     const takePhoto = useCallback(async () => {
         try {
