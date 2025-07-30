@@ -1,5 +1,5 @@
 import React, {ReactNode, useMemo, useState} from 'react';
-import {Pressable, StyleSheet, View} from 'react-native';
+import {Keyboard, Pressable, StyleSheet, View} from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
 
@@ -85,7 +85,10 @@ export default function ActiveChatTile(
   const navigation = useNavigation<any>();
   //handles navigation to a chat screen and toggles chat to read.
   const openChat = (): void => {
-    toggleRead(props.chatId);
+    Keyboard.dismiss();
+    // Wait a moment for keyboard to dismiss before navigating
+    setTimeout(() => {
+      toggleRead(props.chatId);
     setProps({...props, newMessageCount: 0});
     // Push the right screen onto the stack so we can navigate back here when we go back
     navigation.push(
@@ -97,6 +100,8 @@ export default function ActiveChatTile(
         name: props.name,
       },
     );
+    }, 200); // 100–200ms is usually enough;
+    
   };
 
   const Colors = DynamicColors();
