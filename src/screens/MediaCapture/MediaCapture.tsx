@@ -1,16 +1,16 @@
-import * as React from 'react'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import type { GestureResponderEvent } from 'react-native'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import * as React from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { GestureResponderEvent } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { useIsFocused } from '@react-navigation/core'
-import type { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { Gesture, GestureDetector } from 'react-native-gesture-handler'
-import { PressableOpacity } from 'react-native-pressable-opacity'
-import Reanimated, { Extrapolation, interpolate, runOnJS, useAnimatedProps, useAnimatedReaction, useDerivedValue, useSharedValue } from 'react-native-reanimated'
-import IonIcon from 'react-native-vector-icons/Ionicons'
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
-import type { CameraProps, CameraRuntimeError, PhotoFile, VideoFile } from 'react-native-vision-camera'
+import { useIsFocused } from '@react-navigation/core';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { PressableOpacity } from 'react-native-pressable-opacity';
+import Reanimated, { Extrapolation, interpolate, runOnJS, useAnimatedProps, useSharedValue } from 'react-native-reanimated';
+import IonIcon from 'react-native-vector-icons/Ionicons';
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import type { CameraProps, CameraRuntimeError, PhotoFile, VideoFile } from 'react-native-vision-camera';
 import {
   Camera,
   useCameraDevice,
@@ -18,26 +18,27 @@ import {
   // useFrameProcessor, // filters and stuff, if ever
   useLocationPermission,
   useMicrophonePermission
-} from 'react-native-vision-camera'
+} from 'react-native-vision-camera';
 
-import { Colors, useColors } from '@components/colorGuide'
+import { Colors, useColors } from '@components/colorGuide';
 import { GestureSafeAreaView } from '@components/GestureSafeAreaView';
-import { NumberlessText } from '@components/NumberlessText'
+import { NumberlessText } from '@components/NumberlessText';
 import { Spacing, screen } from '@components/spacingGuide';
 
-import { AppStackParamList } from '@navigation/AppStack/AppStackTypes'
+import { AppStackParamList } from '@navigation/AppStack/AppStackTypes';
 
-import { ContentType } from '@utils/Messaging/interfaces'
-import { getConnection } from '@utils/Storage/connections'
+import { ContentType } from '@utils/Messaging/interfaces';
+import { getConnection } from '@utils/Storage/connections';
 
 import CameraFlip from '@assets/icons/CameraFlip.svg';
 import FlashOff from '@assets/icons/FlashOff.svg';
 import FlashOn from '@assets/icons/FlashOn.svg';
 import Whitecross from '@assets/icons/greyCrossIcon.svg';
 
-import { usePreferredCameraDevice } from './hooks/usePreferredCameraDevice'
-import { CaptureButton } from './views/CaptureButon'
+import { usePreferredCameraDevice } from './hooks/usePreferredCameraDevice';
+import { CaptureButton } from './views/CaptureButon';
 import { StatusBarBlurBackground } from './views/StatusBarBlurBackground';
+import { Timer } from './views/Timer';
 
 const ReanimatedCamera = Reanimated.createAnimatedComponent(Camera)
 Reanimated.addWhitelistedNativeProps({
@@ -57,11 +58,10 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
   const camera = useRef<Camera>(null);
   const [isCameraInitialized, setIsCameraInitialized] = useState(false);
   const microphone = useMicrophonePermission();
-  const location = useLocationPermission();
   const zoom = useSharedValue(1);
   const isPressingButton = useSharedValue(false);
+  const [isRecording, setIsRecording] = useState(false);
 
-  const [timerString, setTimerString] = React.useState("00:00");
   // check if camera page is active
   const isFocussed = useIsFocused();
   //   const isForeground = useIsForeground()
@@ -117,8 +117,8 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
   const [mode, setMode] = useState<'photo' | 'video'>('photo');
 
   //#region Animated Zoom
-  const minZoom = device?.minZoom ?? 1
-  const maxZoom = Math.min(device?.maxZoom ?? 1, MAX_ZOOM_FACTOR)
+  const minZoom = device?.minZoom ?? 1;
+  const maxZoom = Math.min(device?.maxZoom ?? 1, MAX_ZOOM_FACTOR);
 
   const Colors = useColors();
 
@@ -127,7 +127,7 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
     return {
       zoom: z,
     }
-  }, [maxZoom, minZoom, zoom])
+  }, [maxZoom, minZoom, zoom]);
   //#endregion
 
   //#region Callbacks
@@ -136,14 +136,20 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
       isPressingButton.value = _isPressingButton
     },
     [isPressingButton],
-  )
+  );
+
+
   const onError = useCallback((error: CameraRuntimeError) => {
     console.error(error)
-  }, [])
+  }, []);
+
+
   const onInitialized = useCallback(() => {
     console.log('Camera initialized!')
     setIsCameraInitialized(true)
-  }, [])
+  }, []);
+
+
   const onMediaCaptured = useCallback(
     (media: PhotoFile | VideoFile, type: 'photo' | 'video') => {
       console.log(media);
@@ -163,17 +169,16 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
       ];
       console.log(fileList);
       goToConfirmation(fileList);
-      // Optional: If you still want to show preview after capture
-      // navigation.navigate('MediaPage', {
-      //   path: media.path,
-      //   type,
-      // });
     },
     [navigation]
   );
+
+
   const onFlipCameraPressed = useCallback(() => {
     setCameraPosition((p) => (p === 'back' ? 'front' : 'back'))
-  }, [])
+  }, []);
+  
+  
   const onFlashPressed = useCallback(() => {
     setFlash((f) => (f === 'off' ? 'on' : 'off'))
   }, [])
@@ -197,7 +202,7 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
   useEffect(() => {
     // Reset zoom to it's default everytime the `device` changes.
     zoom.value = device?.neutralZoom ?? 1
-  }, [zoom, device])
+  }, [zoom, device]);
   //#endregion
 
   //#region Pinch to Zoom Gesture
@@ -227,18 +232,8 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
     });
   //#endregion
 
-  useEffect(() => {
-    const f =
-      format != null
-        ? `(${format.photoWidth}x${format.photoHeight} photo / ${format.videoWidth}x${format.videoHeight}@${format.maxFps} video @ ${fps}fps)`
-        : undefined
-    console.log(`Camera: ${device?.name} | Format: ${f}`)
-  }, [device?.name, format, fps])
 
-  useEffect(() => {
-    location.requestPermission()
-  }, [location])
-
+  // if ever we have filters etc
   // const frameProcessor = useFrameProcessor((frame) => {
   //   'worklet'
 
@@ -250,17 +245,16 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
   //   })
   // }, [])
 
-  const videoHdr = format?.supportsVideoHdr && enableHdr
-  const photoHdr = format?.supportsPhotoHdr && enableHdr && !videoHdr
+  const videoHdr = format?.supportsVideoHdr && enableHdr;
+  const photoHdr = format?.supportsPhotoHdr && enableHdr && !videoHdr;
 
   const tapGesture = Gesture.Tap().onStart(() => {
     console.log('Tap!');
   });
 
   const doubleTapGesture = Gesture.Tap().numberOfTaps(2).onStart(() => {
-    // onFlipCameraPressed();
     runOnJS(onFlipCameraPressed)();
-  })
+  });
 
   return (
     <View style={styles.container}>
@@ -296,7 +290,6 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
                   enableZoomGesture={false}
                   animatedProps={cameraAnimatedProps}
                   exposure={0}
-                  // enableFpsGraph={true}
                   outputOrientation="device"
                   photo={true}
                   video={true}
@@ -325,8 +318,17 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
           }}
         />
       </PressableOpacity>
-      {mode === 'video' && (
-        <Text style={styles.timerText}>{timerString}</Text>
+      {isRecording && (
+        <Timer
+          durationSeconds={60}
+          running={isRecording}
+          cameraRef={camera} // this is your ref from MediaCapture
+          onFinish={() => {
+            console.log('Recording timer finished');
+            setIsRecording(false); // optional UI cleanup
+          }}
+          style={styles.timerText}
+        />
       )}
       <View style={styles.rightButtonRow}>
         {supportsFlash && (
@@ -389,8 +391,9 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
           flash={supportsFlash ? flash : 'off'}
           enabled={isCameraInitialized && isActive}
           setIsPressingButton={setIsPressingButton}
-          setTimerString={setTimerString}
-        />
+          isRecording={isRecording}
+          setIsRecording={setIsRecording}
+           />
       </View>
 
     </View>
@@ -414,7 +417,6 @@ const styles = StyleSheet.create({
   flipCameraIcon: {
     bottom: Spacing.xxxl,
     right: Spacing.s,
-    // backgroundColor:'red', 
     alignSelf: 'flex-end'
   },
   whiteCrossIcon: {
@@ -432,13 +434,11 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     position: 'relative',
-    // bottom: Spacing.s,
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'black',
     height: Spacing.xml,
-    // paddingTop: Spacing.m
   },
   pillContainer: {
     flexDirection: 'row',
@@ -459,16 +459,13 @@ const styles = StyleSheet.create({
   captureButtonWrapper: {
     alignItems: 'center',
     justifyContent: 'center',
-    // bottom: Spacing.m // check
   },
   captureButton: {
     position: 'absolute',
-    // height: 100,
     flex: 1,
     justifyContent: "center",
     bottom: Spacing.xxxxl,
     alignSelf: 'center',
-    // alignItems: 'center',
   },
   button: {
     top: Spacing.xxl,
