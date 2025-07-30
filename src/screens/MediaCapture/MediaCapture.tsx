@@ -294,7 +294,6 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
                   photo={true}
                   video={true}
                   audio={microphone.hasPermission}
-                  enableLocation={location.hasPermission}
                 />
               </Reanimated.View>
             </GestureDetector>

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Pressable, StyleSheet, ViewProps } from 'react-native';
 
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
@@ -22,7 +22,6 @@ import Capture from '@assets/icons/CaptureButton.svg';
 import StopRecording from '@assets/icons/StopRecording.svg';
 
 
-
 // Capture Button
 const CAPTURE_BUTTON_SIZE = 78
 const BORDER_WIDTH = CAPTURE_BUTTON_SIZE * 0.1;
@@ -40,7 +39,8 @@ interface Props extends ViewProps {
     enabled: boolean;
     setIsPressingButton: (isPressingButton: boolean) => void;
     mode: 'photo' | 'video';
-    setTimerString: (val: string) => void;
+    isRecording: boolean;
+    setIsRecording: (isRecording: boolean) => void;
 }
 
 export const CaptureButton: React.FC<Props> = ({
@@ -53,12 +53,12 @@ export const CaptureButton: React.FC<Props> = ({
     enabled,
     setIsPressingButton,
     mode,
-    setTimerString,
     style,
+    setIsRecording,
+    isRecording,
     ...props
 }) => {
     const pressDownTime = useSharedValue(0); // holds Date.now()
-    const isRecording = useSharedValue(false);
 
     const recordingProgress = useSharedValue(0);
     const isPressingButton = useSharedValue(false);
@@ -68,18 +68,22 @@ export const CaptureButton: React.FC<Props> = ({
 
     // Sync it with isRecording and mode
     useDerivedValue(() => {
-        showStopIcon.value = isRecording.value && mode === 'video';
+        showStopIcon.value = isRecording && mode === 'video';
     });
 
     const [showStopIconJS, setShowStopIconJS] = React.useState(false);
-    const MAX_RECORDING_TIME = 60000; // 1 minute in milliseconds
-    // const recordingStartTime = useSharedValue(0);
     
+    useEffect(() => {
+        console.log('isRecording changed:', isRecording);
+      }, [isRecording]);
 
     useAnimatedReaction(
         () => showStopIcon.value,
         (current, previous) => {
             if (current !== previous) {
+                if(previous == true && isRecording === true) {
+                    runOnJS(stopRecording)();
+                }
                 runOnJS(setShowStopIconJS)(current);
             }
         },
@@ -104,7 +108,7 @@ export const CaptureButton: React.FC<Props> = ({
         } catch (e) {
             console.error('Failed to stop recording', e);
         } finally {
-            isRecording.value = false;
+            setIsRecording(false);
             pressDownTime.value = 0;
             elapsedRecordingTime.value = 0;
             cancelAnimation(recordingProgress);
@@ -117,17 +121,17 @@ const startRecording = useCallback(() => {
     if (!camera.current) return;
 
     pressDownTime.value = Date.now();
-    isRecording.value = true;
+    setIsRecording(true)
 
     camera.current.startRecording({
         flash,
         onRecordingFinished: (video) => {
             runOnJS(onMediaCaptured)(video, 'video');
-            isRecording.value = false;
+            runOnJS(setIsRecording)(false);
         },
         onRecordingError: (error) => {
             console.error('Recording failed', error);
-            isRecording.value = false;
+            runOnJS(setIsRecording)(false);
         },
     });
     // updateLoop();
@@ -145,10 +149,10 @@ const startRecording = useCallback(() => {
             if (mode == "photo") {
                 runOnJS(takePhoto)();
             }
-            else if (mode == "video" && isRecording.value === false) {
+            else if (mode == "video" && isRecording === false) {
                 runOnJS(startRecording)();
             }
-            else if (mode == "video" && isRecording.value === true) {
+            else if (mode == "video" && isRecording === true) {
                 runOnJS(stopRecording)();
             }
         });
@@ -160,7 +164,6 @@ const startRecording = useCallback(() => {
             pressDownTime.value = Date.now();
             isPressingButton.value = true;
             runOnJS(setIsPressingButton)(true);
-            // triggerRecordingAfterDelay();
             runOnJS(startRecording)();
         })
         .onEnd(() => {
@@ -234,8 +237,8 @@ const startRecording = useCallback(() => {
                     <GestureDetector gesture={longPressGesture}>
                         <Reanimated.View {...props} style={[buttonStyle, style]}>
                             <Reanimated.View style={styles.flex}>
-                                <Reanimated.View style={[styles.shadow, shadowStyle, styles.btn]} />
-                                <Pressable style={styles.btn}>
+                                <Reanimated.View style={[styles.shadow, shadowStyle]} />
+                                <Pressable>
                                     {showStopIconJS ? (
                                         <StopRecording width={CAPTURE_BUTTON_SIZE} height={CAPTURE_BUTTON_SIZE} />
                                     ) : (
@@ -255,18 +258,6 @@ const startRecording = useCallback(() => {
 const styles = StyleSheet.create({
     flex: {
         flex: 1,
-        // backgroundColor: 'green',
-        // width: "100%"
-    },
-    btn: {
-        justifyContent: "center",
-        // backgroundColor: 'red',
-        alignSelf: 'center',
-        width: "100%",
-        height: "100%",
-        flex: 1,
-        alignContent: "center",
-        alignItems: "center"
     },
     shadow: {
         position: 'absolute',
