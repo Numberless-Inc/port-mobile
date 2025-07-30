@@ -1,6 +1,6 @@
-#include "commonrand.h"
+#include "commonrand.hpp"
 #include <vector>
-#include "encoders.h"
+#include "encoders.hpp"
 #include <openssl/rand.h>
 std::string commonrand::hex(std::size_t length)
 {
