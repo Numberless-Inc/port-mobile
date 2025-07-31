@@ -64,14 +64,6 @@ const ContactsScreen = () => {
             <NewContactOptions /> 
             {allConnections.length>0 &&
              <SearchBar
-             style={{
-               backgroundColor: Colors.surface,
-               height: Height.searchBar,
-               width: '100%',
-               flexDirection: 'row',
-               alignItems: 'center',
-               borderRadius: Spacing.xml,
-             }}
              searchText={searchText}
              setSearchText={setSearchtext}
            />

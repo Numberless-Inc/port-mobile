@@ -109,14 +109,6 @@ const PhoneContactList = ({ navigation }: Props) => {
           ) : (
             <View style={styles.card}>
               <SearchBar
-                style={{
-                  backgroundColor: Colors.surface,
-                  height: Height.searchBar,
-                  width: '100%',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderRadius: Spacing.xml,
-                }}
                 searchText={searchText}
                 setSearchText={setSearchtext}
               />
