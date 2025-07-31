@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     fontFamily: FontType.rg,
     fontSize: FontSizeType.m,
     fontWeight: getWeight(FontType.rg),
-    color: PortColors.title,
+    color: PortColors.text.secondary,
     height: 44,
   },
 });
