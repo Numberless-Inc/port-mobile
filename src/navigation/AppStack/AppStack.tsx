@@ -51,12 +51,15 @@ import { AppStackParamList } from './AppStackTypes';
 import BottomNavStack from './BottomNavStack/BottomNavStack';
 import NewPortStack from './NewPortStack/NewPortStack';
 import NewSuperPortStack from './NewSuperPortStack/NewSuperPortStack';
+import { AppState } from 'react-native';
+import { backgroundToForegroundOperations, performDebouncedCommonAppOperations } from '@utils/AppOperations';
+import { addEventListener } from '@react-native-community/netinfo';
 
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
 function AppStack() {
-
+  const appState = useRef(AppState.currentState);
   const termsStackTrigger = useSelector(
     state => (state as any).triggerUpdateStatusRefetch.change,
   );
@@ -93,6 +96,33 @@ function AppStack() {
       })();
     }
   }, [termsStackTrigger]);
+
+  /**
+  * Setup background or foreground operations according to app state.
+*/
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      //If app has come to the foreground.
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
+        backgroundToForegroundOperations();
+      }
+      appState.current = nextAppState;
+    });
+    // Detects app going online-offline.
+    const unsubscribe = addEventListener(state => {
+      //Performs operation if the app is connected to any valid network (might not have internet access though)
+      if (state.isConnected) {
+        performDebouncedCommonAppOperations();
+      }
+    });
+    return () => {
+      subscription.remove();
+      unsubscribe();
+    };
+  }, []);
 
   return (
     <>
