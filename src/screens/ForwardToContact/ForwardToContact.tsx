@@ -144,14 +144,6 @@ const ForwardToContact = ({route, navigation}: Props) => {
               setSelectedMembers={setSelectedMembers}
               members={selectedMembers}/>
               <SearchBar
-                style={{
-                  backgroundColor: Colors.surface,
-                  height: Height.searchBar,
-                  width: '100%',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderRadius: Spacing.xml,
-                }}
                 searchText={searchText}
                 setSearchText={setSearchText}
               />

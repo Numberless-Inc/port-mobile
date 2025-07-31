@@ -2,26 +2,24 @@ import React, {memo, useState} from 'react';
 import {Pressable, StyleSheet, TextInput, View} from 'react-native';
 
 import {NAME_LENGTH_LIMIT} from '@configs/constants';
-
-import useDynamicSVG from '@utils/Themes/createDynamicSVG';
-
 import SearchGrey from '@assets/icons/GreySearch.svg';
 
-import {PortSpacing} from './ComponentUtils';
-import DynamicColors from './DynamicColors';
+import {Spacing} from './spacingGuide';
+import {useColors} from './colorGuide';
+import useSVG from './svgGuide';
 
 const SearchBar = ({
   searchText,
   setSearchText,
-  style,
   placeholder = 'Search',
 }: {
   searchText: string;
-  setSearchText: any;
-  style?: any;
+  setSearchText: (text: string) => void;
   placeholder?: string;
 }) => {
   const [isFocused, setIsFocused] = useState(false);
+  const Colors = useColors();
+
   const onChangeText = (newName: string) => {
     setIsFocused(true);
     setSearchText(newName);
@@ -29,7 +27,7 @@ const SearchBar = ({
       setIsFocused(false);
     }
   };
-  const Colors = DynamicColors();
+
   const svgArray = [
     {
       assetName: 'CloseIcon',
@@ -43,12 +41,19 @@ const SearchBar = ({
     },
   ];
 
-  const results = useDynamicSVG(svgArray);
+  const results = useSVG(svgArray);
   const CloseIcon = results.CloseIcon;
   const SearchIcon = results.SearchIcon;
 
   return (
-    <View style={[styles.searchBarStyle, style]}>
+    <View
+      style={[
+        styles.searchBarStyle,
+        {
+          backgroundColor: Colors.surface,
+          borderRadius: Spacing.xml,
+        },
+      ]}>
       {isFocused ? (
         <SearchIcon height={20} width={20} />
       ) : (
@@ -56,15 +61,15 @@ const SearchBar = ({
       )}
       <TextInput
         style={{
-          marginLeft: PortSpacing.tertiary.left,
+          marginLeft: Spacing.s,
           flex: 1,
           fontSize: 15,
-          color: Colors.text.primary,
+          color: Colors.text.title,
         }}
         textAlign="left"
         maxLength={NAME_LENGTH_LIMIT}
         placeholder={isFocused ? '' : placeholder}
-        placeholderTextColor={Colors.text.placeholder}
+        placeholderTextColor={Colors.text.subtitle}
         onChangeText={onChangeText}
         value={searchText}
         onBlur={() => setIsFocused(false)}
@@ -82,12 +87,10 @@ const SearchBar = ({
 const styles = StyleSheet.create({
   searchBarStyle: {
     width: '100%',
-    borderRadius: 8,
-    flexDirection: 'row',
-    paddingHorizontal: 16,
     height: 46,
+    flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 16,
   },
 });
 
