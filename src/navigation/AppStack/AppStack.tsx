@@ -3,7 +3,9 @@
  * User is navigated here if onboarding is done or if profile is already setup.
  */
 import React, { useEffect, useRef } from 'react';
+import { AppState } from 'react-native';
 
+import { addEventListener } from '@react-native-community/netinfo';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useSelector } from 'react-redux';
 
@@ -43,6 +45,7 @@ import SelectShareContacts from '@screens/ShareImage/SelectShareContacts';
 import GroupTemplates from '@screens/Templates/GroupTemplates';
 import Templates from '@screens/Templates/Templates';
 
+import { backgroundToForegroundOperations, performDebouncedCommonAppOperations } from '@utils/AppOperations';
 import { checkForUpdates, getUpdateStatusKeyFromLocal } from '@utils/TermsAndConditions';
 
 import { ConnectionModalProvider } from 'src/context/ConnectionModalContext';
@@ -51,9 +54,7 @@ import { AppStackParamList } from './AppStackTypes';
 import BottomNavStack from './BottomNavStack/BottomNavStack';
 import NewPortStack from './NewPortStack/NewPortStack';
 import NewSuperPortStack from './NewSuperPortStack/NewSuperPortStack';
-import { AppState } from 'react-native';
-import { backgroundToForegroundOperations, performDebouncedCommonAppOperations } from '@utils/AppOperations';
-import { addEventListener } from '@react-native-community/netinfo';
+
 
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
