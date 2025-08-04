@@ -4,7 +4,18 @@
   "private": false,
   "license": "Apache-2.0",
   "description": "A consent-based communication app that uses no persistent identifiers",
-  "keywords": ["numberless", "port", "communication", "messaging", "mobile",  "consent", "privacy", "secure", "identifierless", "react-native"],
+  "keywords": [
+    "numberless",
+    "port",
+    "communication",
+    "messaging",
+    "mobile",
+    "consent",
+    "privacy",
+    "secure",
+    "identifierless",
+    "react-native"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/Numberless-Inc/port-mobile"
@@ -38,8 +49,8 @@
     "@react-native-community/cli": "^18.0.0",
     "@react-native-community/netinfo": "^11.2.1",
     "@react-native-documents/picker": "^10.1.1",
-    "@react-native-firebase/app": "^21.13.0",
-    "@react-native-firebase/messaging": "^21.13.0",
+    "@react-native-firebase/app": "^22.4.0",
+    "@react-native-firebase/messaging": "^22.4.0",
     "@react-navigation/bottom-tabs": "^7.3.8",
     "@react-navigation/material-top-tabs": "^7.2.8",
     "@react-navigation/native": "^7.1.4",
