@@ -84,27 +84,7 @@ export const getEmojiSize = (text: string): FontSizeType => {
   }
 };
 
-export const getReplyBubbleName = async (
-  reply: ReplyContent,
-  isGroupChat: boolean,
-) => {
-  try {
-    if (reply.sender) {
-      return 'You';
-    } else {
-      if (isGroupChat) {
-        return 'Group member';
-      } else {
-        const dataHandler = new DirectChat(reply.chatId);
-        const name = (await dataHandler.getChatData()).name;
-        return name;
-      }
-    }
-  } catch (error) {
-    console.log('Error fetching reply bubble name: ', error);
-    return '';
-  }
-};
+
 
 export const handleDownload = async (
   chatId: string,
