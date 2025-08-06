@@ -13,7 +13,7 @@ import { EmailAddress, PhoneNumber } from 'react-native-contacts/type';
 import { useColors } from '@components/colorGuide';
 import { GradientScreenView } from '@components/GradientScreenView';
 import SearchBar from '@components/SearchBar';
-import { Height, Spacing } from '@components/spacingGuide';
+import {  Spacing } from '@components/spacingGuide';
 import TopBarDescription from '@components/Text/TopBarDescription';
 
 import { defaultFolderInfo, defaultPermissions } from '@configs/constants';

@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@components/colorGuide';
 import { GradientScreenView } from '@components/GradientScreenView';
 import SearchBar from '@components/SearchBar';
-import { Height, Spacing } from '@components/spacingGuide';
+import {  Spacing } from '@components/spacingGuide';
 import TopBarDescription from '@components/Text/TopBarDescription';
 
 import { getContacts } from '@utils/Storage/contacts';

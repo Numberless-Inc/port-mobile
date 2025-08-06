@@ -9,7 +9,7 @@ import SelectedMembersCard from '@components/Cards/SelectedMembersCard';
 import { useColors } from '@components/colorGuide';
 import { GradientScreenView } from '@components/GradientScreenView';
 import SearchBar from '@components/SearchBar';
-import { Height, Spacing } from '@components/spacingGuide';
+import {  Spacing } from '@components/spacingGuide';
 import TopBarDescription from '@components/Text/TopBarDescription';
 
 import { DEFAULT_AVATAR } from '@configs/constants';

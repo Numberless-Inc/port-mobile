@@ -2,10 +2,11 @@ import React, {memo, useState} from 'react';
 import {Pressable, StyleSheet, TextInput, View} from 'react-native';
 
 import {NAME_LENGTH_LIMIT} from '@configs/constants';
+
 import SearchGrey from '@assets/icons/GreySearch.svg';
 
-import {Spacing} from './spacingGuide';
 import {useColors} from './colorGuide';
+import {Spacing} from './spacingGuide';
 import useSVG from './svgGuide';
 
 const SearchBar = ({
