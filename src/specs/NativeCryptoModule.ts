@@ -33,6 +33,16 @@ export interface Spec extends TurboModule {
     pathToEncryptedFile: string,
     pathToDestination: string,
   ) => Promise<string>;
+  readonly yapV1Encrypt: (
+    sharedSecretHex: string,
+    peerPublicKeyHex: string,
+    plaintext: string,
+  ) => string;
+  readonly yapV1Decrypt: (
+    sharedSecretHex: string,
+    privateKeyHex: string,
+    plaintext: string,
+  ) => string;
 }
 
 export default TurboModuleRegistry.getEnforcing<Spec>('NativeCryptoModule');

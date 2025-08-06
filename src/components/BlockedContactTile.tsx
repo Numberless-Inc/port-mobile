@@ -1,101 +1,60 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
 
 import {DEFAULT_PROFILE_AVATAR_INFO} from '@configs/constants';
 
-import {blockUser, unblockUser} from '@utils/Storage/blockUsers';
 import {BlockedUser} from '@utils/Storage/DBCalls/blockUser';
 
-import {PortSpacing} from './ComponentUtils';
-import DynamicColors from './DynamicColors';
-import {FontSizeType, FontType, NumberlessText} from './NumberlessText';
+import { useColors } from './colorGuide';
+import {FontSizeType, FontWeight, NumberlessText} from './NumberlessText';
 import {AvatarBox} from './Reusable/AvatarBox/AvatarBox';
-import ConfirmationBottomSheet from './Reusable/BottomSheets/ConfirmationBottomSheet';
+import { Spacing } from './spacingGuide';
+
+
 
 interface BlockedContactProps extends BlockedUser {
   isLast: boolean;
+  isBlocked: boolean;
+  onPressAction: (user: BlockedUser) => void;
 }
-const BlockedContactTile = (user: BlockedContactProps) => {
-  const {name, pairHash, isLast} = user;
-  const [isBlocked, setIsBlocked] = useState(true);
-  const [isSelected, setIsSelected] = useState(false);
-  const [confirmBlockUserSheet, setConfirmBlockUserSheet] = useState(false);
-  const onPress = async () => {
-    setConfirmBlockUserSheet(p => !p);
-  };
-  const blockUserClicked = async () => {
-    try {
-      await blockUser({
-        name: name,
-        pairHash: pairHash,
-        blockTimestamp: new Date().toISOString(),
-      });
-      setIsBlocked(true);
-      setIsSelected(false);
-    } catch {
-      console.log('Error in blocking user');
-    }
-  };
 
-  const unblockUserClicked = async () => {
-    try {
-      await unblockUser(pairHash);
-      setIsBlocked(false);
-      setIsSelected(true);
-    } catch {
-      console.log('Error in unblocking user');
-    }
-  };
-  const Colors = DynamicColors();
+const BlockedContactTile = ({
+  name,
+  pairHash,
+  isLast,
+  isBlocked,
+  onPressAction,
+}: BlockedContactProps) => {
+  const Colors = useColors();
   const styles = styling(isLast, Colors);
 
   return (
-    <Pressable onPress={() => onPress()} style={styles.card}>
+    <Pressable onPress={() => onPressAction({name, pairHash})} style={styles.card}>
       <View style={styles.row}>
         <AvatarBox
           avatarSize="s"
           profileUri={DEFAULT_PROFILE_AVATAR_INFO.fileUri}
         />
         <NumberlessText
-          textColor={Colors.text.primary}
-          fontType={FontType.rg}
+          textColor={Colors.text.title}
+          fontWeight={FontWeight.rg}
           fontSizeType={FontSizeType.m}>
           {name}
         </NumberlessText>
       </View>
 
-      <NumberlessText
-        textColor={Colors.primary.red}
-        fontType={FontType.md}
-        fontSizeType={FontSizeType.s}>
-        {isSelected ? 'Block' : 'Unblock'}
-      </NumberlessText>
-      <ConfirmationBottomSheet
-        visible={confirmBlockUserSheet}
-        onClose={() => setConfirmBlockUserSheet(false)}
-        onConfirm={async () => {
-          if (isBlocked) {
-            await unblockUserClicked();
-          } else {
-            await blockUserClicked();
-          }
-        }}
-        title={
-          isBlocked
-            ? `Are you sure you want to unblock ${name}?`
-            : `Are you sure you want to block ${name}?`
-        }
-        description={
-          isBlocked
-            ? `Unblocking ${name} gives them the ability to connect with you through Port and Superports`
-            : `Blocking ${name} will prevent them from connecting with you over Ports, Superports or contact sharing until you unblock them.`
-        }
-        buttonText={isBlocked ? 'Unblock contact' : 'Block contact'}
-        buttonColor="r"
-      />
+      <View style={styles.button}>
+        <NumberlessText
+          textColor={Colors.white}
+          fontWeight={FontWeight.md}
+          fontSizeType={FontSizeType.s}>
+          {isBlocked ? 'UNBLOCK' : 'BLOCK'}
+        </NumberlessText>
+      </View>
     </Pressable>
   );
 };
+
 
 const styling = (isLast: boolean, colors: any) =>
   StyleSheet.create({
@@ -103,16 +62,22 @@ const styling = (isLast: boolean, colors: any) =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      paddingVertical: PortSpacing.tertiary.uniform,
-      marginHorizontal: PortSpacing.tertiary.uniform,
+      paddingVertical: Spacing.s,
+      marginHorizontal: Spacing.s,
       borderBottomWidth: isLast ? 0 : 1,
-      borderBottomColor: colors.primary.lightgrey,
+      borderBottomColor: colors.grey,
     },
     row: {
       flexDirection: 'row',
       alignItems: 'center',
-      gap: PortSpacing.tertiary.uniform,
+      gap: Spacing.s,
     },
+    button:{
+      backgroundColor: colors.mainElements,
+      paddingVertical: Spacing.s,
+      paddingHorizontal: Spacing.s,
+      borderRadius: Spacing.s
+    }
   });
 
 export default BlockedContactTile;

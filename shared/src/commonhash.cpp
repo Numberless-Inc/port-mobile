@@ -1,9 +1,9 @@
-#include "commonhash.h"
+#include "commonhash.hpp"
 
-#include "encoders.h"
+#include "encoders.hpp"
 #include <openssl/evp.h>
 #include <openssl/sha.h>
-#include "encoders.h"
+#include "encoders.hpp"
 
 std::string hash::hashSHA256(std::string input)
 {

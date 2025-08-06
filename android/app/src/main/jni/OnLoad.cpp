@@ -34,7 +34,7 @@
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
 #include <rncore.h>
 
-#include <NativeCryptoModule.h>
+#include <NativeCryptoModule.hpp>
 
 #ifdef REACT_NATIVE_APP_CODEGEN_HEADER
 #include REACT_NATIVE_APP_CODEGEN_HEADER
