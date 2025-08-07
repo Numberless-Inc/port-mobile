@@ -6,17 +6,29 @@ import {AppRegistry, LogBox, Text, TextInput} from 'react-native';
 
 import {DEMO_MODE} from '@env';
 
-import {initBackgroundFetch} from '@utils/BackgroundOperations/backgroundFetch';
-
 import App from './App';
 import {name as appName} from './app.json';
 import {registerBackgroundMessaging} from './src/utils/Messaging/PushNotifications/fcm';
+import {AppState} from 'react-native';
+import {performPeriodicOperations} from '@utils/AppOperations';
+
 
 if (DEMO_MODE === 'true') {
   LogBox.ignoreAllLogs();
 }
 
-initBackgroundFetch();
+
+useEffect(() => {
+  const subscription = AppState.addEventListener('change', (nextAppState) => {
+    if (nextAppState === 'active') {
+      // manually triggering periodic operations
+      performPeriodicOperations();
+    }
+  });
+
+  return () => subscription.remove();
+}, []);
+
 
 /**
  * Prevents accessibility text from expanding beyond what the app can comfortably render
