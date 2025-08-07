@@ -54,6 +54,7 @@ const LightColors = {
   notch: '#98A2B3',
   disabled: '#CFCCD6',
   enabled: '#6A35FF',
+  mainElements:'#05070B',
   text: {
     subtitle: '#667085',
     title: '#05070B',
@@ -79,6 +80,7 @@ const DarkColors = {
   notch: '#98A2B3',
   disabled: '#7E7B84',
   enabled: '#6A35FF',
+  mainElements:'#27272B',
   purpleGradient: ['#290B80', '#1D0A57', '#170A43', '#05070B'],
   text: {
     subtitle: '#CFCCD9',
