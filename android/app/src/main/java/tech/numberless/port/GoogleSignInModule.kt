@@ -100,7 +100,7 @@ class GoogleSignInModule(private val reactContext: ReactApplicationContext) : Re
         }
     }
 
-    override fun onNewIntent(p0: Intent?) {
+    override fun onNewIntent(p0: Intent) {
         // Don't need to do anything, we just need this to complete the implementation of the
         // abstract inherited class
     }

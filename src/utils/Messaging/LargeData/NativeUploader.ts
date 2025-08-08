@@ -1,5 +1,3 @@
-import {NativeModules} from 'react-native';
-
 import {
   LARGE_FILE_PRESIGNED_URL_RESOURCE,
   MULTIPART_ABORT,
@@ -7,12 +5,14 @@ import {
   MULTIPART_COMPLETE,
 } from '@configs/api';
 
-const {PortMediaUploader} = NativeModules;
-PortMediaUploader.initialize(
+import NativeMediaUploadModule from '@specs/NativeMediaUploadModule';
+
+
+NativeMediaUploadModule.initialize(
   LARGE_FILE_PRESIGNED_URL_RESOURCE,
   MULTIPART_BEGIN,
   MULTIPART_COMPLETE,
   MULTIPART_ABORT,
 );
 
-export default PortMediaUploader;
+export default NativeMediaUploadModule;

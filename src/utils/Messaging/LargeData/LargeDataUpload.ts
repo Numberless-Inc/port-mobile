@@ -1,4 +1,4 @@
-import PortMediaUploader from '@utils/Messaging/LargeData/NativeUploader';
+import NativeMediaUploadModule from '@utils/Messaging/LargeData/NativeUploader';
 import {getToken} from '@utils/ServerAuth';
 import {
   addFilePrefix,
@@ -105,8 +105,7 @@ class LargeDataUpload {
 
   private async s3Upload() {
     this.encryptedTempFilePath = this.checkEncryptedTempFileNotNull();
-    console.log('Port Multipart module', PortMediaUploader);
-    this.mediaId = await PortMediaUploader.uploadFile(
+    this.mediaId = await NativeMediaUploadModule.uploadFile(
       // This is one of the few instances where we need to remove the 'file://' prefix
       this.encryptedTempFilePath.replace('file://', ''),
       await getToken(),

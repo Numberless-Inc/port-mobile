@@ -1,8 +1,9 @@
-import EncryptedStorage from 'react-native-encrypted-storage';
+import NativeEncryptedStorage from "@specs/NativeEncryptedStorage";
+
 
 /**
  * HAZMAT SUITS ON. This clears secure storage, including the user's id, keys, and tokens
  */
-export async function clearRNSS() {
-  await EncryptedStorage.clear();
+export function clearRNSS() {
+  NativeEncryptedStorage.clear();
 }

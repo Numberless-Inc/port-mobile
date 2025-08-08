@@ -18,7 +18,7 @@ std::string ed25519::generate_keys_json()
   assert(32 == private_key_len);
 
   // Extract public key
-  size_t public_key_len = 0;
+  size_t public_key_len;
   std::vector<unsigned char> public_key(32);
   EVP_PKEY_get_raw_public_key(pkey, public_key.data(), &public_key_len);
   assert(32 == public_key_len);
@@ -34,7 +34,7 @@ std::string ed25519::generate_keys_json()
 std::string ed25519::sign_message(const std::string &message, const std::string &private_key_b64)
 {
   std::vector<unsigned char> private_key = encoders::base64_decode(private_key_b64);
-  EVP_PKEY *priv_key = EVP_PKEY_new_raw_private_key(EVP_PKEY_ED25519, nullptr, private_key.data(), private_key.size());
+  EVP_PKEY *priv_key = EVP_PKEY_new_raw_private_key(EVP_PKEY_ED25519, nullptr, private_key.data(), 32);
   size_t sig_len;
   EVP_MD_CTX *mdctx = EVP_MD_CTX_new();
   if (1 != EVP_DigestSignInit(mdctx, NULL, NULL, NULL, priv_key))
