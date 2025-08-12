@@ -206,7 +206,7 @@ function ChatScreen({ ifTemplateExists }: { ifTemplateExists?: TemplateParams })
         //Notifying that initial message load is complete.
         setMessagesLoaded(true);
         setPermissions(await dataHandler.getPermissions());
-        await performDebouncedCommonAppOperations();
+        performDebouncedCommonAppOperations();
       })();
 
       return () => {
@@ -217,7 +217,7 @@ function ChatScreen({ ifTemplateExists }: { ifTemplateExists?: TemplateParams })
         });
       };
       // eslint-disable-next-line
-    }, []),
+    }, [chatId]),
   );
 
   useEffect(() => {
