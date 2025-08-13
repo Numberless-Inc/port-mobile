@@ -13,7 +13,7 @@ import { EmailAddress, PhoneNumber } from 'react-native-contacts/type';
 import { useColors } from '@components/colorGuide';
 import { GradientScreenView } from '@components/GradientScreenView';
 import SearchBar from '@components/SearchBar';
-import { Height, Spacing } from '@components/spacingGuide';
+import {  Spacing } from '@components/spacingGuide';
 import TopBarDescription from '@components/Text/TopBarDescription';
 
 import { defaultFolderInfo, defaultPermissions } from '@configs/constants';
@@ -109,14 +109,6 @@ const PhoneContactList = ({ navigation }: Props) => {
           ) : (
             <View style={styles.card}>
               <SearchBar
-                style={{
-                  backgroundColor: Colors.surface,
-                  height: Height.searchBar,
-                  width: '100%',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderRadius: Spacing.xml,
-                }}
                 searchText={searchText}
                 setSearchText={setSearchtext}
               />

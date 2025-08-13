@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@components/colorGuide';
 import { GradientScreenView } from '@components/GradientScreenView';
 import SearchBar from '@components/SearchBar';
-import { Height, Spacing } from '@components/spacingGuide';
+import {  Spacing } from '@components/spacingGuide';
 import TopBarDescription from '@components/Text/TopBarDescription';
 
 import { getContacts } from '@utils/Storage/contacts';
@@ -64,14 +64,6 @@ const ContactsScreen = () => {
             <NewContactOptions /> 
             {allConnections.length>0 &&
              <SearchBar
-             style={{
-               backgroundColor: Colors.surface,
-               height: Height.searchBar,
-               width: '100%',
-               flexDirection: 'row',
-               alignItems: 'center',
-               borderRadius: Spacing.xml,
-             }}
              searchText={searchText}
              setSearchText={setSearchtext}
            />

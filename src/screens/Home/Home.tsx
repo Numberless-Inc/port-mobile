@@ -351,7 +351,6 @@ const Home = ({navigation, route}: Props) => {
                     ListHeaderComponent={
                       <View style={styles.barWrapper}>
                         <SearchBar
-                          style={styles.search}
                           searchText={connections.filter}
                           setSearchText={(filter: string) =>
                             dispatchConnectionAction({
