@@ -17,7 +17,7 @@ import {SvgProps} from 'react-native-svg';
 import {MediaStream} from 'react-native-webrtc';
 import {useSelector} from 'react-redux';
 
-import {PortSpacing, screen} from '@components/ComponentUtils';
+import {PortSpacing, isIOS, screen} from '@components/ComponentUtils';
 import {CustomStatusBar} from '@components/CustomStatusBar';
 import DynamicColors from '@components/DynamicColors';
 import {
@@ -296,22 +296,23 @@ function OngoingCall({route, navigation}: Props) {
       () => true,
     );
     // Add a listener for the mute event
-    const muteListener = NativeCallHelperModule.onMute(
-      ({callUUID, muted}: MuteEventPayload) => {
-        // CallUUID and callId may be different cases
-        if (callUUID.toLowerCase() !== callId.toLowerCase()) {
-          return;
-        }
-        if (muted) {
-          console.log('Muting microphone');
-          micOff();
-        } else {
-          console.log('Unmuting microphone');
-          micOn();
-        }
-      },
-    );
     NativeCallHelperModule.startKeepPhoneAwake();
+
+    const muteListener = isIOS
+      ? NativeCallHelperModule.onMute(({callUUID, muted}: MuteEventPayload) => {
+          // CallUUID and callId may be different cases
+          if (callUUID.toLowerCase() !== callId.toLowerCase()) {
+            return;
+          }
+          if (muted) {
+            console.log('Muting microphone');
+            micOff();
+          } else {
+            console.log('Unmuting microphone');
+            micOn();
+          }
+        })
+      : {remove: () => {}}; // No-op on Android
 
     return () => {
       backHandler.remove();
