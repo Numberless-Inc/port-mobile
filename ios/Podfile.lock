@@ -3364,6 +3364,7 @@ DEPENDENCIES:
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - react-native-blob-util (from `../node_modules/react-native-blob-util`)
+  - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - "react-native-cameraroll (from `../node_modules/@react-native-camera-roll/camera-roll`)"
   - react-native-cloud-storage (from `../node_modules/react-native-cloud-storage`)
   - react-native-compressor (from `../node_modules/react-native-compressor`)
@@ -3431,6 +3432,7 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNShare (from `../node_modules/react-native-share`)
+  - RNStaticSafeAreaInsets (from `../node_modules/react-native-static-safe-area-insets`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - RNVoipPushNotification (from `../node_modules/react-native-voip-push-notification`)
@@ -3543,6 +3545,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/microtasks"
   react-native-blob-util:
     :path: "../node_modules/react-native-blob-util"
+  react-native-blur:
+    :path: "../node_modules/@react-native-community/blur"
   react-native-cameraroll:
     :path: "../node_modules/@react-native-camera-roll/camera-roll"
   react-native-cloud-storage:
@@ -3677,6 +3681,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@sentry/react-native"
   RNShare:
     :path: "../node_modules/react-native-share"
+  RNStaticSafeAreaInsets:
+    :path: "../node_modules/react-native-static-safe-area-insets"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
@@ -3824,4 +3830,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 919ab8fd3934f7586e38810d4995f220fc244b6e
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2

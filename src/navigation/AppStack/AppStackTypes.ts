@@ -44,6 +44,10 @@ export type AppStackParamList = {
   Scan: undefined;
   ConnectionCentre: undefined;
   Scanner: undefined;
+  MediaCapture: {
+    chatId: string;
+  };
+  // MediaCapture: undefined;
   DirectChat: {
     chatId: string;
     isConnected: boolean;
