@@ -1,21 +1,27 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import messaging from '@react-native-firebase/messaging';
+import { getApp } from '@react-native-firebase/app';
+import { getMessaging } from '@react-native-firebase/messaging';
 
-import {isIOS} from '@components/ComponentUtils';
+import { isIOS } from '@components/ComponentUtils';
 
-import {showDefaultNotification} from '@utils/Notifications';
+import { showDefaultNotification } from '@utils/Notifications';
 
 import pullBacklog from '../pullBacklog';
 import ReceiveMessage from '../Receive/ReceiveMessage';
-
 import * as API from './APICalls';
 
 export type FCMToken = string;
 
 const FCM_KEY = 'fcmToken';
 
+// Firebase messaging instance
+const firebaseApp = getApp();
+const messagingInstance = getMessaging(firebaseApp);
+
+// const messagingInstance = getMessaging(getApp());
+
 export const getFCMToken = async () => {
-  const token = await messaging().getToken();
+  const token = await messagingInstance.getToken();
   return token;
 };
 
@@ -23,7 +29,7 @@ export const getAPNSToken = async () => {
   if (!isIOS) {
     throw new Error('not an iOS device');
   }
-  const token = await messaging().getAPNSToken();
+  const token = await messagingInstance.getAPNSToken();
   return token;
 };
 
@@ -32,7 +38,7 @@ export const getAPNSToken = async () => {
  * Payload is ignored, as pullBacklog is used to make an API call to fetch relevant messages
  */
 export const registerBackgroundMessaging = (): void => {
-  messaging().setBackgroundMessageHandler(async ({data}) => {
+  messagingInstance.setBackgroundMessageHandler(async ({ data }) => {
     console.log('[NEW BACKGROUND MESSAGE]');
     // In the background, we don't have very much time, and a ramp up over
     // websockets may not be possble. As such, just process the received message
@@ -45,7 +51,7 @@ export const registerBackgroundMessaging = (): void => {
  * Foreground FCM handler, does the same as background.
  */
 export const foregroundMessageHandler = () => {
-  messaging().onMessage(async _ => {
+  messagingInstance.onMessage(async _ => {
     console.log('[NEW FOREGROUND MESSAGE] ');
     // In the foreground, we have a lor more resources to work with, and can
     // use pullBacklog to use a websocket over the network to fetch messages
