@@ -6,7 +6,6 @@ import Reanimated, {
     Easing,
     SharedValue,
     cancelAnimation,
-    runOnJS,
     useAnimatedReaction,
     useAnimatedStyle,
     useDerivedValue,
@@ -16,7 +15,7 @@ import Reanimated, {
 } from 'react-native-reanimated';
 import type { Camera, PhotoFile, VideoFile } from 'react-native-vision-camera';
 
-import { GestureSafeAreaView } from '@components/GestureSafeAreaView';
+import { runOnJS } from 'react-native-worklets';
 
 import Capture from '@assets/icons/CaptureButton.svg';
 import StopRecording from '@assets/icons/StopRecording.svg';
@@ -25,7 +24,7 @@ import StopRecording from '@assets/icons/StopRecording.svg';
 // Capture Button
 const CAPTURE_BUTTON_SIZE = 78
 const BORDER_WIDTH = CAPTURE_BUTTON_SIZE * 0.1;
-const START_RECORDING_DELAY = 200;
+const START_RECORDING_DELAY = 500;
 
 
 
@@ -132,6 +131,7 @@ const startRecording = useCallback(() => {
         onRecordingError: (error) => {
             console.error('Recording failed', error);
             runOnJS(setIsRecording)(false);
+            runOnJS(stopRecording)(); // just in case we're in a state where recording is actually happening but UI doesn't reflect it
         },
     });
     // updateLoop();
@@ -231,7 +231,6 @@ const startRecording = useCallback(() => {
     });
 
     return (
-        <GestureSafeAreaView style={{ height: 100, flex: 1, justifyContent: 'center', width: "100%" }}>
             <GestureDetector gesture={panGesture}>
                 <GestureDetector gesture={tapGesture}>
                     <GestureDetector gesture={longPressGesture}>
@@ -250,7 +249,6 @@ const startRecording = useCallback(() => {
                     </GestureDetector>
                 </GestureDetector>
             </GestureDetector>
-        </GestureSafeAreaView>
     );
 };
 
