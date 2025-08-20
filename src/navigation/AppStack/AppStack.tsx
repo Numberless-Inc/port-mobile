@@ -3,7 +3,9 @@
  * User is navigated here if onboarding is done or if profile is already setup.
  */
 import React, { useEffect, useRef } from 'react';
+import { AppState } from 'react-native';
 
+import { addEventListener } from '@react-native-community/netinfo';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useSelector } from 'react-redux';
 
@@ -43,6 +45,7 @@ import SelectShareContacts from '@screens/ShareImage/SelectShareContacts';
 import GroupTemplates from '@screens/Templates/GroupTemplates';
 import Templates from '@screens/Templates/Templates';
 
+import { backgroundToForegroundOperations, performDebouncedCommonAppOperations } from '@utils/AppOperations';
 import { checkForUpdates, getUpdateStatusKeyFromLocal } from '@utils/TermsAndConditions';
 
 import { ConnectionModalProvider } from 'src/context/ConnectionModalContext';
@@ -53,10 +56,11 @@ import NewPortStack from './NewPortStack/NewPortStack';
 import NewSuperPortStack from './NewSuperPortStack/NewSuperPortStack';
 
 
+
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
 function AppStack() {
-
+  const appState = useRef(AppState.currentState);
   const termsStackTrigger = useSelector(
     state => (state as any).triggerUpdateStatusRefetch.change,
   );
@@ -93,6 +97,33 @@ function AppStack() {
       })();
     }
   }, [termsStackTrigger]);
+
+  /**
+  * Setup background or foreground operations according to app state.
+*/
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      //If app has come to the foreground.
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
+        backgroundToForegroundOperations();
+      }
+      appState.current = nextAppState;
+    });
+    // Detects app going online-offline.
+    const unsubscribe = addEventListener(state => {
+      //Performs operation if the app is connected to any valid network (might not have internet access though)
+      if (state.isConnected) {
+        performDebouncedCommonAppOperations();
+      }
+    });
+    return () => {
+      subscription.remove();
+      unsubscribe();
+    };
+  }, []);
 
   return (
     <>
