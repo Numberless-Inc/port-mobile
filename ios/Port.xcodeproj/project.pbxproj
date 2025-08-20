@@ -11,7 +11,6 @@
 		0A5A5887D9E448CEB79A9DEC /* Rubik-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AFA2CE3A865144AF96BAEAD0 /* Rubik-BoldItalic.ttf */; };
 		0F1818312DB7CC3F0053B66E /* UploaderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F18182B2DB7CC3E0053B66E /* UploaderProtocol.swift */; };
 		0F1818322DB7CC3F0053B66E /* RCTPortMediaUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F18182E2DB7CC3E0053B66E /* RCTPortMediaUploader.swift */; };
-		0F1818332DB7CC3F0053B66E /* RCTPortMediaUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F18182D2DB7CC3E0053B66E /* RCTPortMediaUploader.m */; };
 		0F1818342DB7CC3F0053B66E /* RegularUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F18182A2DB7CC3E0053B66E /* RegularUploader.swift */; };
 		0F1818352DB7CC3F0053B66E /* MultipartUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1818292DB7CC3E0053B66E /* MultipartUploader.swift */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -59,6 +58,7 @@
 		C35227316CC141E3B4116802 /* Rubik-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6CE2419BF3A84F09B2CF2A6E /* Rubik-Light.ttf */; };
 		CADD983D617E48E7BD04523D /* Rubik-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD1CF344CFCB406EB5AE1240 /* Rubik-Bold.ttf */; };
 		CBF2008ED9D44389A20E9A10 /* Rubik-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA2B26E72BA84A858CDCAD23 /* Rubik-Italic.ttf */; };
+		D83604F02E546FF100E5FE74 /* RCTPortMediaUploader.mm in Sources */ = {isa = PBXBuildFile; fileRef = D83604EF2E546FF100E5FE74 /* RCTPortMediaUploader.mm */; };
 		DAAA7AC2256F4089B12F63EF /* Rubik-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E9AFE7EE27D435EB17F1E39 /* Rubik-BlackItalic.ttf */; };
 		E5F96150FC2C4CAF9BB44DB3 /* Rubik-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F505A8914B4145A2B96053FC /* Rubik-LightItalic.ttf */; };
 		EF3AC8132B3EB24E004EE982 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF3AC8122B3EB24E004EE982 /* BootSplash.storyboard */; };
@@ -114,9 +114,7 @@
 		0F1818292DB7CC3E0053B66E /* MultipartUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartUploader.swift; sourceTree = "<group>"; };
 		0F18182A2DB7CC3E0053B66E /* RegularUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularUploader.swift; sourceTree = "<group>"; };
 		0F18182B2DB7CC3E0053B66E /* UploaderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploaderProtocol.swift; sourceTree = "<group>"; };
-		0F18182D2DB7CC3E0053B66E /* RCTPortMediaUploader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTPortMediaUploader.m; sourceTree = "<group>"; };
 		0F18182E2DB7CC3E0053B66E /* RCTPortMediaUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCTPortMediaUploader.swift; sourceTree = "<group>"; };
-		0F18182F2DB7CC3E0053B66E /* RCTPortMediaUploader-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RCTPortMediaUploader-Bridging-Header.h"; sourceTree = "<group>"; };
 		11B82E9A06C44E178EFC9EA6 /* Rubik-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Regular.ttf"; path = "../assets/fonts/Rubik-Regular.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Port.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Port.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Port/Images.xcassets; sourceTree = "<group>"; };
@@ -482,6 +480,8 @@
 		ADF3A7552DB8A005000570CB /* pbencrypt.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = pbencrypt.cpp; sourceTree = "<group>"; };
 		AFA2CE3A865144AF96BAEAD0 /* Rubik-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-BoldItalic.ttf"; path = "../assets/fonts/Rubik-BoldItalic.ttf"; sourceTree = "<group>"; };
 		BA2B26E72BA84A858CDCAD23 /* Rubik-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Italic.ttf"; path = "../assets/fonts/Rubik-Italic.ttf"; sourceTree = "<group>"; };
+		D83604EE2E546FF100E5FE74 /* RCTPortMediaUploader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTPortMediaUploader.h; sourceTree = "<group>"; };
+		D83604EF2E546FF100E5FE74 /* RCTPortMediaUploader.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RCTPortMediaUploader.mm; sourceTree = "<group>"; };
 		EC75815A30914101AB3F1930 /* Rubik-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-ExtraBoldItalic.ttf"; path = "../assets/fonts/Rubik-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		EF3AC8122B3EB24E004EE982 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = Port/BootSplash.storyboard; sourceTree = "<group>"; };
@@ -562,10 +562,10 @@
 		0F1818302DB7CC3E0053B66E /* PortMediaUploader */ = {
 			isa = PBXGroup;
 			children = (
+				D83604EE2E546FF100E5FE74 /* RCTPortMediaUploader.h */,
+				D83604EF2E546FF100E5FE74 /* RCTPortMediaUploader.mm */,
 				0F18182C2DB7CC3E0053B66E /* FileUploaders */,
-				0F18182D2DB7CC3E0053B66E /* RCTPortMediaUploader.m */,
 				0F18182E2DB7CC3E0053B66E /* RCTPortMediaUploader.swift */,
-				0F18182F2DB7CC3E0053B66E /* RCTPortMediaUploader-Bridging-Header.h */,
 			);
 			name = PortMediaUploader;
 			path = Port/PortMediaUploader;
@@ -1561,8 +1561,8 @@
 				ADF3A7562DB8A005000570CB /* pbencrypt.cpp in Sources */,
 				AD941C792DA4579600163C84 /* commonhash.cpp in Sources */,
 				0F1818312DB7CC3F0053B66E /* UploaderProtocol.swift in Sources */,
+				D83604F02E546FF100E5FE74 /* RCTPortMediaUploader.mm in Sources */,
 				0F1818322DB7CC3F0053B66E /* RCTPortMediaUploader.swift in Sources */,
-				0F1818332DB7CC3F0053B66E /* RCTPortMediaUploader.m in Sources */,
 				0F1818342DB7CC3F0053B66E /* RegularUploader.swift in Sources */,
 				ADCCE2702E39414400030588 /* NativeCryptoModuleProvider.mm in Sources */,
 				0F1818352DB7CC3F0053B66E /* MultipartUploader.swift in Sources */,
