@@ -14,7 +14,6 @@ import Reanimated, {
     withTiming
 } from 'react-native-reanimated';
 import type { Camera, PhotoFile, VideoFile } from 'react-native-vision-camera';
-
 import { runOnJS } from 'react-native-worklets';
 
 import Capture from '@assets/icons/CaptureButton.svg';

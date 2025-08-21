@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Text, View, TextStyle, ViewStyle } from 'react-native';
+import { Text, TextStyle, View, ViewStyle } from 'react-native';
+
 import type { Camera } from 'react-native-vision-camera';
 
 interface TimerProps {

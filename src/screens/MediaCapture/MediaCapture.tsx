@@ -16,7 +16,6 @@ import {
   useCameraDevice,
   useCameraFormat,
   // useFrameProcessor, // filters and stuff, if ever
-  useLocationPermission,
   useMicrophonePermission
 } from 'react-native-vision-camera';
 
@@ -86,7 +85,7 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
   const [enableNightMode, setEnableNightMode] = useState(false);
 
   // camera device settings
-  let device = useCameraDevice(cameraPosition);
+  const device = useCameraDevice(cameraPosition);
 
 
   const [targetFps, setTargetFps] = useState(60);
