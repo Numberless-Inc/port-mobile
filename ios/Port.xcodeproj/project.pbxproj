@@ -11,13 +11,12 @@
 		0A5A5887D9E448CEB79A9DEC /* Rubik-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AFA2CE3A865144AF96BAEAD0 /* Rubik-BoldItalic.ttf */; };
 		0F1818312DB7CC3F0053B66E /* UploaderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F18182B2DB7CC3E0053B66E /* UploaderProtocol.swift */; };
 		0F1818322DB7CC3F0053B66E /* RCTPortMediaUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F18182E2DB7CC3E0053B66E /* RCTPortMediaUploader.swift */; };
-		0F1818332DB7CC3F0053B66E /* RCTPortMediaUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F18182D2DB7CC3E0053B66E /* RCTPortMediaUploader.m */; };
 		0F1818342DB7CC3F0053B66E /* RegularUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F18182A2DB7CC3E0053B66E /* RegularUploader.swift */; };
 		0F1818352DB7CC3F0053B66E /* MultipartUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1818292DB7CC3E0053B66E /* MultipartUploader.swift */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		17818EC3325348738B47A493 /* Rubik-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A228269647EE46F8A305E2B1 /* Rubik-MediumItalic.ttf */; };
 		20D413B01ED14B91B117D4F6 /* Rubik-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC75815A30914101AB3F1930 /* Rubik-ExtraBoldItalic.ttf */; };
-		2E97073989CE4760F794791C /* Pods_Port.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED828780513DB98DFE002949 /* Pods_Port.framework */; };
+		4F46D7042B4C2BB007BC5350 /* Pods_Port.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67E0B8291850770DD281F45E /* Pods_Port.framework */; };
 		6A4E4B436B2B4B5C9D90B42A /* Rubik-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7B907BA49A544CBAB8606CFB /* Rubik-Medium.ttf */; };
 		6D6718C97AE13F67D6227B87 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 3829492AB80DCA6450648613 /* PrivacyInfo.xcprivacy */; };
 		81F174392B0FC9F2006E6BEE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 81F174382B0FC9F2006E6BEE /* GoogleService-Info.plist */; };
@@ -59,6 +58,7 @@
 		C35227316CC141E3B4116802 /* Rubik-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6CE2419BF3A84F09B2CF2A6E /* Rubik-Light.ttf */; };
 		CADD983D617E48E7BD04523D /* Rubik-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD1CF344CFCB406EB5AE1240 /* Rubik-Bold.ttf */; };
 		CBF2008ED9D44389A20E9A10 /* Rubik-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA2B26E72BA84A858CDCAD23 /* Rubik-Italic.ttf */; };
+		D83604F02E546FF100E5FE74 /* RCTPortMediaUploader.mm in Sources */ = {isa = PBXBuildFile; fileRef = D83604EF2E546FF100E5FE74 /* RCTPortMediaUploader.mm */; };
 		DAAA7AC2256F4089B12F63EF /* Rubik-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E9AFE7EE27D435EB17F1E39 /* Rubik-BlackItalic.ttf */; };
 		E5F96150FC2C4CAF9BB44DB3 /* Rubik-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F505A8914B4145A2B96053FC /* Rubik-LightItalic.ttf */; };
 		EF3AC8132B3EB24E004EE982 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF3AC8122B3EB24E004EE982 /* BootSplash.storyboard */; };
@@ -114,25 +114,24 @@
 		0F1818292DB7CC3E0053B66E /* MultipartUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartUploader.swift; sourceTree = "<group>"; };
 		0F18182A2DB7CC3E0053B66E /* RegularUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularUploader.swift; sourceTree = "<group>"; };
 		0F18182B2DB7CC3E0053B66E /* UploaderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploaderProtocol.swift; sourceTree = "<group>"; };
-		0F18182D2DB7CC3E0053B66E /* RCTPortMediaUploader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTPortMediaUploader.m; sourceTree = "<group>"; };
 		0F18182E2DB7CC3E0053B66E /* RCTPortMediaUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCTPortMediaUploader.swift; sourceTree = "<group>"; };
-		0F18182F2DB7CC3E0053B66E /* RCTPortMediaUploader-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RCTPortMediaUploader-Bridging-Header.h"; sourceTree = "<group>"; };
 		11B82E9A06C44E178EFC9EA6 /* Rubik-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Regular.ttf"; path = "../assets/fonts/Rubik-Regular.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Port.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Port.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Port/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Port/Info.plist; sourceTree = "<group>"; };
-		26D9E17F2147E4C08738F6D5 /* Pods-Port.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Port.debug.xcconfig"; path = "Target Support Files/Pods-Port/Pods-Port.debug.xcconfig"; sourceTree = "<group>"; };
 		2DD988CA88D9480E91B30A7B /* Rubik-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Black.ttf"; path = "../assets/fonts/Rubik-Black.ttf"; sourceTree = "<group>"; };
 		3829492AB80DCA6450648613 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = Port/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		4BB7053FA53F48C69AB69699 /* Rubik-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-ExtraBold.ttf"; path = "../assets/fonts/Rubik-ExtraBold.ttf"; sourceTree = "<group>"; };
-		4CDF5095698FB31C7EFB56DC /* Pods-Port.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Port.release.xcconfig"; path = "Target Support Files/Pods-Port/Pods-Port.release.xcconfig"; sourceTree = "<group>"; };
 		4D08A40BE9CF4D84BED2A4D3 /* Rubik-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-SemiBold.ttf"; path = "../assets/fonts/Rubik-SemiBold.ttf"; sourceTree = "<group>"; };
+		67E0B8291850770DD281F45E /* Pods_Port.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Port.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CE2419BF3A84F09B2CF2A6E /* Rubik-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Light.ttf"; path = "../assets/fonts/Rubik-Light.ttf"; sourceTree = "<group>"; };
 		7B907BA49A544CBAB8606CFB /* Rubik-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Medium.ttf"; path = "../assets/fonts/Rubik-Medium.ttf"; sourceTree = "<group>"; };
 		81215DA32B10C2DA00BC9A87 /* Port.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Port.entitlements; path = Port/Port.entitlements; sourceTree = "<group>"; };
 		81F174382B0FC9F2006E6BEE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8E9AFE7EE27D435EB17F1E39 /* Rubik-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-BlackItalic.ttf"; path = "../assets/fonts/Rubik-BlackItalic.ttf"; sourceTree = "<group>"; };
+		9759D0543CFF3815B5E6C1A9 /* Pods-Port.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Port.debug.xcconfig"; path = "Target Support Files/Pods-Port/Pods-Port.debug.xcconfig"; sourceTree = "<group>"; };
 		9BB0D4F5CB1E419FB64571BA /* Rubik-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-SemiBoldItalic.ttf"; path = "../assets/fonts/Rubik-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		A0F0710A80ABD31898C0FB07 /* Pods-Port.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Port.release.xcconfig"; path = "Target Support Files/Pods-Port/Pods-Port.release.xcconfig"; sourceTree = "<group>"; };
 		A228269647EE46F8A305E2B1 /* Rubik-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-MediumItalic.ttf"; path = "../assets/fonts/Rubik-MediumItalic.ttf"; sourceTree = "<group>"; };
 		AD0DC8A02BD3415A00A57768 /* portnse.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = portnse.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD0DC8A22BD3415A00A57768 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
@@ -481,9 +480,10 @@
 		ADF3A7552DB8A005000570CB /* pbencrypt.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = pbencrypt.cpp; sourceTree = "<group>"; };
 		AFA2CE3A865144AF96BAEAD0 /* Rubik-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-BoldItalic.ttf"; path = "../assets/fonts/Rubik-BoldItalic.ttf"; sourceTree = "<group>"; };
 		BA2B26E72BA84A858CDCAD23 /* Rubik-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Italic.ttf"; path = "../assets/fonts/Rubik-Italic.ttf"; sourceTree = "<group>"; };
+		D83604EE2E546FF100E5FE74 /* RCTPortMediaUploader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTPortMediaUploader.h; sourceTree = "<group>"; };
+		D83604EF2E546FF100E5FE74 /* RCTPortMediaUploader.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RCTPortMediaUploader.mm; sourceTree = "<group>"; };
 		EC75815A30914101AB3F1930 /* Rubik-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-ExtraBoldItalic.ttf"; path = "../assets/fonts/Rubik-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		ED828780513DB98DFE002949 /* Pods_Port.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Port.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF3AC8122B3EB24E004EE982 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = Port/BootSplash.storyboard; sourceTree = "<group>"; };
 		EF6D2D3A2B287D6C004B63B1 /* PortShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PortShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF6D2D3C2B287D6C004B63B1 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -511,7 +511,7 @@
 				AD78F4762DA45C910031AEB1 /* libssl.a in Frameworks */,
 				AD71C80D2D3EEB3700597A2C /* Intents.framework in Frameworks */,
 				AD71C80B2D3EEB1F00597A2C /* CallKit.framework in Frameworks */,
-				2E97073989CE4760F794791C /* Pods_Port.framework in Frameworks */,
+				4F46D7042B4C2BB007BC5350 /* Pods_Port.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -562,10 +562,10 @@
 		0F1818302DB7CC3E0053B66E /* PortMediaUploader */ = {
 			isa = PBXGroup;
 			children = (
+				D83604EE2E546FF100E5FE74 /* RCTPortMediaUploader.h */,
+				D83604EF2E546FF100E5FE74 /* RCTPortMediaUploader.mm */,
 				0F18182C2DB7CC3E0053B66E /* FileUploaders */,
-				0F18182D2DB7CC3E0053B66E /* RCTPortMediaUploader.m */,
 				0F18182E2DB7CC3E0053B66E /* RCTPortMediaUploader.swift */,
-				0F18182F2DB7CC3E0053B66E /* RCTPortMediaUploader-Bridging-Header.h */,
 			);
 			name = PortMediaUploader;
 			path = Port/PortMediaUploader;
@@ -598,7 +598,7 @@
 				AD71C80C2D3EEB3700597A2C /* Intents.framework */,
 				AD71C80A2D3EEB1F00597A2C /* CallKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				ED828780513DB98DFE002949 /* Pods_Port.framework */,
+				67E0B8291850770DD281F45E /* Pods_Port.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1219,8 +1219,8 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				26D9E17F2147E4C08738F6D5 /* Pods-Port.debug.xcconfig */,
-				4CDF5095698FB31C7EFB56DC /* Pods-Port.release.xcconfig */,
+				9759D0543CFF3815B5E6C1A9 /* Pods-Port.debug.xcconfig */,
+				A0F0710A80ABD31898C0FB07 /* Pods-Port.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1261,17 +1261,17 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Port" */;
 			buildPhases = (
-				A9880405B007D04974328CFB /* [CP] Check Pods Manifest.lock */,
+				EABE9C78551C40E7CBAD1EC5 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				EF6D2D452B287D6C004B63B1 /* Embed Foundation Extensions */,
-				03CB6B55D5310D7AE1E54EED /* [CP] Embed Pods Frameworks */,
-				CACD29F54221CF1DBC25D943 /* [CP] Copy Pods Resources */,
-				DA4DEA7D459086CE8E9935A6 /* [CP-User] [RNFB] Core Configuration */,
 				9D9435B5C0454E3286958418 /* Upload Debug Symbols to Sentry */,
+				BB3728B0BB3DB3545AD2B75B /* [CP] Embed Pods Frameworks */,
+				3C835B43CBC0CDF738702D2A /* [CP] Copy Pods Resources */,
+				F0A452FEABDA05FCBE1E92EB /* [CP-User] [RNFB] Core Configuration */,
 			);
 			buildRules = (
 			);
@@ -1432,21 +1432,21 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT \\\"/bin/sh ../node_modules/@sentry/react-native/scripts/sentry-xcode.sh $REACT_NATIVE_XCODE\\\"\"\n";
 		};
-		03CB6B55D5310D7AE1E54EED /* [CP] Embed Pods Frameworks */ = {
+		3C835B43CBC0CDF738702D2A /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Port/Pods-Port-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Port/Pods-Port-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Port/Pods-Port-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Port/Pods-Port-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Port/Pods-Port-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Port/Pods-Port-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9D9435B5C0454E3286958418 /* Upload Debug Symbols to Sentry */ = {
@@ -1463,7 +1463,24 @@
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh ../node_modules/@sentry/react-native/scripts/sentry-xcode-debug-files.sh";
 		};
-		A9880405B007D04974328CFB /* [CP] Check Pods Manifest.lock */ = {
+		BB3728B0BB3DB3545AD2B75B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Port/Pods-Port-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Port/Pods-Port-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Port/Pods-Port-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EABE9C78551C40E7CBAD1EC5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1485,24 +1502,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CACD29F54221CF1DBC25D943 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Port/Pods-Port-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Port/Pods-Port-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Port/Pods-Port-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DA4DEA7D459086CE8E9935A6 /* [CP-User] [RNFB] Core Configuration */ = {
+		F0A452FEABDA05FCBE1E92EB /* [CP-User] [RNFB] Core Configuration */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1561,8 +1561,8 @@
 				ADF3A7562DB8A005000570CB /* pbencrypt.cpp in Sources */,
 				AD941C792DA4579600163C84 /* commonhash.cpp in Sources */,
 				0F1818312DB7CC3F0053B66E /* UploaderProtocol.swift in Sources */,
+				D83604F02E546FF100E5FE74 /* RCTPortMediaUploader.mm in Sources */,
 				0F1818322DB7CC3F0053B66E /* RCTPortMediaUploader.swift in Sources */,
-				0F1818332DB7CC3F0053B66E /* RCTPortMediaUploader.m in Sources */,
 				0F1818342DB7CC3F0053B66E /* RegularUploader.swift in Sources */,
 				ADCCE2702E39414400030588 /* NativeCryptoModuleProvider.mm in Sources */,
 				0F1818352DB7CC3F0053B66E /* MultipartUploader.swift in Sources */,
@@ -1677,7 +1677,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 26D9E17F2147E4C08738F6D5 /* Pods-Port.debug.xcconfig */;
+			baseConfigurationReference = 9759D0543CFF3815B5E6C1A9 /* Pods-Port.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1962,7 +1962,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4CDF5095698FB31C7EFB56DC /* Pods-Port.release.xcconfig */;
+			baseConfigurationReference = A0F0710A80ABD31898C0FB07 /* Pods-Port.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
