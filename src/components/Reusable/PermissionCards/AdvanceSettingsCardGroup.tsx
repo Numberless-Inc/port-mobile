@@ -37,7 +37,6 @@ const AdvanceSettingsCardGroup = ({
   const onUpdateBooleanPermission = async (
     permissionKey: keyof BooleanPermissions,
   ) => {
-    console.log(chatId);
     const updatedPermissions: GroupPermissions = {
       ...permissions,
       [permissionKey]: !permissions[permissionKey],

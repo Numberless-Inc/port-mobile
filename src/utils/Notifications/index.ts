@@ -40,7 +40,6 @@ export const performNotificationRouting = async (
     return;
   }
   const {chatId, source} = notificationData;
-  console.log(chatId, source);
 
   // Use chatId if available, otherwise fallback to source
   let finalChatId: string;
