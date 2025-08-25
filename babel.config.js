@@ -27,7 +27,7 @@ module.exports = {
         ],
       },
     ],
-    'react-native-reanimated/plugin',
+    'react-native-worklets/plugin',
     'module:react-native-dotenv',
   ],
   presets: ['module:@react-native/babel-preset'],

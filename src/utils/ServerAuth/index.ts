@@ -52,11 +52,15 @@ function checkAuthTokenTimeout(
  */
 async function generateAndSaveNewAuthToken(): Promise<ServerAuthToken | undefined> {
   // read from in memory obj
-  const profile = await getProfileInfo();
-  if (!profile) {
-    throw new Error('NoProfileWhileGetToken');
+  let profile;
+  try {
+    profile = await getProfileInfo();
+    if (!profile) {
+      throw new Error('NoProfileWhileGetToken');
+    }
+  } catch (error) {
+    return undefined;
   }
-  const challenge = await API.getNewAuthChallenge(profile.clientId);
   const savedSLK = await readShortLivedKey();
   if (
     savedSLK &&
@@ -64,6 +68,7 @@ async function generateAndSaveNewAuthToken(): Promise<ServerAuthToken | undefine
   ) {
     //return fresh JWT
     try {
+      const challenge = await API.getNewAuthChallenge(profile.clientId);
       const encChallenge: string = signMessage(challenge, savedSLK.privateKey);
       cachedToken = await API.postSolvedAuthChallenge(profile.clientId, {
         signedChallenge: encChallenge,
@@ -76,6 +81,7 @@ async function generateAndSaveNewAuthToken(): Promise<ServerAuthToken | undefine
   } else {
     //try generating a new ShortLivedKey
     try {
+      const challenge = await API.getNewAuthChallenge(profile.clientId);
       const shortLivedKeys = await generateKeys();
       const encChallenge: string = signMessage(
         challenge,
@@ -139,7 +145,11 @@ export async function getToken(): Promise<ServerAuthToken> {
       } catch (error) {
         //if token is not valid or if there is no token found in file:
         //try generating a new token
-        return await generateAndSaveNewAuthToken();
+        const token = await generateAndSaveNewAuthToken();
+        if (!token) {
+          throw new Error('failed in generateAndSaveNewAuthToken (most likely fresh install/no profile)');
+        }
+        return token;
       }
     } else {
       //case2 : token found in store
@@ -151,7 +161,11 @@ export async function getToken(): Promise<ServerAuthToken> {
         return cachedToken.token;
       } else {
         //try generating a new token
-        return await generateAndSaveNewAuthToken();
+        const token = await generateAndSaveNewAuthToken();
+        if (!token) {
+          throw new Error('failed in generateAndSaveNewAuthToken');
+        }
+        return token;
       }
     }
   };
