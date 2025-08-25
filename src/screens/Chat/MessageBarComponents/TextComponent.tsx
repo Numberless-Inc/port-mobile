@@ -384,7 +384,6 @@ const styling = (colors: any) =>
     editMessageContainer: {
       flex: 1,
       flexDirection: 'column',
-      alignItems: 'center',
       marginTop: Spacing.s,
       backgroundColor: colors.primary.surface2,
       borderRadius: 16,
