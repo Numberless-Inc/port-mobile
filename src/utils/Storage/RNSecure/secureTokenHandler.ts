@@ -1,4 +1,4 @@
-import EncryptedStorage from 'react-native-encrypted-storage';
+import NativeEncryptedStorage from '@specs/NativeEncryptedStorage';
 
 import {tokenKey} from '../../../configs/paths';
 
@@ -18,8 +18,8 @@ export async function getTokenInfoRNSS(): Promise<
   SavedServerAuthToken | undefined
 > {
   try {
-    const session: any = await EncryptedStorage.getItem(tokenKey);
-    return JSON.parse(session);
+    const session = NativeEncryptedStorage.getItem(tokenKey);
+    return session ? JSON.parse(session) :  undefined;
   } catch (error) {
     console.log('Error reading token from encrypted storage: ', error);
     return undefined;
@@ -34,7 +34,7 @@ export async function saveTokenInfoRNSS(
   token: SavedServerAuthToken,
 ): Promise<void> {
   try {
-    await EncryptedStorage.setItem(tokenKey, JSON.stringify(token));
+    NativeEncryptedStorage.setItem(tokenKey, JSON.stringify(token));
   } catch (error) {
     console.log('Error saving token to encrypted storage: ', error);
   }
