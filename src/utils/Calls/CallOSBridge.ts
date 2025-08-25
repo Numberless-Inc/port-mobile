@@ -1,5 +1,7 @@
 import uuid from 'react-native-uuid';
 
+import {isIOS} from '@components/ComponentUtils';
+
 import DirectChat from '@utils/DirectChats/DirectChat';
 
 import NativeCallHelperModule, {
@@ -20,6 +22,12 @@ export async function setUpCallStateListeners(
   acceptanceCallback: (callId: string) => void,
   endCallback: (callId: string) => void,
 ) {
+  // There appears to be a bug in react-native causing the app to crash
+  // on some Android devices when setting event listeners.
+  // Since these are not needed at all, we might as well not set them up.
+  if (!isIOS) {
+    return;
+  }
   NativeCallHelperModule.onAccept((event: AcceptEventPayload) => {
     acceptanceCallback(event.callUUID);
   });

@@ -1,4 +1,4 @@
-#include "NativeCryptoModule.hpp"
+#include "NativeCryptoModule.h"
 
 #include <future>
 #include <openssl/evp.h>
