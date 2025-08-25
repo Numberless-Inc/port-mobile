@@ -7,7 +7,8 @@ import { useIsFocused } from '@react-navigation/core';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { PressableOpacity } from 'react-native-pressable-opacity';
-import Reanimated, { Extrapolation, interpolate, runOnJS, useAnimatedProps, useSharedValue } from 'react-native-reanimated';
+import Reanimated, { Extrapolation, interpolate, useAnimatedProps, useSharedValue } from 'react-native-reanimated';
+import { runOnJS } from 'react-native-worklets';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import type { CameraProps, CameraRuntimeError, PhotoFile, VideoFile } from 'react-native-vision-camera';
@@ -68,7 +69,6 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
   const goToConfirmation = async (lst: any[]) => {
     // navigation.goBack();
     if (lst.length > 0) {
-      console.log("Navigating to GalleryConfirmation...", lst);
       const connection = await getConnection(chatId);
       navigation.push('GalleryConfirmation', {
         selectedMembers: [connection],
@@ -76,7 +76,6 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
         isChat: true,
       });
     }
-    console.log("navigated to GalleryConfirmation...");
   };
 
   const [cameraPosition, setCameraPosition] = useState<'front' | 'back'>('back');
@@ -142,9 +141,6 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
 
   const onMediaCaptured = useCallback(
     (media: PhotoFile | VideoFile, type: 'photo' | 'video') => {
-      console.log(media);
-      console.log(`Media captured! ${JSON.stringify(media)}`);
-      console.log();
       const isVideo = type === 'video';
       const fileList = [
         {
@@ -156,7 +152,6 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
           },
         },
       ];
-      console.log(fileList);
       goToConfirmation(fileList);
     },
     [navigation]
