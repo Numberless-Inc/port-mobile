@@ -73,7 +73,6 @@
     "react-native": "0.80.2",
     "react-native-audio-recorder-player": "^3.6.6",
     "react-native-autolink": "^4.2.0",
-    "react-native-background-fetch": "^4.2.1",
     "react-native-blob-util": "^0.19.6",
     "react-native-bootsplash": "^6.3.4",
     "react-native-cloud-storage": "^2.2.2",

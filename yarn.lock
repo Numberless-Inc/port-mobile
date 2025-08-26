@@ -9998,11 +9998,6 @@ react-native-autolink@^4.2.0:
   dependencies:
     autolinker "^3.16.2"
 
-react-native-background-fetch@^4.2.1:
-  version "4.2.3"
-  resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-4.2.3.tgz#d952613afccbc64bc33f17ff402baa1540133d2a"
-  integrity sha512-JC20TejQZfQk5DueXwK/HPpJNB7WZ3rMmyzHVKF+F14vHKf/RzUMJf3q8WXZ4rs5iPiHjbMkadwXGAPWYe5g6w==
-
 react-native-blob-util@^0.19.6:
   version "0.19.8"
   resolved "https://registry.yarnpkg.com/react-native-blob-util/-/react-native-blob-util-0.19.8.tgz#c31aeeebcbbbb1c10faec4346955ed9374a1d9d3"
