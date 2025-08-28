@@ -10,7 +10,7 @@ import SelectedMembersCard from '@components/Cards/SelectedMembersCard';
 import { useColors } from '@components/colorGuide';
 import { GradientScreenView } from '@components/GradientScreenView';
 import SearchBar from '@components/SearchBar';
-import { Height, Spacing } from '@components/spacingGuide';
+import {  Spacing } from '@components/spacingGuide';
 import TopBarDescription from '@components/Text/TopBarDescription';
 
 import {AppStackParamList} from '@navigation/AppStack/AppStackTypes';
@@ -102,14 +102,6 @@ const ShareContact = ({route, navigation}: Props) => {
               setSelectedMembers={setSelectedMembers}
               members={selectedMembers}/>
               <SearchBar
-                style={{
-                  backgroundColor: Colors.surface,
-                  height: Height.searchBar,
-                  width: '100%',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderRadius: Spacing.xml,
-                }}
                 searchText={searchText}
                 setSearchText={setSearchText}
               />
