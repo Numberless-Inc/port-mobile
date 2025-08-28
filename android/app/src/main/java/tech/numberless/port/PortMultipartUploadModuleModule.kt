@@ -1,5 +1,6 @@
 package tech.numberless.port
-
+import android.content.Context
+import tech.numberless.port.specs.NativeMediaUploadModuleSpec
 import android.util.Log
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
@@ -20,18 +21,14 @@ import kotlin.math.ceil
 
 /**
  * React module for uploading files in chunks
- * @property NAME The name of the module. Defaults to "PortMediaUploader"
  */
-@ReactModule(name = PortMediaUploader.NAME)
-class PortMediaUploader constructor(
-    reactContext: ReactApplicationContext,
-) : ReactContextBaseJavaModule(reactContext) {
+class PortMediaUploader(reactContext: ReactApplicationContext) : NativeMediaUploadModuleSpec(reactContext) {
     /**
      * Companion object for the module.
      * @property NAME The name of the module.
      */
     companion object {
-        const val NAME = "PortMediaUploader"
+        const val NAME = "NativeMediaUploadModule"
     }
 
     /**
@@ -110,8 +107,7 @@ class PortMediaUploader constructor(
      * @param complete The endpoint for completing a multipart upload.
      * @param abort The endpoint for aborting a multipart upload.
      */
-    @ReactMethod
-    fun initialize(
+    override fun initialize(
         presign: String,
         begin: String,
         complete: String,
@@ -133,8 +129,7 @@ class PortMediaUploader constructor(
      * @param promise The promise to resolve or reject.
      * @return Technically, nothing. But if the upload is successful, the promise will resolve with a mediaId.
      */
-    @ReactMethod
-    fun uploadFile(
+    override fun uploadFile(
         path: String,
         token: String,
         partSize: Double,
@@ -164,20 +159,17 @@ class PortMediaUploader constructor(
      * @param path The path of the file to be uploaded.
      * @return True if the upload was canceled, false otherwise.
      */
-    @ReactMethod
-    fun cancelUpload(path: String): Boolean {
+    override fun cancelUpload(path: String, promise: Promise) {
         val job = uploadJobs.remove(path) // Remove the job reference
-        val promise = uploadPromises.remove(path) // Remove the promise reference
 
         if (job == null) {
             Log.w("PortMediaUploader", "Cancel request ignored: No active upload for $path")
-            return false
+            promise.resolve(false)
         }
 
-        job.cancel() // Cancel the upload if it's still running
-        promise?.reject("UPLOAD_CANCELED", "Upload was canceled for $path")
+        job?.cancel() // Cancel the upload if it's still running
+        promise.resolve(true)
 
         Log.i("PortMediaUploader", "Upload for $path successfully canceled.")
-        return true
     }
 }
