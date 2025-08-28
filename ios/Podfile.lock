@@ -1757,6 +1757,35 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
+  - react-native-blur (4.4.1):
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - hermes-engine
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-hermes
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - SocketRocket
+    - Yoga
   - react-native-cameraroll (7.10.0):
     - boost
     - DoubleConversion
@@ -3185,7 +3214,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - RNVectorIcons (10.2.0):
+  - RNVectorIcons (10.3.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -3364,6 +3393,7 @@ DEPENDENCIES:
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - react-native-blob-util (from `../node_modules/react-native-blob-util`)
+  - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - "react-native-cameraroll (from `../node_modules/@react-native-camera-roll/camera-roll`)"
   - react-native-cloud-storage (from `../node_modules/react-native-cloud-storage`)
   - react-native-compressor (from `../node_modules/react-native-compressor`)
@@ -3543,6 +3573,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/microtasks"
   react-native-blob-util:
     :path: "../node_modules/react-native-blob-util"
+  react-native-blur:
+    :path: "../node_modules/@react-native-community/blur"
   react-native-cameraroll:
     :path: "../node_modules/@react-native-camera-roll/camera-roll"
   react-native-cloud-storage:
@@ -3745,6 +3777,7 @@ SPEC CHECKSUMS:
   React-Mapbuffer: 8f620d1794c6b59a8c3862c3ae820a2e9e6c9bb0
   React-microtasksnativemodule: dcf5321c9a41659a6718df8a5f202af1577c6825
   react-native-blob-util: 72c84b29a72e2d25b5c49600fa57bc7085513ff1
+  react-native-blur: ecdc987ab8d8fba95abef14551f033376872d0a6
   react-native-cameraroll: 8c3ba9b6f511cf645778de19d5039b61d922fdfb
   react-native-cloud-storage: 9ab15771b6680b968f8dac6c37c0f57f28d872fd
   react-native-compressor: e993b00adf26484fe40a33c008e0d2a403391536
@@ -3813,7 +3846,7 @@ SPEC CHECKSUMS:
   RNSentry: aac1c4a308e7fa4f3a684d6726dba7655c83bed3
   RNShare: f5de13630ef7082d870a4397e7e9402608b58c52
   RNSVG: bc7ccfe884848ac924d2279d9025d41b5f05cb0c
-  RNVectorIcons: 4e0c24d4bca3b3eb6763256317133b3d65b91bde
+  RNVectorIcons: 0567525e0a344458329daa09068cf9e8090ec791
   RNVoipPushNotification: e5edde96849c0133ebc7e900dc30c8c221cfb690
   RNWorklets: 09b1efb10eb4c8b886db5edcccd33bdf38659710
   Sentry: 59993bffde4a1ac297ba6d268dc4bbce068d7c1b
@@ -3824,4 +3857,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 919ab8fd3934f7586e38810d4995f220fc244b6e
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2

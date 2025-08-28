@@ -30,6 +30,7 @@ import CreateNewGroup from '@screens/GroupsV2/CreateNewGroup';
 import GroupProfile from '@screens/GroupsV2/GroupProfile';
 import InviteGroupMembers from '@screens/GroupsV2/InviteGroupMembers';
 import HelpScreen from '@screens/Help/HelpScreen';
+import { MediaCapture } from '@screens/MediaCapture/MediaCapture';
 import MediaViewer from '@screens/MediaViewer/MediaViewer';
 import AccountSettings from '@screens/MyAccount';
 import GroupSuperPortQRScreen from '@screens/NewGroupSuperPort/GroupSuperPortQRScreen';
@@ -141,6 +142,7 @@ function AppStack() {
             />
             <Stack.Screen name="MediaViewer" component={MediaViewer} />
             <Stack.Screen name="Scan" component={QRScanner} />
+            <Stack.Screen name="MediaCapture" component={MediaCapture} />
             <Stack.Screen name="BlockedContacts" component={BlockedContacts} />
             <Stack.Screen name="HelpScreen" component={HelpScreen} />
             <Stack.Screen name="Templates" component={Templates} />

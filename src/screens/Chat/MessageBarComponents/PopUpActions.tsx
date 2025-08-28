@@ -50,6 +50,11 @@ const PopUpActions = ({
 
   const svgArray = [
     {
+      assetName: 'CameraIcon',
+      light: require('@assets/light/icons/media/Camera.svg').default,
+      dark: require('@assets/dark/icons/media/Camera.svg').default,
+    },
+    {
       assetName: 'VideoIcon',
       light: require('@assets/light/icons/media/Video.svg').default,
       dark: require('@assets/dark/icons/media/Video.svg').default,
@@ -78,6 +83,7 @@ const PopUpActions = ({
 
   const results = useDynamicSVG(svgArray);
 
+  const CameraIcon = results.CameraIcon;
   const VideoIcon = results.VideoIcon;
   const FileIcon = results.FileIcon;
   const ImageIcon = results.ImageIcon;
@@ -93,6 +99,12 @@ const PopUpActions = ({
       });
     }
     togglePopUp();
+  };
+
+  const onCameraPressed = () => {
+    navigation.push('MediaCapture', {
+      chatId: chatId
+    });
   };
 
   // image pressed
@@ -184,6 +196,17 @@ const PopUpActions = ({
   return (
     <Animated.View style={[styles.mainContainer, animatedStyle]}>
       <View style={styles.popUpContainer}>
+        <View style={styles.optionContainer}>
+          <Pressable style={styles.optionBox} onPress={onCameraPressed}>
+          <CameraIcon />
+          </Pressable>
+          <NumberlessText
+            fontSizeType={FontSizeType.s}
+            textColor={Colors.text.primary}
+            fontType={FontType.rg}>
+            Camera
+          </NumberlessText>
+        </View>
         <View style={styles.optionContainer}>
           <Pressable style={styles.optionBox} onPress={onImagePressed}>
             <ImageIcon />
