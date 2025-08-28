@@ -24,8 +24,6 @@ import {
 import {ChatType} from '@utils/Storage/DBCalls/connections';
 import {getLineData} from '@utils/Storage/lines';
 import {updatePermissions} from '@utils/Storage/permissions';
-import DirectChat from '@utils/DirectChats/DirectChat';
-import { getIconByUri } from '@components/Reusable/AvatarBox/AvatarBox';
 
 /**
  * Routes the user to the appropriate chat screen when a notification is pressed
@@ -148,7 +146,7 @@ export async function displaySimpleNotification(
 
   if (chatId) {
     try {
-      let connection = await getConnection(chatId);
+      const connection = await getConnection(chatId);
       profileUri = connection.pathToDisplayPic || DEFAULT_AVATAR;
     }
     catch {
@@ -175,7 +173,7 @@ export async function displaySimpleNotification(
         type: AndroidStyle.MESSAGING,
         person: {
           name: chatName,
-          icon: Icon
+          icon: "https://www.iconpacks.net/icons/free-icons-6/free-user-yellow-circle-icon-20550-thumb.png"
         },
         messages: messages,
         group: isGroup,
