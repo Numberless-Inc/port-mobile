@@ -86,7 +86,7 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
   const device = useCameraDevice(cameraPosition);
 
 
-  const [targetFps, setTargetFps] = useState(60);
+  const [targetFps, setTargetFps] = useState(30);
 
   const screenAspectRatio = screen.height / screen.width;
   const format = useCameraFormat(device, [
