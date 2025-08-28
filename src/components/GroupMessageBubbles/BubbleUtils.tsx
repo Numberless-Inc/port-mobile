@@ -55,13 +55,7 @@ export const IMAGE_DIMENSIONS = MAX_WIDTH_CONTENT - PortSpacing.primary.uniform;
 export const TIME_STAMP_TEXT_PADDING_SENDER = '                     ‎';
 export const TIME_STAMP_TEXT_PADDING_RECEIVER = '                 ‎';
 
-export const getMemberColor = (memberId?: string | null) => {
-  if (memberId) {
-    return '#' + memberId.substring(0, 6).replace(/[^\da-f]/gi, '0');
-  } else {
-    return PortColors.primary.blue.app;
-  }
-};
+
 
 export const hasOnlyEmojis = (text: string): boolean => {
   if (text.length > 5) {
@@ -87,18 +81,7 @@ export const getEmojiSize = (text: string): FontSizeType => {
   }
 };
 
-export const getReplyBubbleName = async (reply: GroupReplyContent) => {
-  try {
-    if (reply.sender) {
-      return 'You';
-    } else {
-      return 'Group member';
-    }
-  } catch (error) {
-    console.log('Error fetching reply bubble name: ', error);
-    return '';
-  }
-};
+
 
 export const handleDownload = async (
   chatId: string,
