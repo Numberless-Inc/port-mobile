@@ -70,16 +70,16 @@ export const CaptureButton: React.FC<Props> = ({
     });
 
     const [showStopIconJS, setShowStopIconJS] = React.useState(false);
-    
+
     useEffect(() => {
         console.log('isRecording changed:', isRecording);
-      }, [isRecording]);
+    }, [isRecording]);
 
     useAnimatedReaction(
         () => showStopIcon.value,
         (current, previous) => {
             if (current !== previous) {
-                if(previous == true && isRecording === true) {
+                if (previous == true && isRecording === true) {
                     runOnJS(stopRecording)();
                 }
                 runOnJS(setShowStopIconJS)(current);
@@ -98,7 +98,7 @@ export const CaptureButton: React.FC<Props> = ({
             console.error('Failed to take photo', e);
         }
     }, [camera, flash, onMediaCaptured]);
-      
+
     const stopRecording = useCallback(async () => {
         try {
             if (!camera.current) return;
@@ -112,29 +112,29 @@ export const CaptureButton: React.FC<Props> = ({
             cancelAnimation(recordingProgress);
         }
     }, [camera]);
-    
 
-const startRecording = useCallback(() => {
-    console.log("in startRecording");
-    if (!camera.current) return;
 
-    pressDownTime.value = Date.now();
-    setIsRecording(true)
+    const startRecording = useCallback(() => {
+        console.log("in startRecording");
+        if (!camera.current) return;
 
-    camera.current.startRecording({
-        flash,
-        onRecordingFinished: (video) => {
-            runOnJS(onMediaCaptured)(video, 'video');
-            runOnJS(setIsRecording)(false);
-        },
-        onRecordingError: (error) => {
-            console.error('Recording failed', error);
-            runOnJS(setIsRecording)(false);
-            runOnJS(stopRecording)(); // just in case we're in a state where recording is actually happening but UI doesn't reflect it
-        },
-    });
-    // updateLoop();
-}, [camera, flash, onMediaCaptured, stopRecording]);
+        pressDownTime.value = Date.now();
+        setIsRecording(true)
+
+        camera.current.startRecording({
+            flash,
+            onRecordingFinished: (video) => {
+                runOnJS(onMediaCaptured)(video, 'video');
+                runOnJS(setIsRecording)(false);
+            },
+            onRecordingError: (error) => {
+                console.error('Recording failed', error);
+                runOnJS(setIsRecording)(false);
+                runOnJS(stopRecording)(); // just in case we're in a state where recording is actually happening but UI doesn't reflect it
+            },
+        });
+        // updateLoop();
+    }, [camera, flash, onMediaCaptured, stopRecording]);
 
 
 
@@ -230,24 +230,22 @@ const startRecording = useCallback(() => {
     });
 
     return (
-            <GestureDetector gesture={panGesture}>
-                <GestureDetector gesture={tapGesture}>
-                    <GestureDetector gesture={longPressGesture}>
-                        <Reanimated.View {...props} style={[buttonStyle, style]}>
-                            <Reanimated.View style={styles.flex}>
-                                <Reanimated.View style={[styles.shadow, shadowStyle]} />
-                                <Pressable>
-                                    {showStopIconJS ? (
-                                        <StopRecording width={CAPTURE_BUTTON_SIZE} height={CAPTURE_BUTTON_SIZE} />
-                                    ) : (
-                                        <Capture width={CAPTURE_BUTTON_SIZE} height={CAPTURE_BUTTON_SIZE} />
-                                    )}
-                                </Pressable>
-                            </Reanimated.View>
-                        </Reanimated.View>
-                    </GestureDetector>
-                </GestureDetector>
+        <GestureDetector gesture={panGesture}>
+            <GestureDetector gesture={Gesture.Race(tapGesture, longPressGesture)}>
+                <Reanimated.View {...props} style={[buttonStyle, style]}>
+                    <Reanimated.View style={styles.flex}>
+                        <Reanimated.View style={[styles.shadow, shadowStyle]} />
+                        <Pressable>
+                            {showStopIconJS ? (
+                                <StopRecording width={CAPTURE_BUTTON_SIZE} height={CAPTURE_BUTTON_SIZE} />
+                            ) : (
+                                <Capture width={CAPTURE_BUTTON_SIZE} height={CAPTURE_BUTTON_SIZE} />
+                            )}
+                        </Pressable>
+                    </Reanimated.View>
+                </Reanimated.View>
             </GestureDetector>
+        </GestureDetector>
     );
 };
 

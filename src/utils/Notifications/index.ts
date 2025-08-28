@@ -24,7 +24,6 @@ import {
 import {ChatType} from '@utils/Storage/DBCalls/connections';
 import {getLineData} from '@utils/Storage/lines';
 import {updatePermissions} from '@utils/Storage/permissions';
-import DirectChat from '@utils/DirectChats/DirectChat';
 
 /**
  * Routes the user to the appropriate chat screen when a notification is pressed
@@ -113,7 +112,6 @@ export async function displaySimpleNotification(
   const currentNotifications = await notifee.getDisplayedNotifications();
   let messages: any[] = [];
   let notificationIdToReplace: string | undefined;
-  let profileUri = DEFAULT_AVATAR;
   for (let i = 0; i < currentNotifications.length; i++) {
     // Iterate over existing notifications to try to find a matching one.
     console.info(currentNotifications[i]);
@@ -145,14 +143,6 @@ export async function displaySimpleNotification(
   }
   messages.push(newestMessage);
 
-  if (chatId) {
-    const dataHandler = new DirectChat(chatId);
-    const chatData = dataHandler.getChatData();
-    profileUri = (await chatData).displayPic || DEFAULT_AVATAR;
-  }
-
-  console.log("profileUri", profileUri);
-
   const notification: Notification = {
     title: chatName,
     body: body,
@@ -168,7 +158,6 @@ export async function displaySimpleNotification(
         type: AndroidStyle.MESSAGING,
         person: {
           name: chatName,
-          icon: profileUri
         },
         messages: messages,
         group: isGroup,

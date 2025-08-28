@@ -8,7 +8,6 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { PressableOpacity } from 'react-native-pressable-opacity';
 import Reanimated, { Extrapolation, interpolate, useAnimatedProps, useSharedValue } from 'react-native-reanimated';
-import { runOnJS } from 'react-native-worklets';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import type { CameraProps, CameraRuntimeError, PhotoFile, VideoFile } from 'react-native-vision-camera';
@@ -19,6 +18,7 @@ import {
   // useFrameProcessor, // filters and stuff, if ever
   useMicrophonePermission
 } from 'react-native-vision-camera';
+import { runOnJS } from 'react-native-worklets';
 
 import { Colors, useColors } from '@components/colorGuide';
 import { GestureSafeAreaView } from '@components/GestureSafeAreaView';
@@ -36,7 +36,6 @@ import FlashOn from '@assets/icons/FlashOn.svg';
 import Whitecross from '@assets/icons/greyCrossIcon.svg';
 
 import { CaptureButton } from './views/CaptureButon';
-import { StatusBarBlurBackground } from './views/StatusBarBlurBackground';
 import { Timer } from './views/Timer';
 
 const ReanimatedCamera = Reanimated.createAnimatedComponent(Camera)
@@ -270,7 +269,6 @@ export function MediaCapture({ route, navigation }: Props): React.ReactElement {
         </View>
       )}
   
-      <StatusBarBlurBackground />
   
       <PressableOpacity style={styles.whiteCrossIcon} hitSlop={40}>
         <Whitecross
