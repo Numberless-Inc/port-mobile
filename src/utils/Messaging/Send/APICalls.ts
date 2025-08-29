@@ -29,7 +29,6 @@ export async function sendObject(
   let isGroupChat = isGroup;
   isGroupChat = connection.connectionType === ChatType.group;
   const routingId = connection.routingId;
-  console.log('sending message :', processedPayload);
   //post to messaging resource
   await axios.post(
     MESSAGING_RESOURCE,

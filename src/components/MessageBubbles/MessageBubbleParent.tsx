@@ -38,7 +38,6 @@ const sendReadReceipt = async (chatId: string, message: LoadedMessage) => {
     !message.sender &&
     UpdateRequiredMessageContentTypes.includes(message.contentType)
   ) {
-    console.log(`shouldAck: ${message.shouldAck}`);
     //If message wasn't sent by us, it has to be delivered at the least and only then do we need to send an update.
     if (
       message.messageStatus !== undefined &&
@@ -94,7 +93,6 @@ export const MessageBubbleParent = ({
   hasExtraPadding: boolean;
 }): ReactNode => {
   const chatId = message.chatId;
-  console.log(chatId);
 
   const {selectionMode, selectedMessages, toggleSelected} =
     useSelectionContext();
