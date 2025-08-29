@@ -20,9 +20,11 @@ import {
   DEFAULT_PROFILE_AVATAR_INFO,
 } from '@configs/constants';
 
+import { ConnectionProgressBar } from './ConnectionProgressBar';
 
 
-function HomescreenPlaceholder({onPlusPress}:{onPlusPress:()=>void}): ReactNode {
+
+function HomescreenPlaceholder({onPlusPress,connectionsMade}:{onPlusPress:()=>void; connectionsMade: number}): ReactNode {
   //profile information
   const profile = useSelector(state => state.profile.profile);
   const {name} = useMemo(() => {
@@ -30,6 +32,7 @@ function HomescreenPlaceholder({onPlusPress}:{onPlusPress:()=>void}): ReactNode 
     return {
       name: savedName === DEFAULT_NAME ? 'there' : savedName,
       avatar: profile?.profilePicInfo || DEFAULT_PROFILE_AVATAR_INFO,
+      
     };
   }, [profile]);
   const Colors = useColors();
@@ -64,12 +67,31 @@ function HomescreenPlaceholder({onPlusPress}:{onPlusPress:()=>void}): ReactNode 
       <TouchableOpacity onPress={onPlusPress}>
       <NumberlessText
           style={{marginTop:  Spacing.s}}
-          textColor={Colors.purple}
+          textColor={Colors.accent2}
           fontSizeType={FontSizeType.l}
           fontWeight={FontWeight.rg}>
           Click on the + button below to create a Port
         </NumberlessText>
         </TouchableOpacity>
+        <NumberlessText
+          style={{marginTop:  Spacing.m, marginBottom: Spacing.s}}
+          textColor={Colors.text.subtitle}
+          fontSizeType={FontSizeType.m}
+          fontWeight={FontWeight.md}>
+          INVITE YOUR FRIENDS
+        </NumberlessText>
+        <ConnectionProgressBar currentConnections={connectionsMade} totalConnections={3} />
+        <NumberlessText
+         style={{marginTop:  Spacing.xs}}
+          textColor={Colors.accent}
+          fontSizeType={FontSizeType.m}
+          fontWeight={FontWeight.sb}>
+            {connectionsMade}/{3}
+            <NumberlessText
+          textColor={Colors.text.subtitle}
+          fontSizeType={FontSizeType.m}
+          fontWeight={FontWeight.rg}> friends invited.</NumberlessText>
+      </NumberlessText>
     </GradientCard>
   );
 }

@@ -298,6 +298,8 @@ const Home = ({navigation, route}: Props) => {
     };
   }, [opacityAnimation, connections.initialLoadComplete]);
 
+
+
   return (
     <>
       <CustomStatusBar
@@ -375,6 +377,7 @@ const Home = ({navigation, route}: Props) => {
                       ) : (
                         <View style={styles.placeholdercard}>
                           <HomescreenPlaceholder
+                          connectionsMade={connections.matching.length}
                             onPlusPress={() =>
                               setOpenConnectionsBottomsheet(true)
                             }
@@ -413,6 +416,7 @@ const Home = ({navigation, route}: Props) => {
                     />
                     <View style={styles.placeholdercard}>
                       <HomescreenPlaceholder
+                      connectionsMade={connections.matching.length}
                         onPlusPress={() => setOpenConnectionsBottomsheet(true)}
                       />
                     </View>
