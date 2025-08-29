@@ -203,8 +203,7 @@ dependencies {
     }
 
     // Dependencies for firebase cloud messaging, FCM
-    implementation("com.google.firebase:firebase-bom:32.0.0")
-    implementation("com.google.firebase:firebase-messaging-ktx")
+    implementation("com.google.firebase:firebase-bom:34.1.0")
     // Dependencies for google auth apis
     implementation "com.google.android.gms:play-services-auth:20.5.0"
     implementation("com.google.apis:google-api-services-drive:v3-rev20230822-2.0.0")
