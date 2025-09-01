@@ -14,8 +14,8 @@ import axios from 'axios';
 import {isIOS} from '@components/ComponentUtils';
 
 import {PERMISSION_MANAGEMENT_URL} from '@configs/api';
-import {DEFAULT_AVATAR} from '@configs/constants';
 import { AvatarUriToPngMap } from '@configs/avatarmapping';
+import {DEFAULT_AVATAR} from '@configs/constants';
 
 import {getToken} from '@utils/ServerAuth';
 import {
@@ -158,10 +158,7 @@ export async function displaySimpleNotification(
       console.warn('Failed to get connection or avatar:', error);
       profileUri = getAvatarFileUri(DEFAULT_AVATAR);
     }
-  }
-  
-  console.log('Final profileUri =', profileUri);
-  
+  }  
   
   // Add the message to the list of existing messages for this chat's notification
   const newestMessage: {
