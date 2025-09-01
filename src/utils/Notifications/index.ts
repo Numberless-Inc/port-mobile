@@ -1,4 +1,4 @@
-import {AppState, Platform, Settings} from 'react-native';
+import {AppState, Image, Platform, Settings} from 'react-native';
 
 import notifee, {
   AndroidColor,
@@ -15,6 +15,7 @@ import {isIOS} from '@components/ComponentUtils';
 
 import {PERMISSION_MANAGEMENT_URL} from '@configs/api';
 import {DEFAULT_AVATAR} from '@configs/constants';
+import { AvatarUriToPngMap } from '@configs/avatarmapping';
 
 import {getToken} from '@utils/ServerAuth';
 import {
@@ -112,7 +113,6 @@ export async function displaySimpleNotification(
   const currentNotifications = await notifee.getDisplayedNotifications();
   let messages: any[] = [];
   let notificationIdToReplace: string | undefined;
-  let profileUri = DEFAULT_AVATAR;
   for (let i = 0; i < currentNotifications.length; i++) {
     // Iterate over existing notifications to try to find a matching one.
     console.info(currentNotifications[i]);
@@ -129,6 +129,40 @@ export async function displaySimpleNotification(
     }
   }
 
+  const getAvatarFileUri = (key: string | undefined): string | undefined => {
+    if (!key) return undefined;
+  
+    const asset = AvatarUriToPngMap[key];
+    if (!asset) return undefined;
+  
+    const resolved = Image.resolveAssetSource(asset);
+    return resolved?.uri;
+  };
+
+  let profileUri: string | undefined = getAvatarFileUri(DEFAULT_AVATAR);
+
+  if (chatId) {
+    try {
+      const connection = await getConnection(chatId);
+      const avatarKey = connection?.pathToDisplayPic;
+  
+      if (avatarKey && AvatarUriToPngMap[avatarKey]) {
+        profileUri = getAvatarFileUri(avatarKey);
+        console.log('Using connection avatar:', profileUri, avatarKey);
+      } else {
+        // Optional fallback log
+        console.log('No valid avatar found. Using default.');
+        profileUri = getAvatarFileUri(DEFAULT_AVATAR);
+      }
+    } catch (error) {
+      console.warn('Failed to get connection or avatar:', error);
+      profileUri = getAvatarFileUri(DEFAULT_AVATAR);
+    }
+  }
+  
+  console.log('Final profileUri =', profileUri);
+  
+  
   // Add the message to the list of existing messages for this chat's notification
   const newestMessage: {
     text: string;
@@ -143,20 +177,6 @@ export async function displaySimpleNotification(
     newestMessage.person = person;
   }
   messages.push(newestMessage);
-
-  if (chatId) {
-    try {
-      const connection = await getConnection(chatId);
-      profileUri = connection.pathToDisplayPic || DEFAULT_AVATAR;
-    }
-    catch {
-      profileUri = DEFAULT_AVATAR;
-    }
-  }
-
-    // const dataHandler = new DirectChat(chatId);
-    // const chatData = dataHandler.getChatData();
-    // profileUri = (await chatData).displayPic || DEFAULT_AVATAR;
 
   const notification: Notification = {
     title: chatName,
@@ -173,7 +193,7 @@ export async function displaySimpleNotification(
         type: AndroidStyle.MESSAGING,
         person: {
           name: chatName,
-          icon: "https://www.iconpacks.net/icons/free-icons-6/free-user-yellow-circle-icon-20550-thumb.png"
+          icon: profileUri
         },
         messages: messages,
         group: isGroup,

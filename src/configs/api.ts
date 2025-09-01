@@ -1,7 +1,7 @@
 import {DOMAIN, USE_SSL} from '@env';
 
 const useSSL = USE_SSL ? USE_SSL === 'true' : true;
-const URL = DOMAIN ? DOMAIN : 'staging.numberless.tech';
+const URL = 'dev.numberless.tech';
 
 /**
  * Base Endpoints
