@@ -75,7 +75,7 @@ const BaseBottomSheet = ({
       >
         {children}
       </BottomSheetView>
-      <View style={{backgroundColor: bgColor === 'g' ? Colors.background : Colors.surface, height: 150, width: Width.screen, marginTop: -Spacing.m}}/>
+      <View style={{backgroundColor: bgColor === 'g' ? Colors.background : Colors.surface, width: Width.screen, marginTop: -Spacing.m}}/>
     </BottomSheet>): null
   );
 };
