@@ -24,9 +24,9 @@ import {
 } from '@utils/Storage/connections';
 import { ChatType } from '@utils/Storage/DBCalls/connections';
 import { getLineData } from '@utils/Storage/lines';
+import { getMedia } from '@utils/Storage/media';
 import { updatePermissions } from '@utils/Storage/permissions';
 import { getSafeAbsoluteURI, isAvatarUri, isMediaUri } from '@utils/Storage/StorageRNFS/sharedFileHandlers';
-import { getMedia } from '@utils/Storage/media';
 
 /**
  * Routes the user to the appropriate chat screen when a notification is pressed
