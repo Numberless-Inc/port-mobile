@@ -50,6 +50,58 @@ import Avatar6 from '@assets/avatarsforprofile/Avatar6.svg';
 import Avatar7 from '@assets/avatarsforprofile/Avatar7.svg';
 import Avatar8 from '@assets/avatarsforprofile/Avatar8.svg';
 import Avatar9 from '@assets/avatarsforprofile/Avatar9.svg';
+import Avatar1PNG from '@assets/avatarsforprofile/pngs/Avatar1.png';
+import Avatar10PNG from '@assets/avatarsforprofile/pngs/Avatar10.png';
+import Avatar11PNG from '@assets/avatarsforprofile/pngs/Avatar11.png';
+import Avatar12PNG from '@assets/avatarsforprofile/pngs/Avatar12.png';
+import Avatar13PNG from '@assets/avatarsforprofile/pngs/Avatar13.png';
+import Avatar14PNG from '@assets/avatarsforprofile/pngs/Avatar14.png';
+import Avatar15PNG from '@assets/avatarsforprofile/pngs/Avatar15.png';
+import Avatar16PNG from '@assets/avatarsforprofile/pngs/Avatar16.png';
+import Avatar17PNG from '@assets/avatarsforprofile/pngs/Avatar17.png';
+import Avatar18PNG from '@assets/avatarsforprofile/pngs/Avatar18.png';
+import Avatar19PNG from '@assets/avatarsforprofile/pngs/Avatar19.png';
+import Avatar2PNG from '@assets/avatarsforprofile/pngs/Avatar2.png';
+import Avatar20PNG from '@assets/avatarsforprofile/pngs/Avatar20.png';
+import Avatar21PNG from '@assets/avatarsforprofile/pngs/Avatar21.png';
+import Avatar22PNG from '@assets/avatarsforprofile/pngs/Avatar22.png';
+import Avatar23PNG from '@assets/avatarsforprofile/pngs/Avatar23.png';
+import Avatar24PNG from '@assets/avatarsforprofile/pngs/Avatar24.png';
+import Avatar25PNG from '@assets/avatarsforprofile/pngs/Avatar25.png';
+import Avatar26PNG from '@assets/avatarsforprofile/pngs/Avatar26.png';
+import Avatar27PNG from '@assets/avatarsforprofile/pngs/Avatar27.png';
+import Avatar28PNG from '@assets/avatarsforprofile/pngs/Avatar28.png';
+import Avatar29PNG from '@assets/avatarsforprofile/pngs/Avatar29.png';
+import Avatar3PNG from '@assets/avatarsforprofile/pngs/Avatar3.png';
+import Avatar30PNG from '@assets/avatarsforprofile/pngs/Avatar30.png';
+import Avatar31PNG from '@assets/avatarsforprofile/pngs/Avatar31.png';
+import Avatar32PNG from '@assets/avatarsforprofile/pngs/Avatar32.png';
+import Avatar33PNG from '@assets/avatarsforprofile/pngs/Avatar33.png';
+import Avatar34PNG from '@assets/avatarsforprofile/pngs/Avatar34.png';
+import Avatar35PNG from '@assets/avatarsforprofile/pngs/Avatar35.png';
+import Avatar36PNG from '@assets/avatarsforprofile/pngs/Avatar36.png';
+import Avatar37PNG from '@assets/avatarsforprofile/pngs/Avatar37.png';
+import Avatar38PNG from '@assets/avatarsforprofile/pngs/Avatar38.png';
+import Avatar39PNG from '@assets/avatarsforprofile/pngs/Avatar39.png';
+import Avatar4PNG from '@assets/avatarsforprofile/pngs/Avatar4.png';
+import Avatar40PNG from '@assets/avatarsforprofile/pngs/Avatar40.png';
+import Avatar41PNG from '@assets/avatarsforprofile/pngs/Avatar41.png';
+import Avatar42PNG from '@assets/avatarsforprofile/pngs/Avatar42.png';
+import Avatar43PNG from '@assets/avatarsforprofile/pngs/Avatar43.png';
+import Avatar44PNG from '@assets/avatarsforprofile/pngs/Avatar44.png';
+import Avatar45PNG from '@assets/avatarsforprofile/pngs/Avatar45.png';
+import Avatar46PNG from '@assets/avatarsforprofile/pngs/Avatar46.png';
+import Avatar47PNG from '@assets/avatarsforprofile/pngs/Avatar47.png';
+import Avatar48PNG from '@assets/avatarsforprofile/pngs/Avatar48.png';
+import Avatar49PNG from '@assets/avatarsforprofile/pngs/Avatar49.png';
+import Avatar5PNG from '@assets/avatarsforprofile/pngs/Avatar5.png';
+import Avatar50PNG from '@assets/avatarsforprofile/pngs/Avatar50.png';
+import Avatar51PNG from '@assets/avatarsforprofile/pngs/Avatar51.png';
+import Avatar52PNG from '@assets/avatarsforprofile/pngs/Avatar52.png';
+import Avatar6PNG from '@assets/avatarsforprofile/pngs/Avatar6.png';
+import Avatar7PNG from '@assets/avatarsforprofile/pngs/Avatar7.png';
+import Avatar8PNG from '@assets/avatarsforprofile/pngs/Avatar8.png';
+import Avatar9PNG from '@assets/avatarsforprofile/pngs/Avatar9.png';
 
 //avatars to be used for direct chats
 export const DirectAvatarMapping = [
@@ -106,3 +158,59 @@ export const DirectAvatarMapping = [
   {id: '51', Icon: Avatar51},
   {id: '52', Icon: Avatar52},
 ];
+
+
+export const AvatarUriToPngMap: Record<string, any> = {
+  'avatar://1': Avatar1PNG,
+  'avatar://2': Avatar2PNG,
+  'avatar://3': Avatar3PNG,
+  'avatar://4': Avatar4PNG,
+  'avatar://5': Avatar5PNG,
+  'avatar://6': Avatar6PNG,
+  'avatar://7': Avatar7PNG,
+  'avatar://8': Avatar8PNG,
+  'avatar://9': Avatar9PNG,
+  'avatar://10': Avatar10PNG,
+  'avatar://11': Avatar11PNG,
+  'avatar://12': Avatar12PNG,
+  'avatar://13': Avatar13PNG,
+  'avatar://14': Avatar14PNG,
+  'avatar://15': Avatar15PNG,
+  'avatar://16': Avatar16PNG,
+  'avatar://17': Avatar17PNG,
+  'avatar://18': Avatar18PNG,
+  'avatar://19': Avatar19PNG,
+  'avatar://20': Avatar20PNG,
+  'avatar://21': Avatar21PNG,
+  'avatar://22': Avatar22PNG,
+  'avatar://23': Avatar23PNG,
+  'avatar://24': Avatar24PNG,
+  'avatar://25': Avatar25PNG,
+  'avatar://26': Avatar26PNG,
+  'avatar://27': Avatar27PNG,
+  'avatar://28': Avatar28PNG,
+  'avatar://29': Avatar29PNG,
+  'avatar://30': Avatar30PNG,
+  'avatar://31': Avatar31PNG,
+  'avatar://32': Avatar32PNG,
+  'avatar://33': Avatar33PNG,
+  'avatar://34': Avatar34PNG,
+  'avatar://35': Avatar35PNG,
+  'avatar://36': Avatar36PNG,
+  'avatar://37': Avatar37PNG,
+  'avatar://38': Avatar38PNG,
+  'avatar://39': Avatar39PNG,
+  'avatar://40': Avatar40PNG,
+  'avatar://41': Avatar41PNG,
+  'avatar://42': Avatar42PNG,
+  'avatar://43': Avatar43PNG,
+  'avatar://44': Avatar44PNG,
+  'avatar://45': Avatar45PNG,
+  'avatar://46': Avatar46PNG,
+  'avatar://47': Avatar47PNG,
+  'avatar://48': Avatar48PNG,
+  'avatar://49': Avatar49PNG,
+  'avatar://50': Avatar50PNG,
+  'avatar://51': Avatar51PNG,
+  'avatar://52': Avatar52PNG,
+};

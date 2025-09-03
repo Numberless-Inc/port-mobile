@@ -1,4 +1,4 @@
-import {AppState, Platform, Settings} from 'react-native';
+import { AppState, Image, Platform, Settings } from 'react-native';
 
 import notifee, {
   AndroidColor,
@@ -11,19 +11,22 @@ import notifee, {
 } from '@notifee/react-native';
 import axios from 'axios';
 
-import {isIOS} from '@components/ComponentUtils';
+import { isIOS } from '@components/ComponentUtils';
 
-import {PERMISSION_MANAGEMENT_URL} from '@configs/api';
-import {DEFAULT_AVATAR} from '@configs/constants';
+import { PERMISSION_MANAGEMENT_URL } from '@configs/api';
+import { AvatarUriToPngMap } from '@configs/avatarmapping';
+import { DEFAULT_AVATAR } from '@configs/constants';
 
-import {getToken} from '@utils/ServerAuth';
+import { getToken } from '@utils/ServerAuth';
 import {
   getChatIdFromRoutingId,
   getConnection,
 } from '@utils/Storage/connections';
-import {ChatType} from '@utils/Storage/DBCalls/connections';
-import {getLineData} from '@utils/Storage/lines';
-import {updatePermissions} from '@utils/Storage/permissions';
+import { ChatType } from '@utils/Storage/DBCalls/connections';
+import { getLineData } from '@utils/Storage/lines';
+import { getMedia } from '@utils/Storage/media';
+import { updatePermissions } from '@utils/Storage/permissions';
+import { getSafeAbsoluteURI, isAvatarUri, isMediaUri } from '@utils/Storage/StorageRNFS/sharedFileHandlers';
 
 /**
  * Routes the user to the appropriate chat screen when a notification is pressed
@@ -39,7 +42,7 @@ export const performNotificationRouting = async (
   if (!notificationData) {
     return;
   }
-  const {chatId, source} = notificationData;
+  const { chatId, source } = notificationData;
   console.log(chatId, source);
 
   // Use chatId if available, otherwise fallback to source
@@ -118,13 +121,48 @@ export async function displaySimpleNotification(
     if (
       currentNotifications[i].notification.android?.groupId === chatId &&
       currentNotifications[i].notification.android?.style?.type ===
-        AndroidStyle.MESSAGING
+      AndroidStyle.MESSAGING
     ) {
       messages = (
         currentNotifications[i].notification.android
           ?.style as AndroidMessagingStyle
       ).messages;
       notificationIdToReplace = currentNotifications[i].id;
+    }
+  }
+
+  const getAvatarFileUri = (key: string | undefined): string | undefined => {
+    if (!key) return undefined;
+
+    const asset = AvatarUriToPngMap[key];
+    if (!asset) return undefined;
+
+    const resolved = Image.resolveAssetSource(asset);
+    return resolved?.uri;
+  };
+
+  let profileUri: string | undefined = getAvatarFileUri(DEFAULT_AVATAR);
+
+  if (chatId) {
+    try {
+      const connection = await getConnection(chatId);
+      const avatarKey = connection?.pathToDisplayPic;
+      if (avatarKey && !isAvatarUri(avatarKey) && isMediaUri(avatarKey)) {
+        const mediaInfo = await getMedia(avatarKey);
+        if (mediaInfo) {
+          profileUri = getSafeAbsoluteURI(mediaInfo.filePath);
+        }
+      }
+      else if (avatarKey && isAvatarUri(avatarKey) && AvatarUriToPngMap[avatarKey]) {
+        profileUri = getAvatarFileUri(avatarKey);
+        console.log('Using connection avatar:', profileUri, avatarKey);
+      }
+      else {
+        profileUri = getAvatarFileUri(DEFAULT_AVATAR);
+      }
+    } catch (error) {
+      console.warn('Failed to get connection or avatar:', error);
+      profileUri = getAvatarFileUri(DEFAULT_AVATAR);
     }
   }
 
@@ -138,7 +176,7 @@ export async function displaySimpleNotification(
     timestamp: Date.now(),
   };
   if (memberName) {
-    const person = {name: memberName};
+    const person = { name: memberName };
     newestMessage.person = person;
   }
   messages.push(newestMessage);
@@ -147,7 +185,7 @@ export async function displaySimpleNotification(
     title: chatName,
     body: body,
     data: {
-      ...(chatId && {chatId: chatId}),
+      ...(chatId && { chatId: chatId }),
       isGroup: isGroup.toString(),
       isConnected: isConnected.toString(),
     },
@@ -158,6 +196,7 @@ export async function displaySimpleNotification(
         type: AndroidStyle.MESSAGING,
         person: {
           name: chatName,
+          icon: profileUri
         },
         messages: messages,
         group: isGroup,
@@ -240,7 +279,7 @@ export async function resetAppBadge() {
     return;
   }
   await notifee.setBadgeCount(0);
-  Settings.set({count: 1});
+  Settings.set({ count: 1 });
 }
 
 interface chatWithType {
@@ -265,7 +304,7 @@ export async function setRemoteNotificationPermissionsForChats(
       // TODO Group logic needs to be shimmed when implemented
       chats,
     },
-    {headers: {Authorization: `${token}`}},
+    { headers: { Authorization: `${token}` } },
   );
 }
 
@@ -283,7 +322,7 @@ export async function setRemoteNotificationPermissionForDirectChat(
   try {
     if (lineData) {
       await setRemoteNotificationPermissionsForChats(notificationState, [
-        {id: lineId, type: 'line'},
+        { id: lineId, type: 'line' },
       ]);
       await updatePermissions(lineData.permissionsId, {
         notifications: notificationState,
