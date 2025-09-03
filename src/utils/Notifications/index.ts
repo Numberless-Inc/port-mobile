@@ -158,8 +158,6 @@ export async function displaySimpleNotification(
         console.log('Using connection avatar:', profileUri, avatarKey);
       }
       else {
-        // Optional fallback log
-        console.log('No valid avatar found. Using default.');
         profileUri = getAvatarFileUri(DEFAULT_AVATAR);
       }
     } catch (error) {
@@ -167,7 +165,7 @@ export async function displaySimpleNotification(
       profileUri = getAvatarFileUri(DEFAULT_AVATAR);
     }
   }
-  console.log("profileUri is ", profileUri);
+
   // Add the message to the list of existing messages for this chat's notification
   const newestMessage: {
     text: string;
