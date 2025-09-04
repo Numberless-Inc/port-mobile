@@ -28,6 +28,7 @@ import {
   backgroundToForegroundOperations,
   performDebouncedCommonAppOperations,
 } from '@utils/AppOperations';
+import {getBackupIntervalInStorage} from '@utils/Backup';
 import {getDeveloperModeFromStorage, turnOnDeveloperMode} from '@utils/DeveloperMode';
 import {
   foregroundMessageHandler,
@@ -70,6 +71,7 @@ function App(): JSX.Element {
       initialiseFCM();
       //checks if developer mode is turned on
       const developerMode = await getDeveloperModeFromStorage();
+      await getBackupIntervalInStorage();
       if (developerMode) {
         turnOnDeveloperMode();
       }

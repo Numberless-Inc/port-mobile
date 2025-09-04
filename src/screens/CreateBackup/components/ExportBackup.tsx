@@ -14,19 +14,15 @@ import {
 import { Spacing } from '@components/spacingGuide';
 import useSVG from '@components/svgGuide';
 
-type ExportBackupProps = {
-    onCloudExport: () => Promise<void>;
-    onLocalExport: () => Promise<void>;
-    isCloudExporting: boolean;
-    isLocalExporting: boolean;
-};
-
 const ExportBackup = ({
     onCloudExport,
     onLocalExport,
-    isCloudExporting,
-    isLocalExporting,
-}: ExportBackupProps) => {
+    exportMode,
+}:{
+    onCloudExport: () => void;
+    onLocalExport: () => void;
+    exportMode: string | null;
+}) => {
     const color = useColors();
     const svgArray = [
         {
@@ -45,21 +41,21 @@ const ExportBackup = ({
                     textColor={color.text.title}
                     fontSizeType={FontSizeType.l}
                     fontWeight={FontWeight.md}>
-                    Back up options
+                    Choose backup location
                 </NumberlessText>
                 <NumberlessText
                     style={{ marginTop: Spacing.m }}
                     textColor={color.text.subtitle}
                     fontSizeType={FontSizeType.s}
                     fontWeight={FontWeight.rg}>
-                    Back up to your cloud to be able to restore your data if you lose your device, or create a local backup file to manage yourself.
+                    We recommend saving your backup to the cloud. It'll be stored in a hidden folder, so only you can access it, and you'll be able to restore your chats even if you lose your device.
                 </NumberlessText>
                 <View style={{ gap: Spacing.s, marginTop: Spacing.m, justifyContent: 'center', alignItems: 'center' }}>
                     <PrimaryButton
-                        text={isIOS ? "Back up to iCloud" : "Back up to Google Drive"}
+                        text={isIOS ? "Continue with iCloud" : "Continue with Google"}
                         onClick={onCloudExport}
-                        isLoading={isCloudExporting}
-                        disabled={isCloudExporting}
+                        isLoading={exportMode === 'cloud'}
+                        disabled={exportMode === 'cloud'}
                         theme={color.theme}
                         Icon={isIOS ? undefined : GoogleLogo}
                         textStyle={{ fontSize: FontSizeType.m, fontWeight: FontWeight.md }}
@@ -73,7 +69,7 @@ const ExportBackup = ({
                     <SecondaryButton
                         text="Create a local backup"
                         onClick={onLocalExport}
-                        isLoading={isLocalExporting}
+                        isLoading={exportMode === 'local'}
                         disabled={false}
                         theme={color.theme}
                         textStyle={{ fontSize: FontSizeType.m, fontWeight: FontWeight.md }}

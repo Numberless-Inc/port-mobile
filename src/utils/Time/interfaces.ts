@@ -43,3 +43,15 @@ export const disappearDuration: {[key in disappearOptionsTypes]: number} = {
   '90 days': 90 * 24 * 60 * 60 * 1000,
   Off: 0,
 };
+
+export const backupIntervals = {
+  'in 3 days': 3 * 24 * 60 * 60 * 1000,
+  'in 7 days': 7 * 24 * 60 * 60 * 1000,
+  'in 15 days': 15 * 24 * 60 * 60 * 1000,
+  'in 30 days': 30 * 24 * 60 * 60 * 1000,
+  'in 90 days': 90 * 24 * 60 * 60 * 1000,
+  'Never': 0,
+}
+export type BackupIntervalString = keyof typeof backupIntervals;
+export const backupIntervalStrings = Object.keys(backupIntervals) as BackupIntervalString[];
+export const DEFAULT_BACKUP_INTERVAL: BackupIntervalString = 'Never'; // Potential badness - default value in non-config file
