@@ -54,4 +54,4 @@ export const backupIntervals = {
 }
 export type BackupIntervalString = keyof typeof backupIntervals;
 export const backupIntervalStrings = Object.keys(backupIntervals) as BackupIntervalString[];
-export const DEFAULT_BACKUP_INTERVAL: BackupIntervalString = 'Off'; // Potential badness - default value in non-config file
+export const DEFAULT_BACKUP_INTERVAL: BackupIntervalString = 'Never'; // Potential badness - default value in non-config file
