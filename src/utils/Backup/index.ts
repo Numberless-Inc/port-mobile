@@ -26,6 +26,7 @@ import {
   getSafeAbsoluteURI,
 } from '@utils/Storage/StorageRNFS/sharedFileHandlers';
 import {wait} from '@utils/Time';
+import {DEFAULT_BACKUP_INTERVAL, BackupIntervalString} from '@utils/Time/interfaces';
 
 import NativeCryptoModule from '@specs/NativeCryptoModule';
 const {GoogleSignInModule} = NativeModules;
