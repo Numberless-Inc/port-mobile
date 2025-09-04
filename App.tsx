@@ -28,7 +28,7 @@ import {
   backgroundToForegroundOperations,
   performDebouncedCommonAppOperations,
 } from '@utils/AppOperations';
-import {getBackupIntervalInStorage} from '@utils/Backups';
+import {getBackupIntervalInStorage} from '@utils/Backup';
 import {getDeveloperModeFromStorage, turnOnDeveloperMode} from '@utils/DeveloperMode';
 import {
   foregroundMessageHandler,
