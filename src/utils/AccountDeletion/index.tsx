@@ -50,7 +50,7 @@ export default async function permanentlyDeleteAccount() {
   }
   // Clear RNSS
   try {
-    await clearRNSS();
+    clearRNSS();
   } catch (e) {
     console.error('[ACCOUNT DELETION] Could not clear RNSS', e);
   }

@@ -138,6 +138,6 @@ export default tseslint.config(
   },
   prettierConfig,
   {
-    ignores: ['node_modules/', 'ios/', 'android/', '*.config.js', '*.setup.js'],
+    ignores: ['node_modules/', 'ios/', 'android/', '*.config.js', '*.setup.js', "shared/"],
   },
 );

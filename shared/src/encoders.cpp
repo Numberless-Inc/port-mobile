@@ -1,7 +1,6 @@
-#include "encoders.h"
+#include "encoders.hpp"
 #include <sstream>
 #include <iomanip>
-#include <vector>
 
 static const std::string base64_chars =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -19,9 +18,9 @@ std::string encoders::binary_to_hex(const unsigned char *data, std::size_t lengt
   return hex_stream.str();
 }
 
-std::string encoders::hex_to_binary(std::string &hex)
+std::vector<unsigned char> encoders::hex_to_binary(const std::string &hex)
 {
-  std::string binary;
+  std::vector<unsigned char> binary;
   for (size_t i = 0; i < hex.length(); i += 2)
   {
     uint8_t byte = std::stoi(hex.substr(i, 2), nullptr, 16);
@@ -30,9 +29,10 @@ std::string encoders::hex_to_binary(std::string &hex)
   return binary;
 }
 
-std::string encoders::base64_encode(const std::string &in)
+std::string encoders::base64_encode(const std::vector<unsigned char> &in)
 {
   std::string out;
+  out.reserve(in.size() * 2); // Should give it a good head start
   int val = 0, valb = -6;
   for (unsigned char c : in)
   {
@@ -50,12 +50,13 @@ std::string encoders::base64_encode(const std::string &in)
     out.push_back('=');
   return out;
 }
-std::string encoders::base64_decode(const std::string &in)
+std::vector<unsigned char> encoders::base64_decode(const std::string &in)
 {
   std::vector<int> T(256, -1);
   for (int i = 0; i < 64; i++)
     T[base64_chars[i]] = i;
-  std::string out;
+  std::vector<unsigned char> out;
+  out.reserve(in.length()); // Give it a sufficient base to work off of
   std::vector<int> val(4, 0);
   int valb = -8;
   for (unsigned char c : in)

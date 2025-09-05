@@ -15,7 +15,7 @@
        "@specs/*":["./src/specs/*"],
     },
   },
-  "extends": "@react-native/typescript-config/tsconfig.json",
+  "extends": "@react-native/typescript-config",
   "include": [
     "App.tsx",
     "index.js",

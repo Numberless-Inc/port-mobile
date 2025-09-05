@@ -11,16 +11,8 @@ set(STATIC_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../../../../shared/lib/${ANDRO
 include(${REACT_ANDROID_DIR}/cmake-utils/ReactNative-application.cmake)
 
 # Define where the additional source code lives. We need to crawl back the jni, main, src, app, android folders
-target_sources(${CMAKE_PROJECT_NAME} PRIVATE 
-  ../../../../../shared/src/NativeCryptoModule.cpp
-  ../../../../../shared/src/encoders.cpp
-  ../../../../../shared/src/commonhash.cpp
-  ../../../../../shared/src/commonrand.cpp
-  ../../../../../shared/src/ed25519.cpp
-  ../../../../../shared/src/x25519.cpp
-  ../../../../../shared/src/aes256.cpp
-  ../../../../../shared/src/pbencrypt.cpp
-)
+file(GLOB NATIVE_SOURCE_FILES CONFIGURE_DEPENDS ../../../../../shared/src/*.cpp)
+target_sources(${CMAKE_PROJECT_NAME} PRIVATE ${NATIVE_SOURCE_FILES})
 
 # Define where CMake can find the additional header files. We need to crawl back the jni, main, src, app, android folders
 target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC ../../../../../shared/include)

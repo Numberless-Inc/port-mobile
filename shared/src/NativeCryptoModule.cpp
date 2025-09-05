@@ -1,15 +1,18 @@
 #include "NativeCryptoModule.h"
 
-#include "commonhash.h"
-#include "commonrand.h"
-#include "ed25519.h"
-#include "x25519.h"
-#include "aes256.h"
-#include "pbencrypt.h"
 #include <future>
 #include <openssl/evp.h>
 #include <memory>
 #include <fstream>
+
+#include "commonhash.hpp"
+#include "commonrand.hpp"
+#include "ed25519.hpp"
+#include "x25519.hpp"
+#include "aes256.hpp"
+#include "pbencrypt.hpp"
+#include "yap.hpp"
+#include "encoders.hpp"
 namespace facebook::react
 {
 
@@ -40,11 +43,17 @@ namespace facebook::react
   }
   std::string NativeCryptoModule::generateX25519Keypair(jsi::Runtime &rt)
   {
-    return x25519::generate_keypair_json();
+    auto keypair = x25519::generate_keypair();
+    return keypair->to_json();
   }
-  std::string NativeCryptoModule::deriveX25519Secret(jsi::Runtime &rt, std::string private_key, std::string public_key)
+  std::string NativeCryptoModule::deriveX25519Secret(jsi::Runtime &rt, std::string private_key_hex, std::string public_key_hex)
   {
-    return x25519::derive_secret(private_key, public_key);
+    // Convert the shared secret to a hex string
+
+    auto private_key = encoders::hex_to_binary(private_key_hex);    
+    auto public_key = encoders::hex_to_binary(public_key_hex);
+    auto ss = x25519::derive_secret(private_key, public_key);
+    return encoders::binary_to_hex(ss.data(), ss.size());
   }
   std::string NativeCryptoModule::aes256Encrypt(jsi::Runtime &rt, std::string plaintext, std::string secret)
   {
@@ -130,6 +139,20 @@ namespace facebook::react
     return NativeCryptoModule::make_promise(rt, decryptor);
   }
 
+  std::string NativeCryptoModule::yapV1Encrypt(jsi::Runtime &rt, std::string shared_secret_hex, std::string peer_public_key_hex, std::string plaintext)
+  {
+    auto ss = encoders::hex_to_binary(shared_secret_hex);
+    auto peer_public_key = encoders::hex_to_binary(peer_public_key_hex);
+    auto plaintext_data = std::vector<unsigned char>(plaintext.begin(), plaintext.end());
+    auto encapsulated_ct = yap::v1::encrypt(ss, peer_public_key, plaintext_data);
+
+    auto ct = yap::v1::encrypt(ss, peer_public_key, plaintext_data);
+    return encoders::base64_encode(ct);
+  }
+  std::string NativeCryptoModule::yapV1Decrypt(jsi::Runtime &rt, std::string shared_secret_hex, std::string private_key_hex, std::string plaintext)
+  {
+    return std::string();
+  }
   jsi::Object NativeCryptoModule::make_promise(jsi::Runtime &rt, std::function<jsi::Value()> func)
   {
     auto jsThreadInvoker = this->jsInvoker_;

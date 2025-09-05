@@ -1,12 +1,12 @@
-#include "pbencrypt.h"
+#include "pbencrypt.hpp"
 
 #include <fstream>
 #include <openssl/evp.h>
 #include <vector>
 
-#include "aes256.h"
-#include "commonrand.h"
-#include "encoders.h"
+#include "aes256.hpp"
+#include "commonrand.hpp"
+#include "encoders.hpp"
 
 #define ITERATION_COUNT 2048
 #define KEY_LENGTH EVP_MAX_KEY_LENGTH
@@ -56,10 +56,10 @@ namespace pbencrypt
 
     // Generate a salt and add it to the head data
     auto salt = commonrand::hex(PKCS5_SALT_LEN);
-    auto salt_bin = encoders::hex_to_binary(salt);
+    std::vector<unsigned char> salt_bin = encoders::hex_to_binary(salt);
     memcpy(&head_data.salt, salt_bin.data(), PKCS5_SALT_LEN);
     // Generate a key using the password and salt
-    std::vector<unsigned char> key_vec = generate_key(password, salt_bin.data());
+    std::vector<unsigned char> key_vec = generate_key(password, (const char *)(salt_bin.data()));
     std::string key = encoders::binary_to_hex(key_vec.data(), KEY_LENGTH);
     // Encrypt the metadata using the key
     std::string encrypted_metadata = aes256::encrypt(metadata, key);

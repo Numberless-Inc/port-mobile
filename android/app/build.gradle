@@ -210,6 +210,7 @@ dependencies {
     implementation("com.google.apis:google-api-services-drive:v3-rev20230822-2.0.0")
     implementation("com.google.api-client:google-api-client-android:2.2.0")
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.security:security-crypto:1.1.0' // Or the latest stable version
 }
 
 apply plugin: "com.google.gms.google-services"

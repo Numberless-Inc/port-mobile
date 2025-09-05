@@ -29,7 +29,9 @@ namespace facebook::react
     jsi::Object aes256FileEncrypt(jsi::Runtime &rt, std::string path_to_input, std::string path_to_output);
     jsi::Object aes256FileDecrypt(jsi::Runtime &rt, std::string path_to_input, std::string path_to_output, std::string key_and_iv);
     jsi::Object pbEncrypt(jsi::Runtime &rt, std::string password, std::string metadata, std::string path_to_db, std::string path_to_destination);
-    jsi::Object pbDecrypt(jsi::Runtime &rt, std::string password, std::string path_to_backup, std::string path_to_db_destination); 
+    jsi::Object pbDecrypt(jsi::Runtime &rt, std::string password, std::string path_to_backup, std::string path_to_db_destination);
+    std::string yapV1Encrypt(jsi::Runtime &rt, std::string shared_secret_hex, std::string peer_public_key_hex, std::string plaintext);
+    std::string yapV1Decrypt(jsi::Runtime &rt, std::string shared_secret_hex, std::string private_key_hex, std::string plaintext);
 
   private:
     jsi::Object make_promise(jsi::Runtime &rt, std::function<jsi::Value()> func);
